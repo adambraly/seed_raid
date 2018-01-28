@@ -1,0 +1,20 @@
+version: "3.3"
+
+services:
+  db:
+    container_name: seedraid-db
+    hostname: seedraid-db
+    image: postgres:9.6.6-alpine
+    ports:
+      - "5432:5432"
+    volumes:
+      - seedraid-db-data:/var/lib/postgresql/data/pgdata
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_DB=seedraid-db
+      - PGPORT=5432
+      - PGDATA=/var/lib/postgresql/data/pgdata
+
+volumes:
+  seedraid-db-data:
