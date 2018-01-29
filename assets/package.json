@@ -20,7 +20,7 @@
   },
   "scripts": {
     "start": "yarn run watch",
-    "watch": "MIX_ENV=dev webpack-dev-server --inline --hot --stdin --colors --public localhost:8080",
+    "watch": "MIX_ENV=dev webpack --watch --colors",
     "deploy": "MIX_ENV=prod webpack -p"
   },
   "devDependencies": {

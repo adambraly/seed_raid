@@ -17,7 +17,7 @@ function receiveRaids(json) {
 const Actions = {
   fetchRaids: (dispatch) => {
     dispatch(requestRaids());
-    return fetch('http://localhost:8000/api/raids')
+    return fetch('http://localhost:4000/api/raids')
       .then(response => response.json())
       .then(json => dispatch(receiveRaids(json)));
   },

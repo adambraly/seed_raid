@@ -3,6 +3,9 @@ const webpack = require('webpack');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
+const publicPath = '/';
+const destDir = path.resolve(__dirname, '..', 'priv', 'static');
+
 
 module.exports = (env) => {
   const isDev = !(env && env.prod);
@@ -15,13 +18,13 @@ module.exports = (env) => {
 
     entry: {
       app: [
-        'js/app.js',
+        'js/App.jsx',
       ],
     },
     output: {
-      path: path.resolve(__dirname, '../priv/static'),
+      path: destDir,
       filename: 'js/[name].js',
-      publicPath: 'http://localhost:8080/',
+      publicPath,
     },
 
     devServer: {
