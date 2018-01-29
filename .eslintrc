@@ -1,0 +1,11 @@
+// .eslintrc
+
+{
+  "extends": "airbnb",
+  "env": {
+    "browser": true,
+  },
+  "plugins": [
+    "react"
+  ]
+}

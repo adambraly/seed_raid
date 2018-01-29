@@ -13,17 +13,16 @@ defmodule SeedRaidWeb.Router do
     plug(:accepts, ["json"])
   end
 
-  scope "/", SeedRaidWeb do
-    # Use the default browser stack
-    pipe_through(:browser)
-
-    get("/", PageController, :index)
-  end
-
-  # Other scopes may use custom stacks.
   scope "/api", SeedRaidWeb do
     pipe_through(:api)
 
     resources("/raids", RaidController)
+  end
+
+  scope "/", SeedRaidWeb do
+    # Use the default browser stack
+    pipe_through(:browser)
+
+    get("/*path", PageController, :index)
   end
 end

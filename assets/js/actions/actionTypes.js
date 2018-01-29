@@ -1,0 +1,2 @@
+export const REQUEST_RAIDS = 'REQUEST_RAIDS';
+export const RECIEVE_RAIDS = 'RECIEVE_RAIDS';

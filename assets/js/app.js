@@ -8,6 +8,6 @@
 
 import React from 'react';
 import { render } from 'react-dom';
-import Hello from './components/Hello';
+import configureStore from './store';
 
-render(<Hello />, document.getElementById('app'));
+const store = configureStore();
