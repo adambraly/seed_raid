@@ -21,7 +21,7 @@ function raids(
       return Object.assign({}, state, {
         isFetching: false,
         didInvalidate: false,
-        items: action.posts,
+        items: action.raids,
         lastUpdated: action.receivedAt,
       });
     default:

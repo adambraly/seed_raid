@@ -1,18 +1,31 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import Raid from './Raid';
 
 const Timeline = (props) => {
-  // Build list items of single tweet components using map
-  const content = props.raids.map((raid) => {
-    return (
-      <Raid key={raid.id} tweet={raid} />
-    );
-  });
-
-    // Return ul filled with our mapped tweets
+  const { raids, isFetching } = props;
   return (
-    <ul className="timeline">{content}</ul>
+    <div>
+      {isFetching && raids.length === 0 && <h2>Loading...</h2>}
+      { raids.length > 0 &&
+      <ul className="timeline">
+        {
+          raids.map(raid => (
+            <Raid key={raid.id} tweet={raid} />
+          ))
+        }
+      </ul>
+      }
+    </div>
   );
 };
+
+Timeline.propTypes = {
+  raids: PropTypes.arrayOf(Raid.propTypes).isRequired,
+  dispatch: PropTypes.func.isRequired,
+  isFetching: PropTypes.bool.isRequired,
+  lastUpdated: PropTypes.number,
+};
+
 
 export default Timeline;

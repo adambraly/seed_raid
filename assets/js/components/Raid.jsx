@@ -12,7 +12,7 @@ const Raid = (props) => {
     size,
   } = props;
 
-  moment.locale('fr');
+  moment.locale('en');
   const dayOfWeek = moment(date).format('dddd');
   const dayOfmonth = moment(date).date();
   const time = moment(date).format('hh:mm a');
