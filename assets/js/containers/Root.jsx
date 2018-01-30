@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
-import App from '../components/App';
+import TimelineApp from '../components/TimelineApp';
 
 const propTypes = {
   store: PropTypes.object.isRequired,
@@ -9,7 +9,7 @@ const propTypes = {
 
 const Root = ({ store }) => (
   <Provider store={store}>
-    <App />
+    <TimelineApp />
   </Provider>
 );
 

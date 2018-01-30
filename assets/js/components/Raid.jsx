@@ -5,7 +5,7 @@ import moment from 'moment';
 const Raid = (props) => {
   const {
     id,
-    date,
+    when,
     title,
     icon,
     description,
@@ -13,9 +13,9 @@ const Raid = (props) => {
   } = props;
 
   moment.locale('en');
-  const dayOfWeek = moment(date).format('dddd');
-  const dayOfmonth = moment(date).date();
-  const time = moment(date).format('hh:mm a');
+  const dayOfWeek = moment(when).format('dddd');
+  const dayOfmonth = moment(when).date();
+  const time = moment(when).format('hh:mm a');
   const raidTypeStyle = {
     backgroundImage: `url(${icon})`,
   };
@@ -56,7 +56,7 @@ const Raid = (props) => {
 
 Raid.propTypes = {
   id: PropTypes.string,
-  date: PropTypes.string,
+  when: PropTypes.string,
   title: PropTypes.string,
   icon: PropTypes.string,
   description: PropTypes.string,
@@ -65,7 +65,7 @@ Raid.propTypes = {
 
 Raid.defaultProps = {
   id: '',
-  date: '',
+  when: '',
   title: '',
   icon: '',
   description: '',

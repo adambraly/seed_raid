@@ -1,26 +1,28 @@
-import fetch from 'whatwg-fetch';
+import 'whatwg-fetch';
 import * as types from './actionTypes';
 
-function requestRaids() {
+
+export function isFetching(bool) {
   return {
-    type: types.REQUEST_RAIDS,
+    type: types.FETCHING_RAIDS,
+    isFetching: bool,
   };
 }
 
-function receiveRaids(json) {
+
+export function raidsFetchSuccess(items) {
   return {
-    type: types.RECIEVE_RAIDS,
-    data: json,
+    type: types.RAID_FETCH_SUCCESS,
+    items,
   };
 }
 
-const Actions = {
-  fetchRaids: (dispatch) => {
-    dispatch(requestRaids());
+
+export function fetchRaids() {
+  return (dispatch) => {
+    dispatch(isFetching(true));
     return fetch('http://localhost:4000/api/raids')
       .then(response => response.json())
-      .then(json => dispatch(receiveRaids(json)));
-  },
-};
-
-export default Actions;
+      .then(json => dispatch(raidsFetchSuccess(json.data)));
+  };
+}

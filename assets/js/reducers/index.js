@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux';
 import raids from './raids';
 
-const reducer = combineReducers({
+const rootReducer = combineReducers({
   raids,
 });
-export default reducer;
+
+export default rootReducer;

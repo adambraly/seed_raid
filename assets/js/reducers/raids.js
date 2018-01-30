@@ -1,28 +1,24 @@
 import {
-  REQUEST_RAIDS,
-  RECEIVE_RAIDS,
+  FETCHING_RAIDS,
+  RAID_FETCH_SUCCESS,
 } from '../actions/actionTypes';
 
-function raids(
-  state = {
-    isFetching: false,
-    didInvalidate: false,
-    items: [],
-  },
-  action,
-) {
+const initialState = {
+  items: [],
+  isFetching: true,
+};
+
+
+function raids(state = initialState, action = {}) {
   switch (action.type) {
-    case REQUEST_RAIDS:
+    case FETCHING_RAIDS:
       return Object.assign({}, state, {
         isFetching: true,
-        didInvalidate: false,
       });
-    case RECEIVE_RAIDS:
+    case RAID_FETCH_SUCCESS:
       return Object.assign({}, state, {
         isFetching: false,
-        didInvalidate: false,
-        items: action.raids,
-        lastUpdated: action.receivedAt,
+        items: action.items,
       });
     default:
       return state;
