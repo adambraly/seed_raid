@@ -5,6 +5,8 @@
   "author": "Sweetlie",
   "license": "MIT",
   "dependencies": {
+    "lodash": "^4.17.4",
+    "material-ui": "^1.0.0-beta.31",
     "moment": "^2.20.1",
     "phoenix": "file:../deps/phoenix",
     "phoenix_html": "file:../deps/phoenix_html",

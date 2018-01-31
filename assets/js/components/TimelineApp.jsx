@@ -18,7 +18,7 @@ class TimelineApp extends React.Component {
         <ul className="timeline">
           {
             raids.map(raid => (
-              <Raid key={raid.id} tweet={raid} />
+              <Raid key={raid.id} {...raid} />
             ))
           }
         </ul>
@@ -32,6 +32,7 @@ class TimelineApp extends React.Component {
 TimelineApp.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   raids: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     participants: PropTypes.number.isRequired,
     size: PropTypes.number.isRequired,
