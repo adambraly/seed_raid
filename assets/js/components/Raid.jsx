@@ -2,25 +2,24 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
+
+
 const Raid = (props) => {
   const {
-    id,
-    when,
     title,
     description,
     size,
     participants,
+    when,
   } = props;
 
   moment.locale('en');
   const dayOfWeek = moment.utc(when).format('dddd');
   const dayOfmonth = moment.utc(when).date();
   const time = moment.utc(when).format('hh:mm a');
-  const raidTypeStyle = {
-//    backgroundImage: `url(${icon})`,
-  };
+
   return (
-    <article id={id} className="raid">
+    <article className="raid">
       <figure>
         <header>
           {dayOfWeek}
@@ -33,7 +32,7 @@ const Raid = (props) => {
         </footer>
       </figure>
       <section className="content">
-        <div className="raid-type" style={raidTypeStyle}>
+        <div className="raid-type">
           <span className="size">
             {size}
           </span>
@@ -55,19 +54,15 @@ const Raid = (props) => {
 };
 
 Raid.propTypes = {
-  id: PropTypes.string,
-  when: PropTypes.string,
-  title: PropTypes.string,
+  when: PropTypes.string.isRequired,
+  title: PropTypes.string.isRequired,
   description: PropTypes.string,
-  size: PropTypes.number,
+  size: PropTypes.number.isRequired,
+  participants: PropTypes.number.isRequired,
 };
 
 Raid.defaultProps = {
-  id: '',
-  when: '',
-  title: '',
   description: '',
-  size: 50,
 };
 
 

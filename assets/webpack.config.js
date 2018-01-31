@@ -74,15 +74,16 @@ module.exports = (env) => {
           loader: 'file-loader',
         },
         {
-          test: /\.(css|styl)$/,
+          test: /\.(css|sass|scss)$/,
           exclude: /node_modules/,
           use: isDev ? [
             'style-loader',
             'css-loader',
             'postcss-loader',
+            'sass-loader',
           ] : ExtractTextPlugin.extract({
             fallback: 'style-loader',
-            use: ['css-loader', 'postcss-loader'],
+            use: ['css-loader', 'postcss-loader', 'sass-loader'],
           }),
         },
       ],
@@ -93,11 +94,24 @@ module.exports = (env) => {
       extensions: ['.js', '.json', '.jsx', '.css'],
     },
     plugins: isDev ? [
+      new webpack.ProvidePlugin({
+        $: 'jquery',
+        jQuery: 'jquery',
+      }),
+
       new CopyWebpackPlugin([{
         from: './static',
         to: path.resolve(__dirname, '../priv/static'),
       }]),
+      new ExtractTextPlugin({
+        filename: 'css/[name].css',
+        allChunks: true,
+      }),
     ] : [
+      new webpack.ProvidePlugin({
+        $: 'jquery',
+        jQuery: 'jquery',
+      }),
       new CopyWebpackPlugin([{
         from: './static',
         to: path.resolve(__dirname, '../priv/static'),

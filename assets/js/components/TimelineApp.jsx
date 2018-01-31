@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import Raid from './Raid';
 import { fetchRaids } from '../actions/raids';
 
+import '../../css/main.scss';
+
+
 class TimelineApp extends React.Component {
   componentDidMount() {
     this.props.dispatch(fetchRaids());
@@ -12,7 +15,7 @@ class TimelineApp extends React.Component {
   render() {
     const { raids, isFetching } = this.props;
     return (
-      <div>
+      <div className="container">
         {isFetching && raids.length === 0 && <h2>Loading...</h2>}
         { raids.length > 0 &&
         <ul className="timeline">
