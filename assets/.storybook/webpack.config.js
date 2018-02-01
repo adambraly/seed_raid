@@ -5,6 +5,8 @@
 // IMPORTANT
 // When you add this file, we won't add the default configurations which is similar
 // to "React Create App". This only has babel loader to load JavaScript.
+const bourbon = require('node-bourbon').includePaths;
+
 
 module.exports = {
   plugins: [
@@ -16,7 +18,16 @@ module.exports = {
       {
         test: /\.(css|sass|scss)$/,
         exclude: /node_modules/,
-        use: ['style-loader', 'css-loader', 'sass-loader'],
+        use:[{
+                loader: "style-loader"
+            }, {
+                loader: "css-loader"
+            }, {
+                loader: "sass-loader",
+                options: {
+                    includePaths: [].concat(bourbon)
+                }
+            }],
       },
       // add your custom rules.
     ],

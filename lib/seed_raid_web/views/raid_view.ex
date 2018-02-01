@@ -19,7 +19,8 @@ defmodule SeedRaidWeb.RaidView do
       when: raid.when,
       discord_id: raid.discord_id,
       region: raid.region,
-      side: raid.side
+      side: raid.side,
+      type: raid.type
     }
   end
 end

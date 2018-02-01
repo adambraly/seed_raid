@@ -1,0 +1,30 @@
+*,
+*::after,
+*::before {
+  @include box-sizing(border-box);
+}
+
+body {
+  background-color: $background;
+  color: $main-text;
+  font: {
+    size: 100%;
+    family: $primary-font;
+  }
+}
+
+a {
+  color: $link;
+  font-family: $secondary-font;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+}
+
+h1,
+h2 {
+  font-family: $secondary-font;
+  font-weight: bold;
+}

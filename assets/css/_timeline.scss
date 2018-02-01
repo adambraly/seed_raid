@@ -1,16 +1,289 @@
-ul.timeline {
-  list-style: none;
-  padding: 20px 0 20px;
-  position: relative;
+@import "bourbon";
+@import "datetime";
+
+// mixins - rem fallback - credits: http://zerosixthree.se/
+
+@function calculate-rem($size) {
+  $rem-size: $size / 16px;
+  @return $rem-size * 1rem;
 }
 
-.timeline > li > .timeline-panel {
-            width: 46%;
-            float: left;
-            border: 1px solid #d4d4d4;
-            border-radius: 2px;
-            padding: 20px;
-            position: relative;
-            -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
-            box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
-        }
+@mixin font-size($size) {
+  font-size: calculate-rem($size);
+}
+
+// mixins - border radius
+
+@mixin border-radius($radius: .25em) {
+  border-radius: $radius;
+}
+
+// layout - breakpoints
+
+$small: 320px;
+$medium: 768px;
+$large: 1170px;
+
+// layout - media queries
+
+@mixin media-query($canvas) {
+  @if $canvas == S {
+    @media only screen and (min-width: $small) {
+      @content;
+    }
+  } @else if $canvas == M {
+    @media only screen and (min-width: $medium) {
+      @content;
+    }
+  } @else if $canvas == L {
+    @media only screen and (min-width: $large) {
+      @content;
+    }
+  }
+}
+
+header {
+  background: $color-1;
+  height: 200px;
+  line-height: 200px;
+  text-align: center;
+
+  h1 {
+    @include font-size(18px);
+    color: $color-3;
+  }
+
+  @include media-query(L) {
+    height: 300px;
+    line-height: 300px;
+
+    h1 {
+      @include font-size(24px);
+    }
+  }
+}
+
+.container {
+  max-width: $large;
+  width: 90%;
+
+  &::after {
+    clear: both;
+    content: '';
+    display: table;
+  }
+
+  position: relative;
+  padding: 2em 0;
+  margin: {
+    top: 2em;
+    bottom: 2em;
+    left: 0;
+    right: auto;
+  }
+
+  &::before {
+    /* this is the vertical line */
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 18px;
+    height: 100%;
+    width: 4px;
+    background: darken($background, 5%);
+  }
+
+  @include media-query(L) {
+    margin: {
+      top: 3em;
+      bottom: 3em;
+    }
+
+    &::before {
+      left: 50%;
+      margin-left: -2px;
+    }
+  }
+}
+
+.timeline-block {
+  position: relative;
+  margin: 2em 0;
+  @include clearfix;
+
+  &:first-child {
+    margin-top: 0;
+  }
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+
+  @include media-query(L) {
+    margin: 4em 0;
+
+    &:first-child {
+      margin-top: 0;
+    }
+
+    &:last-child {
+      margin-bottom: 0;
+    }
+  }
+}
+
+.timeline-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  box-shadow: 0 0 0 4px $color-3, inset 0 2px 0 rgba(#000, 0.08),
+    0 3px 0 4px rgba(#000, 0.05);
+
+  img {
+    display: block;
+    width: 24px;
+    height: 24px;
+    position: relative;
+    left: 50%;
+    top: 50%;
+    margin-left: -12px;
+    margin-top: -12px;
+  }
+
+  &.picture {
+    background: $color-4;
+  }
+
+  &.movie {
+    background: $color-2;
+  }
+
+  &.location {
+    background: $color-5;
+  }
+
+  @include media-query(L) {
+    width: 60px;
+    height: 60px;
+    left: 50%;
+    margin-left: -30px;
+  }
+}
+
+.timeline-content {
+  position: relative;
+  margin-left: 60px;
+  background: $color-3;
+  @include border-radius;
+  padding: 1em;
+  box-shadow: 0 3px 0 darken($background, 5%);
+  @include clearfix;
+
+  h2 {
+    color: $color-1;
+  }
+
+  p,
+  .read-more {
+    @include font-size(13px);
+  }
+
+  .read-more {
+    display: inline-block;
+  }
+
+  p {
+    margin: 1em 0;
+    line-height: 1.6;
+  }
+
+  .read-more {
+    float: right;
+    padding: 0.8em 1em;
+    background: $link;
+    color: $color-3;
+    @include border-radius;
+
+    .no-touch &:hover {
+      background-color: lighten($link, 5%);
+    }
+  }
+
+  .datetime {
+    float: left;
+    box-shadow: 0 3px 0 darken($background, 5%);
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 16px;
+    right: 100%;
+    height: 0;
+    width: 0;
+    border: 7px solid transparent;
+    border-right: 7px solid $color-3;
+  }
+
+  @include media-query(M) {
+    h2 {
+      @include font-size(20px);
+    }
+
+    p {
+      @include font-size(16px);
+    }
+
+    .read-more {
+      @include font-size(14px);
+    }
+  }
+
+  @include media-query(L) {
+    margin-left: 0;
+    padding: 1.6em;
+    width: 45%;
+
+    &::before {
+      top: 24px;
+      left: 100%;
+      border-color: transparent;
+      border-left-color: $color-3;
+    }
+
+    .read-more {
+      float: left;
+    }
+
+    .datetime {
+      position: absolute;
+      left: 115%;
+      top: -15px;
+    }
+
+    .timeline-block:nth-child(even) & {
+      float: right;
+
+      &::before {
+        top: 24px;
+        left: auto;
+        right: 100%;
+        border-color: transparent;
+        border-right-color: $color-3;
+      }
+
+      .read-more {
+        float: right;
+      }
+
+      .datetime {
+        left: auto;
+        right: 115%;
+        text-align: right;
+      }
+    }
+  }
+}

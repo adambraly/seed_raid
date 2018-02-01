@@ -15,18 +15,19 @@ class TimelineApp extends React.Component {
   render() {
     const { raids, isFetching } = this.props;
     return (
-      <div className="container">
-        {isFetching && raids.length === 0 && <h2>Loading...</h2>}
-        { raids.length > 0 &&
-        <ul className="timeline">
+      <React.Fragment>
+        <header>
+          <h1>Seed Raid</h1>
+        </header>
+        <section className="container">
+          {isFetching && raids.length === 0 && <h2>Loading...</h2>}
           {
             raids.map(raid => (
               <Raid key={raid.id} {...raid} />
             ))
           }
-        </ul>
-        }
-      </div>
+        </section>
+      </React.Fragment>
     );
   }
 }

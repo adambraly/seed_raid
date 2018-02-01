@@ -1,0 +1,62 @@
+$datetime-header-background: #f00;
+$datetime-header-color: #fff;
+$datetime-header-height: 15px;
+$datetime-section-background: #fff;
+$datetime-section-color: #4c566b;
+$datetime-section-height: 45px;
+
+$datetime-border-radius: 8px;
+$datetime-figure-width:  77px;
+
+$background: #e9f0f5; // body background color
+
+.datetime {
+  height: #{ $datetime-header-height + $datetime-header-height + $datetime-section-height + 3px };
+  width: $datetime-figure-width;
+
+  background-color: $datetime-section-background;
+  border-radius: $datetime-border-radius;
+
+  header {
+    height: $datetime-header-height;
+    width: $datetime-figure-width;
+    position: absolute;
+
+    top: -1px;
+    background-color: $datetime-header-background;
+    border-radius: $datetime-border-radius $datetime-border-radius 0 0;
+
+    font: .8em Arial, Helvetica, Geneva, sans-serif;
+    letter-spacing: 0.5px;
+    color: $datetime-header-color;
+    text-align: center;
+  }
+
+  footer {
+    height: $datetime-header-height;
+    width: $datetime-figure-width;
+    position: absolute;
+
+    top: #{ $datetime-header-height + $datetime-section-height + 1 };
+    background-color: $datetime-header-background;
+    border-radius: 0 0 $datetime-border-radius $datetime-border-radius;
+
+    font: .8em Arial, Helvetica, Geneva, sans-serif;
+    letter-spacing: 0.5px;
+    color: $datetime-header-color;
+    text-align: center;
+    box-shadow: 0 3px 0 darken($background, 5%);
+  }
+
+  section {
+    width: $datetime-figure-width;
+    height: $datetime-section-height;
+    position: absolute;
+    top: #{ $datetime-header-height + 1px };
+
+    font: $datetime-section-height/1.2 "Helvetica Neue", Arial, Helvetica, Geneva, sans-serif;
+    letter-spacing: -2px;
+    color: $datetime-section-color;
+    text-align: center;
+  }
+}
