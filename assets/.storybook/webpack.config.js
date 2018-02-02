@@ -29,7 +29,33 @@ module.exports = {
                 }
             }],
       },
-      // add your custom rules.
+      {
+        test: /\.(gif|png|jpe?g|svg)$/i,
+        exclude: /node_modules/,
+        loaders: [
+          'file-loader?name=images/[name].[ext]',
+          {
+            loader: 'image-webpack-loader',
+            options: {
+              query: {
+                mozjpeg: {
+                  progressive: true,
+                },
+                gifsicle: {
+                  interlaced: true,
+                },
+                optipng: {
+                  optimizationLevel: 7,
+                },
+                pngquant: {
+                  quality: '65-90',
+                  speed: 4,
+                },
+              },
+            },
+          },
+        ],
+      },
     ],
   },
 };

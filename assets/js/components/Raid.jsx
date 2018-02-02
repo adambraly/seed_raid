@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
+import starlight from '../../static/images/starlight-rose.png';
 
 
 const Raid = (props) => {
@@ -11,6 +12,7 @@ const Raid = (props) => {
     size,
     participants,
     when,
+    type,
   } = props;
 
   moment.locale('en');
@@ -18,11 +20,13 @@ const Raid = (props) => {
   const dayOfmonth = moment.utc(when).date();
   const time = moment.utc(when).format('hh:mm a');
 
+  const timelineImgClasses = type => (
+    `timeline-img ${type}`
+  );
+
   return (
     <div className="timeline-block">
-      <div className="timeline-img movie">
-        <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/148866/cd-icon-movie.svg" alt="Movie" />
-      </div>
+      <div className={timelineImgClasses(type)} />
       <div className="timeline-content">
         <h3>{title}</h3>
         <p>
@@ -52,6 +56,7 @@ Raid.propTypes = {
   description: PropTypes.string,
   size: PropTypes.number.isRequired,
   participants: PropTypes.number.isRequired,
+  type: PropTypes.string.isRequired,
 };
 
 Raid.defaultProps = {

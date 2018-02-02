@@ -10,7 +10,8 @@ const payload = {
   data: [
     {
       when: '2017-01-29T00:00:00.000000Z',
-      title: 'MIX 100',
+      title: 'SLR 100',
+      type: 'starlight-rose',
       size: 50,
       side: 'alliance',
       region: 'eu',
@@ -20,7 +21,8 @@ const payload = {
     },
     {
       when: '2017-01-25T00:00:00.000000Z',
-      title: 'MIX 100',
+      title: 'AHOUU 100',
+      type: 'foxflower',
       size: 50,
       side: 'alliance',
       region: 'eu',
@@ -31,6 +33,7 @@ const payload = {
     {
       when: '2017-01-24T00:00:00.000000Z',
       title: 'MIX 100',
+      type: 'mix',
       size: 50,
       side: 'alliance',
       region: 'eu',
