@@ -40,7 +40,7 @@ const payload = {
     },
     {
       when: '2017-01-24T00:00:00.000000Z',
-      title: 'MIX 100',
+      title: 'MIX 50',
       type: 'mix',
       size: 50,
       side: 'alliance',
@@ -48,12 +48,9 @@ const payload = {
       participants: 1,
       id: '3d903e60-19f5-5698-9052-1842ec7a508f',
       discord_id: 1234,
-      requirements: {
-        aethril: 3,
-        felwort: 3,
-      },
       max: {
         aethril: 10,
+        any: 25,
       },
     },
   ],

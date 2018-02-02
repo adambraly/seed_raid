@@ -55,3 +55,13 @@ h2 {
 .wowhead-item-link {
   color: $color-4;
 }
+
+ul {
+  list-style-type: none;
+  padding-left: 20px;
+
+  ul {
+    padding-left: 40px;
+    list-style-type: disclosure-closed;
+  }
+}

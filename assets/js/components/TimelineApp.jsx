@@ -48,6 +48,10 @@ TimelineApp.propTypes = {
       aethril: PropTypes.number,
       felwort: PropTypes.number,
     }),
+    max: PropTypes.shape({
+      aethril: PropTypes.number,
+      any: PropTypes.number,
+    }),
   })).isRequired,
   dispatch: PropTypes.func.isRequired,
 };

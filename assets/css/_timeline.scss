@@ -187,12 +187,6 @@ header {
   padding: 1em;
   position: relative;
 
-
-
-
-
-
-
   p,
   .read-more {
     @include font-size(13px);
@@ -224,7 +218,9 @@ header {
 
   .datetime {
     box-shadow: 0 3px 0 darken($background, 5%);
-    float: left;
+    left: -110px;
+    position: absolute;
+    top: 40px;
   }
 
   &::before {
@@ -242,6 +238,13 @@ header {
     h2 {
       @include font-size(20px);
     }
+
+    .datetime {
+      left: -110px;
+      position: absolute;
+      top: 40px;
+    }
+
 
     p {
       @include font-size(16px);

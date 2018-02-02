@@ -12,9 +12,13 @@ const Requirements = (props) => {
     spells.push(<SpellRank name="aethril" rank={aethril} />);
   }
   return (
-    <span>
-      {spells}
-    </span>);
+    <ul>
+      {spells.map(spell => (
+        <li>
+          {spell}
+        </li>
+      ))}
+    </ul>);
 };
 
 Requirements.defaultProps = {
