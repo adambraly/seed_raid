@@ -1,12 +1,12 @@
 $datetime-header-background: $color-2;
 $datetime-header-color: #fff;
-$datetime-header-height: 15px;
+$datetime-header-height: 14px;
 $datetime-section-background: #fff;
 $datetime-section-color: $main-text;
-$datetime-section-height: 45px;
+$datetime-section-height: 38px;
 
-$datetime-border-radius: 8px;
-$datetime-figure-width:  77px;
+$datetime-border-radius: 6px;
+$datetime-figure-width:  65px;
 
 .datetime {
   background-color: $datetime-section-background;
@@ -19,7 +19,7 @@ $datetime-figure-width:  77px;
     background-color: $datetime-header-background;
     border-radius: $datetime-border-radius $datetime-border-radius 0 0;
     color: $datetime-header-color;
-    font: .8em Arial, Helvetica, Geneva, sans-serif;
+    font: .68em Arial, Helvetica, Geneva, sans-serif;
     height: $datetime-header-height;
     letter-spacing: .5px;
     position: absolute;
@@ -32,7 +32,7 @@ $datetime-figure-width:  77px;
     border-radius: 0 0 $datetime-border-radius $datetime-border-radius;
     box-shadow: 0 3px 0 darken($background, 5%);
     color: $datetime-header-color;
-    font: .8em Arial, Helvetica, Geneva, sans-serif;
+    font: .75em Arial, Helvetica, Geneva, sans-serif;
     height: $datetime-header-height;
     letter-spacing: .5px;
     position: absolute;

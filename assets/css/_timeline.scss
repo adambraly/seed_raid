@@ -157,6 +157,18 @@ header {
     background-image: url('../static/images/mix.png');
   }
 
+  .size {
+    color: $color-3;
+    display: inline-block;
+    height: 100%;
+    width: 100%;
+    line-height: 60px;
+    text-align: center;
+    font-size: 30px;
+    vertical-align: middle;
+    text-shadow: 2px 3px 1px rgba(0, 0, 0, 0.5);
+  }
+
 
   @include media-query(L) {
     height: 60px;

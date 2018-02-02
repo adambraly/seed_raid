@@ -30,7 +30,9 @@ const Raid = (props) => {
 
   return (
     <div className="timeline-block">
-      <div className={timelineImgClasses(type)} />
+      <div className={timelineImgClasses(type)}>
+        <span className="size">{size}</span>
+      </div>
       <div className="timeline-content">
         <h3 className={typeFontClasses(type)}>{title}</h3>
         <p>

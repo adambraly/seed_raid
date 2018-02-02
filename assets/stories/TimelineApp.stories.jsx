@@ -12,7 +12,7 @@ const payload = {
       when: '2017-01-29T00:00:00.000000Z',
       title: 'SLR 100',
       type: 'starlight-rose',
-      size: 50,
+      size: 200,
       side: 'alliance',
       region: 'eu',
       participants: 1,
