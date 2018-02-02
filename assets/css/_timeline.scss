@@ -162,9 +162,9 @@ header {
     display: inline-block;
     height: 100%;
     width: 100%;
-    line-height: 60px;
+    line-height: 40px;
     text-align: center;
-    font-size: 30px;
+    font-size: 20px;
     vertical-align: middle;
     text-shadow: 2px 3px 1px rgba(0, 0, 0, 0.5);
   }
@@ -175,6 +175,11 @@ header {
     left: 50%;
     margin-left: -30px;
     width: 60px;
+
+    .size {
+      line-height: 60px;
+      font-size: 30px;
+    }
   }
 }
 
@@ -221,6 +226,8 @@ header {
     left: -110px;
     position: absolute;
     top: 40px;
+    font-size: 8.8px;
+    width: 55px;
   }
 
   &::before {
@@ -240,9 +247,11 @@ header {
     }
 
     .datetime {
+      font-size: 9px;
       left: -110px;
       position: absolute;
       top: 40px;
+      width: 58px;
     }
 
 
@@ -275,6 +284,7 @@ header {
       left: 115%;
       position: absolute;
       top: -15px;
+      width: 64px;
     }
 
     .timeline-block:nth-child(even) & {

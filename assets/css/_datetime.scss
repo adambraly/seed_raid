@@ -7,24 +7,27 @@ $datetime-section-height: 38px;
 
 $datetime-border-radius: 6px;
 $datetime-figure-width:  65px;
+$panel-font-family: Arial, Helvetica, Geneva, sans-serif;
+$section-font-family: 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif;
 
 .datetime {
   background-color: $datetime-section-background;
   border-radius: $datetime-border-radius;
   height: #{ $datetime-header-height + $datetime-header-height + $datetime-section-height + 3px };
   text-align: center;
-  width: $datetime-figure-width;
+  max-width: $datetime-figure-width;
 
   header {
     background-color: $datetime-header-background;
     border-radius: $datetime-border-radius $datetime-border-radius 0 0;
     color: $datetime-header-color;
-    font: .68em Arial, Helvetica, Geneva, sans-serif;
+    font-family: $panel-font-family;
     height: $datetime-header-height;
     letter-spacing: .5px;
+    line-height: 100%;
     position: absolute;
     top: -1px;
-    width: $datetime-figure-width;
+    width: 100%;
   }
 
   footer {
@@ -32,21 +35,21 @@ $datetime-figure-width:  65px;
     border-radius: 0 0 $datetime-border-radius $datetime-border-radius;
     box-shadow: 0 3px 0 darken($background, 5%);
     color: $datetime-header-color;
-    font: .75em Arial, Helvetica, Geneva, sans-serif;
+    font-family: $panel-font-family;
     height: $datetime-header-height;
     letter-spacing: .5px;
     position: absolute;
     top: #{ $datetime-header-height + $datetime-section-height + 1 };
-    width: $datetime-figure-width;
+    width: 100%;
   }
 
   section {
     color: $datetime-section-color;
-    font: $datetime-section-height / 1.2 'Helvetica Neue', Arial, Helvetica, Geneva, sans-serif;
+    font: $datetime-section-height / 1.2 $section-font-family;
     height: $datetime-section-height;
     letter-spacing: -2px;
     position: absolute;
     top: #{ $datetime-header-height + 1px };
-    width: $datetime-figure-width;
+    width: 100%;
   }
 }
