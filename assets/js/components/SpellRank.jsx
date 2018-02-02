@@ -16,7 +16,7 @@ const SpellRank = (props) => {
   const spellID = spellsID[name][rank];
   return (
     <WowheadSpellLink id={spellID}>
-      {`${name} rank ${rank}`}
+      {`[${name} rank ${rank}]`}
     </WowheadSpellLink>
   );
 };

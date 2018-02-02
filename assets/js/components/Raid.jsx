@@ -1,18 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import Requirements from './Requirements'
 
-import starlight from '../../static/images/starlight-rose.png';
 
 
 const Raid = (props) => {
   const {
     title,
-    description,
     size,
     participants,
     when,
     type,
+    requirements,
   } = props;
 
   moment.locale('en');
@@ -37,6 +37,11 @@ const Raid = (props) => {
         <h3 className={typeFontClasses(type)}>{title}</h3>
         <p>
           <ul>
+            { requirements &&
+              <li>
+                requirements: <Requirements {...requirements} />
+              </li>
+            }
             <li>participants: {participants}/10</li>
           </ul>
         </p>
@@ -63,10 +68,15 @@ Raid.propTypes = {
   size: PropTypes.number.isRequired,
   participants: PropTypes.number.isRequired,
   type: PropTypes.string.isRequired,
+  requirements: PropTypes.shape({
+    aethril: PropTypes.number,
+    felwort: PropTypes.number,
+  }),
 };
 
 Raid.defaultProps = {
   description: '',
+  requirements: null,
 };
 
 

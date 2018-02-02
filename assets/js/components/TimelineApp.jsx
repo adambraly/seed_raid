@@ -44,6 +44,10 @@ TimelineApp.propTypes = {
     discord_id: PropTypes.number.isRequired,
     region: PropTypes.string.isRequired,
     side: PropTypes.string.isRequired,
+    requirements: PropTypes.shape({
+      aethril: PropTypes.number,
+      felwort: PropTypes.number,
+    }),
   })).isRequired,
   dispatch: PropTypes.func.isRequired,
 };
