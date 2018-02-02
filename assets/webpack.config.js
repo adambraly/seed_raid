@@ -6,6 +6,8 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const publicPath = '/';
 const destDir = path.resolve(__dirname, '..', 'priv', 'static');
 
+const bourbon = require('node-bourbon').includePaths;
+
 
 module.exports = (env) => {
   const isDev = !(env && env.prod);
@@ -77,10 +79,20 @@ module.exports = (env) => {
           test: /\.(css|sass|scss)$/,
           exclude: /node_modules/,
           use: isDev ? [
-            'style-loader',
-            'css-loader',
-            'postcss-loader',
-            'sass-loader',
+            {
+              loader: 'style-loader',
+            }, {
+              loader: 'css-loader',
+            },
+            {
+              loader: 'postcss-loader',
+            },
+            {
+              loader: 'sass-loader',
+              options: {
+                includePaths: [].concat(bourbon),
+              },
+            },
           ] : ExtractTextPlugin.extract({
             fallback: 'style-loader',
             use: ['css-loader', 'postcss-loader', 'sass-loader'],
