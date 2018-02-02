@@ -1,12 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-export const WowheadSpellLink = (props) => {
-  const wowheadLink = id => (
-    `//www.wowhead.com/spell=${id}`
-  );
+const WowheadSpellLink = (props) => {
+  const { id } = props;
+  const wowheadData = `spell=${id}`;
+  const wowheadURL = `//www.wowhead.com/spell=${id}`;
   return (
-    <a href={wowheadLink(props.id)} className="wowhead-spell-link">
+    <a
+      href={wowheadURL}
+      className="wowhead-spell-link"
+      data-wowhead={wowheadData}
+    >
       {props.children}
     </a>
   );
