@@ -20,15 +20,19 @@ const Raid = (props) => {
   const dayOfmonth = moment.utc(when).date();
   const time = moment.utc(when).format('hh:mm a');
 
-  const timelineImgClasses = type => (
-    `timeline-img ${type}`
+  const timelineImgClasses = raidType => (
+    `timeline-img ${raidType}`
+  );
+
+  const typeFontClasses = raidType => (
+    `type-font-color ${raidType}`
   );
 
   return (
     <div className="timeline-block">
       <div className={timelineImgClasses(type)} />
       <div className="timeline-content">
-        <h3>{title}</h3>
+        <h3 className={typeFontClasses(type)}>{title}</h3>
         <p>
           <ul>
             <li>participants: {participants}/10</li>

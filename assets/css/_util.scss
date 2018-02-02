@@ -1,0 +1,18 @@
+@mixin type-font-color {
+  color: $color-1;
+
+  &.starlight-rose {
+    color: $starlight-rose;
+  }
+
+  &.foxflower {
+    color: $foxflower;
+  }
+
+  &.mix {
+    color: $color-3;
+    background: $mix;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
