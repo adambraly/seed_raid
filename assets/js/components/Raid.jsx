@@ -4,7 +4,6 @@ import moment from 'moment';
 import Requirements from './Requirements'
 
 
-
 const Raid = (props) => {
   const {
     title,
@@ -72,11 +71,13 @@ Raid.propTypes = {
     aethril: PropTypes.number,
     felwort: PropTypes.number,
   }),
+  max: PropTypes.arrayOf(PropTypes.string),
 };
 
 Raid.defaultProps = {
   description: '',
   requirements: null,
+  max: null,
 };
 
 

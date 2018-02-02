@@ -52,6 +52,9 @@ const payload = {
         aethril: 3,
         felwort: 3,
       },
+      max: {
+        aethril: 10,
+      },
     },
   ],
 };
