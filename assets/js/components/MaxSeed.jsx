@@ -11,8 +11,11 @@ const MaxSeed = (props) => {
     if (name === 'any') {
       return (
         <span>
-          <span className="wowhead-item-link">
+          <span className="wowhead-item-link tooltip-item">
             [any seed]
+            <div className="tooltip">
+              {`${any} is the maximum quantity for any type of seed`}
+            </div>
           </span> {` x ${any} `}
         </span>
       );
