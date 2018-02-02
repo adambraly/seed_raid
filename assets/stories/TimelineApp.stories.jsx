@@ -18,6 +18,10 @@ const payload = {
       participants: 1,
       id: '3d903e60-19f5-4896-9052-1842ec7a508f',
       discord_id: 1234,
+      requirements: {
+        aethril: 3,
+        felwort: 3,
+      },
     },
     {
       when: '2017-01-25T00:00:00.000000Z',
@@ -29,6 +33,10 @@ const payload = {
       participants: 1,
       id: '3d903e60-19f5-4298-9052-1842ec7a508f',
       discord_id: 1234,
+      requirements: {
+        aethril: 3,
+        felwort: 3,
+      },
     },
     {
       when: '2017-01-24T00:00:00.000000Z',
@@ -40,6 +48,10 @@ const payload = {
       participants: 1,
       id: '3d903e60-19f5-5698-9052-1842ec7a508f',
       discord_id: 1234,
+      requirements: {
+        aethril: 3,
+        felwort: 3,
+      },
     },
   ],
 };
