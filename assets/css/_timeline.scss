@@ -1,68 +1,6 @@
 @import 'bourbon';
 @import 'datetime';
 
-// mixins - rem fallback - credits: http://zerosixthree.se/
-
-@function calculate-rem($size) {
-  $rem-size: $size / 16px;
-  @return $rem-size * 1rem;
-}
-
-@mixin font-size($size) {
-  font-size: calculate-rem($size);
-}
-
-// mixins - border radius
-
-@mixin border-radius($radius: .25em) {
-  border-radius: $radius;
-}
-
-// layout - breakpoints
-
-$small: 320px;
-$medium: 768px;
-$large: 1170px;
-
-// layout - media queries
-
-@mixin media-query($canvas) {
-  @if $canvas == S {
-    @media only screen and (min-width: $small) {
-      @content;
-    }
-  } @else if $canvas == M {
-    @media only screen and (min-width: $medium) {
-      @content;
-    }
-  } @else if $canvas == L {
-    @media only screen and (min-width: $large) {
-      @content;
-    }
-  }
-}
-
-header {
-  background: $color-1;
-  height: 200px;
-  line-height: 200px;
-  text-align: center;
-
-  h1 {
-    @include font-size(18px);
-    color: $color-3;
-  }
-
-  @include media-query(L) {
-    height: 300px;
-    line-height: 300px;
-
-    h1 {
-      @include font-size(24px);
-    }
-  }
-}
-
 .container {
   margin: {
     bottom: 2em;

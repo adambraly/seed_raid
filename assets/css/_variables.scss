@@ -26,3 +26,10 @@ $mix-color5: #40E0D0;
 $mix-color5: #97FF7F;
 
 $mix: linear-gradient(70deg, $mix-color1, $mix-color2, $mix-color3, $mix-color3, $mix-color4, $mix-color5);
+
+
+// layout - breakpoints
+
+$small: 320px;
+$medium: 768px;
+$large: 1170px;
