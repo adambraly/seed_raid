@@ -4,7 +4,6 @@ import SeedLink from './SeedLink';
 
 const MaxSeed = (props) => {
   const { any, aethril } = props;
-  console.dir(props);
   const seeds = [];
 
   const seedMaxSpan = (name, max) => {
