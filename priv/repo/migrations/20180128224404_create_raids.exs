@@ -14,10 +14,12 @@ defmodule Seedraid.Repo.Migrations.CreateRaids do
       add(:when, :utc_datetime, null: false)
       add(:participants, :integer, default: 0)
       add(:size, :integer, default: 50)
-      add(:type, :raidtype)
+      add(:type, :raidtype, null: false)
       add(:style, :raidstyle)
       add(:side, :side, null: false)
       add(:region, :region, null: false)
+      add(:max, :jsonb)
+      add(:requirements, :jsonb)
 
       timestamps()
     end

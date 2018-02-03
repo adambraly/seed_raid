@@ -20,7 +20,7 @@ defmodule SeedRaidWeb.RaidView do
       discord_id: raid.discord_id,
       region: raid.region,
       side: raid.side,
-      type: raid.type
+      type: raid.type |> Atom.to_string() |> String.replace("_", "-")
     }
   end
 end

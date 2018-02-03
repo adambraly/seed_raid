@@ -13,7 +13,8 @@ defmodule SeedRaid.CalendarTest do
       when: "2010-04-17 14:00:00.000000Z",
       side: :alliance,
       region: :eu,
-      discord_id: 123
+      discord_id: 123,
+      type: :mix
     }
     @update_attrs %{
       participants: 43,
@@ -22,7 +23,8 @@ defmodule SeedRaid.CalendarTest do
       when: "2011-05-18 15:01:01.000000Z",
       side: :alliance,
       region: :eu,
-      discord_id: 123
+      discord_id: 123,
+      type: :mix
     }
     @invalid_attrs %{participants: nil, size: nil, title: nil, when: nil}
 

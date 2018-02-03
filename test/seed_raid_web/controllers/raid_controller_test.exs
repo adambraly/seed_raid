@@ -11,7 +11,8 @@ defmodule SeedRaidWeb.RaidControllerTest do
     when: "2010-04-17 14:00:00.000000Z",
     side: :alliance,
     region: :eu,
-    discord_id: 123
+    discord_id: 123,
+    type: :starlight_rose
   }
   @update_attrs %{
     participants: 43,
@@ -20,7 +21,8 @@ defmodule SeedRaidWeb.RaidControllerTest do
     when: "2011-05-18 15:01:01.000000Z",
     side: :alliance,
     region: :eu,
-    discord_id: 123
+    discord_id: 123,
+    type: :starlight_rose
   }
   @invalid_attrs %{participants: nil, size: nil, title: nil, when: nil}
 
@@ -53,6 +55,7 @@ defmodule SeedRaidWeb.RaidControllerTest do
                "size" => 42,
                "title" => "some title",
                "when" => "2010-04-17T14:00:00.000000Z",
+               "type" => "starlight-rose",
                "side" => "alliance",
                "region" => "eu",
                "discord_id" => 123
@@ -79,6 +82,7 @@ defmodule SeedRaidWeb.RaidControllerTest do
                "participants" => 43,
                "size" => 43,
                "title" => "some updated title",
+               "type" => "starlight-rose",
                "when" => "2011-05-18T15:01:01.000000Z",
                "side" => "alliance",
                "region" => "eu",

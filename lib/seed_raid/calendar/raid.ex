@@ -32,6 +32,6 @@ defmodule SeedRaid.Calendar.Raid do
       :region,
       :discord_id
     ])
-    |> validate_required([:title, :size, :when, :side, :region, :discord_id])
+    |> validate_required([:title, :size, :when, :side, :region, :discord_id, :type])
   end
 end
