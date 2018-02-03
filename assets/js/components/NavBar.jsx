@@ -7,7 +7,7 @@ import logo from '../../static/images/logo.png'
 
 const NavBar = () => {
   return (
-    <div className="container">
+    <div className="menu-container">
       <nav>
         <div className="nav-fostrap">
           <ul className="navigation-menu">
