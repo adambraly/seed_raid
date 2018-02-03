@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Raid from './Raid';
+import NavBar from './NavBar'
 import { fetchRaids } from '../actions/raids';
 
 import '../../css/main.scss';
@@ -17,16 +18,16 @@ class TimelineApp extends React.Component {
     return (
       <React.Fragment>
         <header>
-          <h1>Seed Raid</h1>
+          <NavBar />
         </header>
-        <section className="container">
+        <main className="container">
           {isFetching && raids.length === 0 && <h2>Loading...</h2>}
           {
             raids.map(raid => (
               <Raid key={raid.id} {...raid} />
             ))
           }
-        </section>
+        </main>
       </React.Fragment>
     );
   }
