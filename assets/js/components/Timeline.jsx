@@ -2,13 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import Raid from './Raid';
-import NavBar from './NavBar'
 import { fetchRaids } from '../actions/raids';
 
-import '../../css/main.scss';
-
-
-class TimelineApp extends React.Component {
+class Timeline extends React.Component {
   componentDidMount() {
     this.props.dispatch(fetchRaids());
   }
@@ -16,25 +12,20 @@ class TimelineApp extends React.Component {
   render() {
     const { raids, isFetching } = this.props;
     return (
-      <React.Fragment>
-        <header>
-          <NavBar />
-        </header>
-        <main className="container">
-          {isFetching && raids.length === 0 && <h2>Loading...</h2>}
-          {
-            raids.map(raid => (
-              <Raid key={raid.id} {...raid} />
-            ))
-          }
-        </main>
-      </React.Fragment>
+      <div className="container">
+        {isFetching && raids.length === 0 && <h2>Loading...</h2>}
+        {
+          raids.map(raid => (
+            <Raid key={raid.id} {...raid} />
+          ))
+        }
+      </div>
     );
   }
 }
 
 
-TimelineApp.propTypes = {
+Timeline.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   raids: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
@@ -72,4 +63,4 @@ const mapStateToProps = (state) => {
 };
 
 
-export default connect(mapStateToProps)(TimelineApp);
+export default connect(mapStateToProps)(Timeline);

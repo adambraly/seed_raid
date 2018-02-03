@@ -1,9 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import SpellRank from './SpellRank';
+import { Link } from 'react-router-dom';
 import '../scripts/navbar';
 
-import logo from '../../static/images/logo.png'
+import logo from '../../static/images/logo.png';
 
 const NavBar = () => {
   return (
@@ -12,12 +11,12 @@ const NavBar = () => {
         <div className="nav-fostrap">
           <ul className="navigation-menu">
             <li className="nav-link logo">
-              <a href="javascript:void(0)">
+              <Link to="/">
                 <img src={logo} alt="Logo" />
                 <span className="brand">Seed Raid</span>
-              </a>
+              </Link>
             </li>
-            <li className="nav-link"><a href="javascript:void(0)">EU Alliance</a></li>
+            <li className="nav-link"><Link to="/calendar/eu-alliance">EU Alliance</Link></li>
             <li className="nav-link"><a href="javascript:void(0)">EU Horde</a></li>
             <li className="nav-link"><a href="javascript:void(0)">NA Horde</a></li>
             <li className="nav-link"><a href="javascript:void(0)">NA Alliance</a></li>
@@ -27,7 +26,7 @@ const NavBar = () => {
           <div className="navbar-fostrap">
             <span /><span /><span />
           </div>
-          <a href="" class="title-mobile">Seed Raid</a>
+          <a href="" className="title-mobile">Seed Raid</a>
         </div>
       </nav>
     </div>

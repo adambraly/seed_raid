@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
-import TimelineApp from '../components/TimelineApp';
+import Timeline from '../components/Timeline';
+import App from '../components/App';
+import Home from '../components/Home';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 const propTypes = {
   store: PropTypes.object.isRequired,
@@ -9,7 +12,12 @@ const propTypes = {
 
 const Root = ({ store }) => (
   <Provider store={store}>
-    <TimelineApp />
+    <Router>
+      <App>
+        <Route eact path="/" component={Home} />
+        <Route path="/calendar/:channel" component={Timeline} />
+      </App>
+    </Router>
   </Provider>
 );
 
