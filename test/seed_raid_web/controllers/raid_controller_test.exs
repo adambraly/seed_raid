@@ -5,28 +5,23 @@ defmodule SeedRaidWeb.RaidControllerTest do
   alias SeedRaid.Calendar.Raid
 
   @create_attrs %{
-    participants: 42,
-    size: 42,
+    seeds: 42,
     title: "some title",
     when: "2010-04-17 14:00:00.000000Z",
     side: :alliance,
     region: :eu,
     discord_id: 123,
-    type: :starlight_rose,
-    requirements: %{"aethril" => 3},
-    max: %{"any" => 25}
+    content: "content...",
+    type: :starlight_rose
   }
   @update_attrs %{
-    participants: 43,
-    size: 43,
-    title: "some updated title",
+    seeds: 43,
     when: "2011-05-18 15:01:01.000000Z",
     side: :alliance,
     region: :eu,
     discord_id: 123,
-    type: :starlight_rose,
-    requirements: %{"aethril" => 3},
-    max: %{"any" => 25}
+    content: "updated content...",
+    type: :starlight_rose
   }
   @invalid_attrs %{participants: nil, size: nil, title: nil, when: nil}
 
@@ -55,16 +50,12 @@ defmodule SeedRaidWeb.RaidControllerTest do
 
       assert json_response(conn, 200)["data"] == %{
                "id" => id,
-               "participants" => 42,
-               "size" => 42,
-               "title" => "some title",
-               "when" => "2010-04-17T14:00:00.000000Z",
+               "seeds" => 42,
+               "content" => "content...",
+               "when" => "2010-04-17T14:00:00Z",
                "type" => "starlight-rose",
                "side" => "alliance",
-               "region" => "eu",
-               "discord_id" => 123,
-               "max" => %{"any" => 25},
-               "requirements" => %{"aethril" => 3}
+               "region" => "eu"
              }
     end
 
@@ -85,16 +76,12 @@ defmodule SeedRaidWeb.RaidControllerTest do
 
       assert json_response(conn, 200)["data"] == %{
                "id" => id,
-               "participants" => 43,
-               "size" => 43,
-               "title" => "some updated title",
+               "seeds" => 43,
+               "content" => "updated content...",
                "type" => "starlight-rose",
-               "when" => "2011-05-18T15:01:01.000000Z",
+               "when" => "2011-05-18T15:01:01Z",
                "side" => "alliance",
-               "region" => "eu",
-               "discord_id" => 123,
-               "max" => %{"any" => 25},
-               "requirements" => %{"aethril" => 3}
+               "region" => "eu"
              }
     end
 

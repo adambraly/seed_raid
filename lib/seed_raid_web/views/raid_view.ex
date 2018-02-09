@@ -13,8 +13,7 @@ defmodule SeedRaidWeb.RaidView do
   def render("raid.json", %{raid: raid}) do
     %{
       id: raid.id,
-      date: raid.date,
-      time: raid.time,
+      when: raid.when |> Timex.format!("{ISO:Extended:Z}"),
       region: raid.region,
       side: raid.side,
       type: raid.type |> Atom.to_string() |> String.replace("_", "-"),
