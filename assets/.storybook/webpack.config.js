@@ -5,7 +5,9 @@
 // IMPORTANT
 // When you add this file, we won't add the default configurations which is similar
 // to "React Create App". This only has babel loader to load JavaScript.
-const bourbon = require('node-bourbon').includePaths;
+const path = require('path');
+const bourbon = require('bourbon');
+const autoprefixer = require('autoprefixer');
 
 
 module.exports = {
@@ -21,13 +23,29 @@ module.exports = {
         use:[{
                 loader: "style-loader"
             }, {
-                loader: "css-loader"
-            }, {
-                loader: "sass-loader",
+                loader: "css-loader",
                 options: {
-                    includePaths: [].concat(bourbon)
+                  sourceMap: true,
+                  importLoaders: 1,
                 }
-            }],
+            }, {
+                loader: 'postcss-loader',
+                options: {
+                  sourceMap: true,
+                  options: {
+                      plugins: [
+                        autoprefixer,
+                      ]
+                  }
+                }
+            }, {
+              loader: "sass-loader",
+              options: {
+                sourceMap: true,
+                includePaths: [bourbon.includePaths]
+              }
+            }
+          ],
       },
       {
         test: /\.(gif|png|jpe?g|svg)$/i,

@@ -20,7 +20,7 @@ defmodule SeedRaid.Mixfile do
   def application do
     [
       mod: {SeedRaid.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:timex_ecto, :logger, :runtime_tools]
     ]
   end
 
@@ -40,9 +40,18 @@ defmodule SeedRaid.Mixfile do
       {:phoenix_html, "~> 2.10"},
       {:phoenix_live_reload, "~> 1.0", only: :dev},
       {:gettext, "~> 0.11"},
+      {:timex, "~> 3.0"},
+      {:timex_ecto, "~> 3.0"},
       {:cowboy, "~> 2.2.2", override: true},
       {:plug, "1.5.0-rc.0", override: true},
-      {:seedparser, github: "wow-sweetlie/seedparser"},
+      {:cowlib, "~> 2.1", override: true},
+      {:ranch, "~> 1.4", override: true},
+      {:seed_parser, github: "wow-sweetlie/seedparser"},
+      {:nostrum, git: "https://github.com/Kraigie/nostrum.git"},
+      {:gun,
+       git: "https://github.com/ninenines/gun.git",
+       ref: "dd1bfe4d6f9fb277781d922aa8bbb5648b3e6756",
+       override: true},
       {:ecto_enum, "~> 1.1"}
     ]
   end

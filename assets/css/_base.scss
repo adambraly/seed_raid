@@ -1,7 +1,7 @@
 *,
 *::after,
 *::before {
-  @include box-sizing(border-box);
+  box-sizing: border-box;
 }
 
 body {
@@ -41,8 +41,8 @@ h2 {
   }
 
   &.mix {
-    color: $color-3;
     background: $mix;
+    color: $color-3;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
   }
@@ -61,8 +61,8 @@ ul {
   padding-left: 20px;
 
   ul {
-    padding-left: 40px;
     list-style-type: disclosure-closed;
+    padding-left: 40px;
   }
 }
 

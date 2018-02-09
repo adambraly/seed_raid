@@ -43,6 +43,8 @@ config :seed_raid, SeedRaidWeb.Endpoint,
 # Do not include metadata nor timestamps in development logs
 config :logger, :console, format: "[$level] $message\n"
 
+config :logger, level: :info
+
 # Set a higher stacktrace during development. Avoid configuring such
 # in production as building large stacktraces may be expensive.
 config :phoenix, :stacktrace_depth, 20
@@ -55,3 +57,11 @@ config :seed_raid, SeedRaid.Repo,
   database: "seed_raid_dev",
   hostname: "localhost",
   pool_size: 10
+
+config :seed_raid, :guild, 358_681_085_246_308_353
+
+config :seed_raid, :channels, %{
+  400_443_211_127_980_044 => "eu-alliance"
+}
+
+import_config "dev.secret.exs"

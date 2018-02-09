@@ -1,8 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import Requirements from './Requirements'
-import MaxSeed from './MaxSeed'
 
 
 const Raid = (props) => {
@@ -10,10 +8,9 @@ const Raid = (props) => {
     title,
     size,
     participants,
+    description,
     when,
     type,
-    requirements,
-    max,
   } = props;
 
   moment.locale('en');
@@ -36,22 +33,12 @@ const Raid = (props) => {
       </div>
       <div className="timeline-content">
         <h3 className={typeFontClasses(type)}>{title}</h3>
-        <p>
-          <ul className="props">
-            <li>Size: {size}</li>
-            { requirements &&
-              <li>
-                requirements: <Requirements {...requirements} />
-              </li>
-            }
-            { max &&
-              <li>
-                maximum(s): <MaxSeed {...max} />
-              </li>
-            }
-            <li>participants: {participants}/10</li>
-          </ul>
-        </p>
+        <div>
+          {description}
+        </div>
+        <footer>
+          Participants: {participants}/10
+        </footer>
         <figure className="datetime">
           <header>
             {dayOfWeek}
@@ -75,20 +62,10 @@ Raid.propTypes = {
   size: PropTypes.number.isRequired,
   participants: PropTypes.number.isRequired,
   type: PropTypes.string.isRequired,
-  requirements: PropTypes.shape({
-    aethril: PropTypes.number,
-    felwort: PropTypes.number,
-  }),
-  max: PropTypes.shape({
-    aethril: PropTypes.number,
-    any: PropTypes.number,
-  }),
 };
 
 Raid.defaultProps = {
   description: '',
-  requirements: null,
-  max: null,
 };
 
 

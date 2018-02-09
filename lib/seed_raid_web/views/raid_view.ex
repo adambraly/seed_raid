@@ -13,14 +13,13 @@ defmodule SeedRaidWeb.RaidView do
   def render("raid.json", %{raid: raid}) do
     %{
       id: raid.id,
-      title: raid.title,
-      participants: raid.participants,
-      size: raid.size,
-      when: raid.when,
-      discord_id: raid.discord_id,
+      date: raid.date,
+      time: raid.time,
       region: raid.region,
       side: raid.side,
-      type: raid.type |> Atom.to_string() |> String.replace("_", "-")
+      type: raid.type |> Atom.to_string() |> String.replace("_", "-"),
+      seeds: raid.seeds,
+      content: raid.content
     }
   end
 end

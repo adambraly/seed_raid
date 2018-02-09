@@ -14,8 +14,8 @@
 
 
 .menu-container {
-  max-width: 1200px;
   margin: 0 auto;
+  max-width: $large;
   width: 100%;
 }
 
@@ -107,7 +107,7 @@
 .title-mobile {
   display: none;
 }
- @media only screen and (max-width:900px) {
+ @media only screen and (max-width: $medium) {
 
 .nav-fostrap {
   background: $color-1;
@@ -229,7 +229,7 @@
   right: 0;
 }
 }
- @media only screen and (max-width:1199px) {
+ @media only screen and (max-width: $large) {
    .container { width: 96%; }
 }
 

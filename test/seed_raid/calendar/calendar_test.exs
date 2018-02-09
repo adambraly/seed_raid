@@ -6,27 +6,30 @@ defmodule SeedRaid.CalendarTest do
   describe "raids" do
     alias SeedRaid.Calendar.Raid
 
+    @datetime {{2010, 04, 17}, {12, 00, 00}}
+
     @valid_attrs %{
       participants: 42,
-      size: 42,
-      title: "some title",
-      when: "2010-04-17 14:00:00.000000Z",
+      seeds: 42,
+      when: Timex.to_datetime(@datetime),
       side: :alliance,
+      max: %{"any" => 25},
       region: :eu,
       discord_id: 123,
-      type: :mix
+      requirements: %{"aethril" => 3},
+      type: :mix,
+      content: "raid..."
     }
     @update_attrs %{
-      participants: 43,
-      size: 43,
-      title: "some updated title",
-      when: "2011-05-18 15:01:01.000000Z",
+      seeds: 43,
+      when: Timex.to_datetime(@datetime),
       side: :alliance,
       region: :eu,
       discord_id: 123,
-      type: :mix
+      type: :mix,
+      content: "updated raid..."
     }
-    @invalid_attrs %{participants: nil, size: nil, title: nil, when: nil}
+    @invalid_attrs %{size: nil, date: nil, when: nil}
 
     def raid_fixture(attrs \\ %{}) do
       {:ok, raid} =
@@ -49,10 +52,9 @@ defmodule SeedRaid.CalendarTest do
 
     test "create_raid/1 with valid data creates a raid" do
       assert {:ok, %Raid{} = raid} = Calendar.create_raid(@valid_attrs)
-      assert raid.participants == 42
-      assert raid.size == 42
-      assert raid.title == "some title"
-      assert raid.when == DateTime.from_naive!(~N[2010-04-17 14:00:00.000000Z], "Etc/UTC")
+      assert raid.seeds == 42
+      assert raid.when == Timex.to_datetime({{2010, 04, 17}, {12, 00, 00}})
+      assert raid.content == "raid..."
     end
 
     test "create_raid/1 with invalid data returns error changeset" do
@@ -63,10 +65,11 @@ defmodule SeedRaid.CalendarTest do
       raid = raid_fixture()
       assert {:ok, raid} = Calendar.update_raid(raid, @update_attrs)
       assert %Raid{} = raid
-      assert raid.participants == 43
-      assert raid.size == 43
-      assert raid.title == "some updated title"
-      assert raid.when == DateTime.from_naive!(~N[2011-05-18 15:01:01.000000Z], "Etc/UTC")
+      assert raid.seeds == 43
+      assert raid.content == "updated raid..."
+
+      assert raid.when == Timex.to_datetime({{2010, 04, 17}, {12, 00, 00}})
+      assert(raid.type == :mix)
     end
 
     test "update_raid/2 with invalid data returns error changeset" do

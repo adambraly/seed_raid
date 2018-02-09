@@ -17,3 +17,5 @@ config :seed_raid, SeedRaid.Repo,
   database: "seed_raid_test",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
+
+import_config "test.secret.exs"

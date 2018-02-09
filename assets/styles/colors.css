@@ -1,0 +1,20 @@
+@main-text: #7f8c97;
+@link: #acb7c0;
+@background: #e9f0f5;
+
+@color-1: #303e49;
+@color-2: #c03b44;
+@color-3: #fff;
+@color-4: #75ce66;
+@color-5: #f0ca45;
+
+@starlight-rose: rgb(56, 235, 253);
+@foxflower: rgb(212, 110, 42);
+@mix-color1: #75ce66;
+@mix-color2: #FF5757;
+@mix-color3: #995DE8;
+@mix-color4: #52BFFF;
+@mix-color5: #40E0D0;
+@mix-color6: #97FF7F;
+
+@mix: linear-gradient(70deg, mix-color1, mix-color2, mix-color3, mix-color3, mix-color4, mix-color5);

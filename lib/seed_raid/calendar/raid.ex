@@ -5,15 +5,17 @@ defmodule SeedRaid.Calendar.Raid do
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
   schema "seedraids" do
-    field(:participants, :integer)
     field(:discord_id, :integer)
-    field(:size, :integer)
-    field(:title, :string)
-    field(:when, :utc_datetime)
-    field(:style, RaidStyleEnum)
-    field(:type, RaidTypeEnum)
+
     field(:side, SideEnum)
     field(:region, RegionEnum)
+
+    field(:content, :string)
+
+    field(:when, Timex.Ecto.DateTime)
+
+    field(:seeds, :integer)
+    field(:type, RaidTypeEnum)
 
     timestamps()
   end
@@ -22,16 +24,14 @@ defmodule SeedRaid.Calendar.Raid do
   def changeset(raid, attrs) do
     raid
     |> cast(attrs, [
-      :title,
-      :participants,
-      :size,
-      :when,
-      :style,
-      :type,
+      :discord_id,
       :side,
       :region,
-      :discord_id
+      :content,
+      :when,
+      :seeds,
+      :type
     ])
-    |> validate_required([:title, :size, :when, :side, :region, :discord_id, :type])
+    |> validate_required([:discord_id, :side, :region, :content, :when])
   end
 end

@@ -12,7 +12,9 @@ defmodule SeedRaidWeb.RaidControllerTest do
     side: :alliance,
     region: :eu,
     discord_id: 123,
-    type: :starlight_rose
+    type: :starlight_rose,
+    requirements: %{"aethril" => 3},
+    max: %{"any" => 25}
   }
   @update_attrs %{
     participants: 43,
@@ -22,7 +24,9 @@ defmodule SeedRaidWeb.RaidControllerTest do
     side: :alliance,
     region: :eu,
     discord_id: 123,
-    type: :starlight_rose
+    type: :starlight_rose,
+    requirements: %{"aethril" => 3},
+    max: %{"any" => 25}
   }
   @invalid_attrs %{participants: nil, size: nil, title: nil, when: nil}
 
@@ -58,7 +62,9 @@ defmodule SeedRaidWeb.RaidControllerTest do
                "type" => "starlight-rose",
                "side" => "alliance",
                "region" => "eu",
-               "discord_id" => 123
+               "discord_id" => 123,
+               "max" => %{"any" => 25},
+               "requirements" => %{"aethril" => 3}
              }
     end
 
@@ -86,7 +92,9 @@ defmodule SeedRaidWeb.RaidControllerTest do
                "when" => "2011-05-18T15:01:01.000000Z",
                "side" => "alliance",
                "region" => "eu",
-               "discord_id" => 123
+               "discord_id" => 123,
+               "max" => %{"any" => 25},
+               "requirements" => %{"aethril" => 3}
              }
     end
 

@@ -17,6 +17,14 @@ defmodule SeedRaidWeb do
   and import those modules here.
   """
 
+  def model do
+    quote do
+      use Ecto.Schema
+
+      @timestamps_opts [type: Timex.Ecto.DateTime]
+    end
+  end
+
   def controller do
     quote do
       use Phoenix.Controller, namespace: SeedRaidWeb
@@ -28,8 +36,9 @@ defmodule SeedRaidWeb do
 
   def view do
     quote do
-      use Phoenix.View, root: "lib/seed_raid_web/templates",
-                        namespace: SeedRaidWeb
+      use Phoenix.View,
+        root: "lib/seed_raid_web/templates",
+        namespace: SeedRaidWeb
 
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_flash: 2, view_module: 1]
