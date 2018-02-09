@@ -28,22 +28,11 @@ class Timeline extends React.Component {
 Timeline.propTypes = {
   isFetching: PropTypes.bool.isRequired,
   raids: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    title: PropTypes.string.isRequired,
-    participants: PropTypes.number.isRequired,
-    size: PropTypes.number.isRequired,
+    id: PropTypes.string.isRequired,  
     when: PropTypes.string.isRequired,
-    discord_id: PropTypes.number.isRequired,
-    region: PropTypes.string.isRequired,
-    side: PropTypes.string.isRequired,
-    requirements: PropTypes.shape({
-      aethril: PropTypes.number,
-      felwort: PropTypes.number,
-    }),
-    max: PropTypes.shape({
-      aethril: PropTypes.number,
-      any: PropTypes.number,
-    }),
+    content: PropTypes.string.isRequired,
+    seeds: PropTypes.number.isRequired,
+    type: PropTypes.string.isRequired,
   })).isRequired,
   dispatch: PropTypes.func.isRequired,
 };

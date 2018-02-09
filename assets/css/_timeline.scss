@@ -121,7 +121,7 @@
 .timeline-content {
   @include border-radius;
   @include clearfix;
-  background: $color-3;
+  background: $monkai-color;
   box-shadow: 0 3px 0 darken($background, 5%);
   margin-left: 60px;
   padding: 1em;
@@ -204,9 +204,13 @@
     padding: 1.6em;
     width: 45%;
 
+    pre {
+      white-space: pre-wrap;
+    }
+
     &::before {
       border-color: transparent;
-      border-left-color: $color-3;
+      border-left-color: $monkai-color;
       left: 100%;
       top: 24px;
     }
@@ -227,7 +231,7 @@
 
       &::before {
         border-color: transparent;
-        border-right-color: $color-3;
+        border-right-color: $monkai-color;
         left: auto;
         right: 100%;
         top: 24px;

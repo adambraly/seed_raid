@@ -29,25 +29,6 @@ h2 {
   font-weight: bold;
 }
 
-.type-font-color {
-  color: $color-1;
-
-  &.starlight-rose {
-    color: $starlight-rose;
-  }
-
-  &.foxflower {
-    color: $foxflower;
-  }
-
-  &.mix {
-    background: $mix;
-    color: $color-3;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-}
-
 .wowhead-spell-link {
   color: $color-5;
 }
