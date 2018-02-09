@@ -9,6 +9,7 @@ defmodule Seedraid.Repo.Migrations.CreateRaids do
     create table(:seedraids, primary_key: false) do
       add(:id, :binary_id, primary_key: true)
       add(:discord_id, :integer, null: false)
+      add(:author_id, :integer, null: false)
 
       add(:content, :text, null: false)
 
@@ -21,9 +22,12 @@ defmodule Seedraid.Repo.Migrations.CreateRaids do
       add(:type, :raidtype)
       timestamps()
     end
+
+    create(unique_index(:seedraids, [:discord_id]))
   end
 
   def down do
+    drop(unique_index(:seedraids, [:discord_id]))
     drop(table(:seedraids))
     RaidTypeEnum.drop_type()
     SideEnum.drop_type()

@@ -6,6 +6,7 @@ defmodule SeedRaid.Calendar.Raid do
   @foreign_key_type :binary_id
   schema "seedraids" do
     field(:discord_id, :integer)
+    field(:author_id, :integer)
 
     field(:side, SideEnum)
     field(:region, RegionEnum)
@@ -24,6 +25,7 @@ defmodule SeedRaid.Calendar.Raid do
   def changeset(raid, attrs) do
     raid
     |> cast(attrs, [
+      :author_id,
       :discord_id,
       :side,
       :region,
@@ -32,6 +34,6 @@ defmodule SeedRaid.Calendar.Raid do
       :seeds,
       :type
     ])
-    |> validate_required([:discord_id, :side, :region, :content, :when])
+    |> validate_required([:discord_id, :author_id, :side, :region, :content, :when])
   end
 end

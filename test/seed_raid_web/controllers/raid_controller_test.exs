@@ -12,7 +12,8 @@ defmodule SeedRaidWeb.RaidControllerTest do
     region: :eu,
     discord_id: 123,
     content: "content...",
-    type: :starlight_rose
+    type: :starlight_rose,
+    author_id: 345
   }
   @update_attrs %{
     seeds: 43,
@@ -21,7 +22,8 @@ defmodule SeedRaidWeb.RaidControllerTest do
     region: :eu,
     discord_id: 123,
     content: "updated content...",
-    type: :starlight_rose
+    type: :starlight_rose,
+    author_id: 345
   }
   @invalid_attrs %{participants: nil, size: nil, title: nil, when: nil}
 

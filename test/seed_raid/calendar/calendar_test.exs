@@ -16,6 +16,7 @@ defmodule SeedRaid.CalendarTest do
       max: %{"any" => 25},
       region: :eu,
       discord_id: 123,
+      author_id: 345,
       requirements: %{"aethril" => 3},
       type: :mix,
       content: "raid..."
@@ -26,6 +27,7 @@ defmodule SeedRaid.CalendarTest do
       side: :alliance,
       region: :eu,
       discord_id: 123,
+      author_id: 345,
       type: :mix,
       content: "updated raid..."
     }
@@ -55,6 +57,7 @@ defmodule SeedRaid.CalendarTest do
       assert raid.seeds == 42
       assert raid.when == Timex.to_datetime({{2010, 04, 17}, {12, 00, 00}})
       assert raid.content == "raid..."
+      assert raid.author_id == 345
     end
 
     test "create_raid/1 with invalid data returns error changeset" do
@@ -67,6 +70,7 @@ defmodule SeedRaid.CalendarTest do
       assert %Raid{} = raid
       assert raid.seeds == 43
       assert raid.content == "updated raid..."
+      assert raid.author_id == 345
 
       assert raid.when == Timex.to_datetime({{2010, 04, 17}, {12, 00, 00}})
       assert(raid.type == :mix)

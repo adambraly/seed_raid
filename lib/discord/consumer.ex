@@ -23,7 +23,7 @@ defmodule SeedRaid.Discord.Consumer do
   end
 
   defp parse_message(message) do
-    Task.Supervisor.start_child(SeedRaid.Discord.TaskSupervisor, PinnedPost, :parse_message, [
+    Task.Supervisor.start_child(SeedRaid.Discord.TaskSupervisor, PinnedPost, :analyze, [
       message
     ])
   end

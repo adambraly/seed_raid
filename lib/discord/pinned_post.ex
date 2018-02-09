@@ -3,6 +3,7 @@ defmodule SeedRaid.Discord.PinnedPost do
 
   alias Nostrum.Api
   alias SeedParser.Decoder
+  alias SeedRaid.Calendar
   require Logger
   @required_keys [:title, :date, :time]
 
@@ -11,14 +12,37 @@ defmodule SeedRaid.Discord.PinnedPost do
     |> Enum.all?(fn key -> seedraid |> Map.has_key?(key) end)
   end
 
-  def parse_message(message) do
+  defp channels do
+    Application.fetch_env!(:seed_raid, :channels)
+  end
+
+  def analyze(message) do
+    case message |> parse do
+      {ok, raid} ->
+        Calendar.create_or_update(raid)
+    end
+  end
+
+  def parse(message) do
     case message.content |> Decoder.decode() do
-      {:ok, seedraid} ->
-        Logger.info(inspect(seedraid))
+      {:ok, metadata} ->
+        channel = channels() |> Map.fetch!(message.channel_id)
+        datetime = Timex.to_datetime({Date.to_erl(metadata.date), Time.to_erl(metadata.time)})
+
+        seedraid = %{
+          discord_id: message.id,
+          author_id: message.author.id,
+          side: channel.side,
+          faction: channel.faction,
+          content: message.content,
+          seeds: metadata.seeds,
+          type: metadata.type,
+          when: datetime
+        }
+
         {:ok, seedraid}
 
       {:error, error} ->
-        Logger.info("error parsing: #{error}")
         {:error, error}
     end
   end
@@ -30,8 +54,6 @@ defmodule SeedRaid.Discord.PinnedPost do
     pinned = Api.get_pinned_messages!(channel_id)
 
     pinned
-    |> Enum.each(&parse_message/1)
-    |> Enum.filter(&ok/1)
-    |> Enum.map(fn {:ok, message} -> message end)
+    |> Enum.each(&analyze/1)
   end
 end
