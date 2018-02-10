@@ -1,23 +1,26 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Provider } from 'react-redux';
-import Timeline from '../components/Timeline';
+import { Route } from 'react-router';
+import { ConnectedRouter } from 'react-router-redux';
+import Timeline from './Timeline';
 import App from '../components/App';
 import Home from '../components/Home';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+
 
 const propTypes = {
   store: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
 };
 
-const Root = ({ store }) => (
+const Root = ({ store, history }) => (
   <Provider store={store}>
-    <Router>
+    <ConnectedRouter history={history}>
       <App>
-        <Route eact path="/" component={Home} />
-        <Route path="/calendar/:channel" component={Timeline} />
+        <Route exact path="/" component={Home} />
+        <Route path="/calendar/:region/:side" component={Timeline} />
       </App>
-    </Router>
+    </ConnectedRouter>
   </Provider>
 );
 

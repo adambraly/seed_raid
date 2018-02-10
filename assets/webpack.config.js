@@ -79,34 +79,32 @@ module.exports = (env) => {
         {
           test: /\.(css|sass|scss)$/,
           exclude: /node_modules/,
-          use: isDev ? [{
-            loader: 'style-loader',
-          }, {
-            loader: 'css-loader',
-            options: {
-              sourceMap: true,
-              importLoaders: 1,
-            },
-          }, {
-            loader: 'postcss-loader',
-            options: {
-              sourceMap: true,
+          use: ExtractTextPlugin.extract({
+            fallback: 'style-loader',
+            use: [{
+              loader: 'css-loader',
               options: {
-                plugins: [
-                  autoprefixer,
-                ],
+                sourceMap: true,
+                importLoaders: 1,
+              },
+            }, {
+              loader: 'postcss-loader',
+              options: {
+                sourceMap: true,
+                options: {
+                  plugins: [
+                    autoprefixer,
+                  ],
+                },
+              },
+            }, {
+              loader: 'sass-loader',
+              options: {
+                sourceMap: true,
+                includePaths: [bourbon.includePaths],
               },
             },
-          }, {
-            loader: 'sass-loader',
-            options: {
-              sourceMap: true,
-              includePaths: [bourbon.includePaths],
-            },
-          },
-          ] : ExtractTextPlugin.extract({
-            fallback: 'style-loader',
-            use: ['css-loader', 'postcss-loader', 'sass-loader'],
+            ],
           }),
         },
       ],

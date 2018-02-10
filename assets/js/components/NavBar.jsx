@@ -16,17 +16,17 @@ const NavBar = () => {
                 <span className="brand">Seed Raid</span>
               </Link>
             </li>
-            <li className="nav-link"><Link to="/calendar/eu-alliance">EU Alliance</Link></li>
-            <li className="nav-link"><a href="javascript:void(0)">EU Horde</a></li>
-            <li className="nav-link"><a href="javascript:void(0)">NA Horde</a></li>
-            <li className="nav-link"><a href="javascript:void(0)">NA Alliance</a></li>
+            <li className="nav-link"><Link to="/calendar/eu/alliance">EU Alliance</Link></li>
+            <li className="nav-link"><Link to="/calendar/eu/horde">EU Horde</Link></li>
+            <li className="nav-link"><Link to="/calendar/na/alliance">NA Alliance</Link></li>
+            <li className="nav-link"><Link to="/calendar/na/horde">NA Horde</Link></li>
           </ul>
         </div>
         <div className="nav-bg-fostrap">
           <div className="navbar-fostrap">
             <span /><span /><span />
           </div>
-          <a href="" className="title-mobile">Seed Raid</a>
+          <Link to="/" className="title-mobile">Seed Raid</Link>
         </div>
       </nav>
     </div>
