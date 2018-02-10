@@ -8,8 +8,8 @@ defmodule Seedraid.Repo.Migrations.CreateRaids do
 
     create table(:seedraids, primary_key: false) do
       add(:id, :binary_id, primary_key: true)
-      add(:discord_id, :integer, null: false)
-      add(:author_id, :integer, null: false)
+      add(:discord_id, :bigserial, null: false)
+      add(:author_id, :bigserial, null: false)
 
       add(:content, :text, null: false)
 

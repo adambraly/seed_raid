@@ -61,7 +61,7 @@ config :seed_raid, SeedRaid.Repo,
 config :seed_raid, :guild, 358_681_085_246_308_353
 
 config :seed_raid, :channels, %{
-  400_443_211_127_980_044 => %{region: "eu", side: "horde"}
+  400_443_211_127_980_044 => %{region: :eu, side: :horde}
 }
 
 import_config "dev.secret.exs"

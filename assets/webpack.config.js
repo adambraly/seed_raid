@@ -6,7 +6,8 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const publicPath = '/';
 const destDir = path.resolve(__dirname, '..', 'priv', 'static');
 
-const bourbon = require('node-bourbon').includePaths;
+const bourbon = require('bourbon');
+const autoprefixer = require('autoprefixer');
 
 
 module.exports = (env) => {
@@ -78,21 +79,31 @@ module.exports = (env) => {
         {
           test: /\.(css|sass|scss)$/,
           exclude: /node_modules/,
-          use: isDev ? [
-            {
-              loader: 'style-loader',
-            }, {
-              loader: 'css-loader',
+          use: isDev ? [{
+            loader: 'style-loader',
+          }, {
+            loader: 'css-loader',
+            options: {
+              sourceMap: true,
+              importLoaders: 1,
             },
-            {
-              loader: 'postcss-loader',
-            },
-            {
-              loader: 'sass-loader',
+          }, {
+            loader: 'postcss-loader',
+            options: {
+              sourceMap: true,
               options: {
-                includePaths: [].concat(bourbon),
+                plugins: [
+                  autoprefixer,
+                ],
               },
             },
+          }, {
+            loader: 'sass-loader',
+            options: {
+              sourceMap: true,
+              includePaths: [bourbon.includePaths],
+            },
+          },
           ] : ExtractTextPlugin.extract({
             fallback: 'style-loader',
             use: ['css-loader', 'postcss-loader', 'sass-loader'],
