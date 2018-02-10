@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import  hljs from 'highlight.js';
+import hljs from 'highlight.js';
 
 class CodeBlock extends React.PureComponent {
   constructor(props) {
@@ -21,7 +21,6 @@ class CodeBlock extends React.PureComponent {
   }
 
   highlightCode() {
-    console.log('highlighting code');
     hljs.highlightBlock(this.codeEl);
   }
 

@@ -10,12 +10,24 @@ class Timeline extends React.Component {
   }
 
   render() {
-    const { raids, isFetching } = this.props;
+    const {
+      raids,
+      isFetching,
+      region,
+      side,
+    } = this.props;
+    let displayedRaids = raids;
+    if (side) {
+      displayedRaids = displayedRaids.filter(raid => raid.side === side);
+    }
+    if (region) {
+      displayedRaids = displayedRaids.filter(raid => raid.region === region);
+    }
     return (
       <div className="container">
         {isFetching && raids.length === 0 && <h2>Loading...</h2>}
         {
-          raids.map(raid => (
+          displayedRaids.map(raid => (
             <Raid key={raid.id} {...raid} />
           ))
         }
@@ -34,22 +46,32 @@ Timeline.propTypes = {
     seeds: PropTypes.number.isRequired,
     type: PropTypes.string.isRequired,
   })).isRequired,
+  region: PropTypes.string,
+  side: PropTypes.string,
   dispatch: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = (state) => {
+Timeline.defaultProps = {
+  region: null,
+  side: null,
+};
+
+const mapStateToProps = (state, ownProps) => {
   const {
     isFetching,
     items: raids,
   } = state.raids || {
     isFetching: true,
     items: [],
-    params: {},
   };
+
+  const { region, side } = ownProps.match.params;
+
   return {
     isFetching,
     raids,
-
+    region,
+    side,
   };
 };
 

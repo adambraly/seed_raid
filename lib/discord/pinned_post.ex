@@ -17,10 +17,14 @@ defmodule SeedRaid.Discord.PinnedPost do
   end
 
   def all(channel_id) do
-    pinned = Api.get_pinned_messages!(channel_id)
+    case Api.get_pinned_messages(channel_id) do
+      {:ok, messages} ->
+        messages
+        |> Enum.each(&analyze/1)
 
-    pinned
-    |> Enum.each(&analyze/1)
+      error ->
+        Logger.warn("error fetching pined messages #{inspect(error)}")
+    end
   end
 
   defp channels do
@@ -30,12 +34,12 @@ defmodule SeedRaid.Discord.PinnedPost do
   defp parse(message) do
     case message.content |> Decoder.decode() do
       {:ok, metadata} ->
-        channel = channels() |> Map.fetch!(message.channel_id)
+        channel = channels() |> Map.fetch!(message.channel_id |> String.to_integer())
         datetime = Timex.to_datetime({Date.to_erl(metadata.date), Time.to_erl(metadata.time)})
 
         seedraid = %{
           discord_id: message.id,
-          author_id: message.author.id,
+          author_id: message.author["id"],
           side: channel.side,
           region: channel.region,
           content: message.content,

@@ -8,15 +8,10 @@
 
 import React from 'react';
 import { render } from 'react-dom';
-import createHistory from 'history/createBrowserHistory';
 import configureStore from './store';
 import Root from './containers/Root';
 
-
-// Create a history of your choosing (we're using a browser history in this case)
-const history = createHistory();
-
-const store = configureStore({}, history);
+const store = configureStore();
 
 render(
   <Root store={store} history={history} />,

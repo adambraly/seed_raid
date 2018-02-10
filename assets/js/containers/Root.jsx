@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { Route, BrowserRouter as Router } from 'react-router-dom';
 import { Provider } from 'react-redux';
-import { Route } from 'react-router';
-import { ConnectedRouter } from 'react-router-redux';
 import Timeline from './Timeline';
 import App from '../components/App';
 import Home from '../components/Home';
@@ -10,17 +9,16 @@ import Home from '../components/Home';
 
 const propTypes = {
   store: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
 };
 
-const Root = ({ store, history }) => (
+const Root = ({ store }) => (
   <Provider store={store}>
-    <ConnectedRouter history={history}>
+    <Router>
       <App>
         <Route exact path="/" component={Home} />
         <Route path="/calendar/:region/:side" component={Timeline} />
       </App>
-    </ConnectedRouter>
+    </Router>
   </Provider>
 );
 
