@@ -9,15 +9,12 @@ defmodule SeedRaid.CalendarTest do
     @datetime {{2010, 04, 17}, {12, 00, 00}}
 
     @valid_attrs %{
-      participants: 42,
       seeds: 42,
       when: Timex.to_datetime(@datetime),
       side: :alliance,
-      max: %{"any" => 25},
       region: :eu,
       discord_id: 123,
       author_id: 345,
-      requirements: %{"aethril" => 3},
       type: :mix,
       content: "raid..."
     }
@@ -26,6 +23,16 @@ defmodule SeedRaid.CalendarTest do
       when: Timex.to_datetime(@datetime),
       side: :alliance,
       region: :eu,
+      discord_id: 123,
+      author_id: 345,
+      type: :mix,
+      content: "updated raid..."
+    }
+    @create_update_attrs %{
+      seeds: 43,
+      when: Timex.to_datetime(@datetime),
+      side: :horde,
+      region: :us,
       discord_id: 123,
       author_id: 345,
       type: :mix,
@@ -74,6 +81,24 @@ defmodule SeedRaid.CalendarTest do
 
       assert raid.when == Timex.to_datetime({{2010, 04, 17}, {12, 00, 00}})
       assert(raid.type == :mix)
+    end
+
+    test "create_or_update with valid data updates the raid" do
+      assert {:ok, %Raid{} = raid} = Calendar.create_or_update_raid(@valid_attrs)
+      assert raid.seeds == 42
+      assert raid.content == "raid..."
+      assert raid.author_id == 345
+      assert raid.side == :alliance
+      assert raid.region == :eu
+
+      assert raid.when == Timex.to_datetime({{2010, 04, 17}, {12, 00, 00}})
+      assert(raid.type == :mix)
+
+      assert {:ok, %Raid{} = updated_raid} = Calendar.create_or_update_raid(@create_update_attrs)
+      assert updated_raid.seeds == 43
+      assert updated_raid.content == "updated raid..."
+      assert raid.side == :alliance
+      assert raid.region == :eu
     end
 
     test "update_raid/2 with invalid data returns error changeset" do
