@@ -29,7 +29,7 @@
   "scripts": {
     "start": "yarn run watch",
     "watch": "MIX_ENV=dev webpack --watch --colors",
-    "deploy": "MIX_ENV=prod webpack -p",
+    "deploy": "MIX_ENV=prod webpack --config webpack.config.prod.js",
     "storybook": "start-storybook -p 6006",
     "build-storybook": "build-storybook"
   },

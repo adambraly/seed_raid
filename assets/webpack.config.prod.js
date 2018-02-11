@@ -10,12 +10,9 @@ const bourbon = require('bourbon');
 const autoprefixer = require('autoprefixer');
 
 
-module.exports = (env) => {
-  const isDev = !(env && env.prod);
-  const devtool = isDev ? 'eval' : 'cheap-module-source-map';
-
+module.exports = () => {
   return {
-    devtool,
+    devtool: 'cheap-module-source-map',
 
     context: __dirname,
 
@@ -28,12 +25,6 @@ module.exports = (env) => {
       path: destDir,
       filename: 'js/[name].js',
       publicPath,
-    },
-
-    devServer: {
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-      },
     },
     module: {
       rules: [
@@ -84,13 +75,11 @@ module.exports = (env) => {
             use: [{
               loader: 'css-loader',
               options: {
-                sourceMap: true,
                 importLoaders: 1,
               },
             }, {
               loader: 'postcss-loader',
               options: {
-                sourceMap: true,
                 options: {
                   plugins: [
                     autoprefixer,
@@ -100,7 +89,6 @@ module.exports = (env) => {
             }, {
               loader: 'sass-loader',
               options: {
-                sourceMap: true,
                 includePaths: [bourbon.includePaths],
               },
             },
@@ -114,21 +102,7 @@ module.exports = (env) => {
       modules: ['node_modules', __dirname],
       extensions: ['.js', '.json', '.jsx', '.css'],
     },
-    plugins: isDev ? [
-      new webpack.ProvidePlugin({
-        $: 'jquery',
-        jQuery: 'jquery',
-      }),
-
-      new CopyWebpackPlugin([{
-        from: './static',
-        to: path.resolve(__dirname, '../priv/static'),
-      }]),
-      new ExtractTextPlugin({
-        filename: 'css/[name].css',
-        allChunks: true,
-      }),
-    ] : [
+    plugins: [
       new webpack.ProvidePlugin({
         $: 'jquery',
         jQuery: 'jquery',
@@ -154,6 +128,10 @@ module.exports = (env) => {
         },
       }),
       new webpack.optimize.UglifyJsPlugin({
+        sourceMap: true,
+        beautify: false,
+        comments: false,
+        extractComments: false,
         compress: {
           warnings: false,
           screw_ie8: true,
