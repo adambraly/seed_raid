@@ -16,12 +16,20 @@ class Timeline extends React.Component {
       region,
       side,
     } = this.props;
+    const translateRegion = (regionCode) => {
+      switch (regionCode) {
+        case 'na':
+          return 'us';
+        default:
+          return regionCode;
+      }
+    };
     let displayedRaids = raids;
     if (side) {
       displayedRaids = displayedRaids.filter(raid => raid.side === side);
     }
     if (region) {
-      displayedRaids = displayedRaids.filter(raid => raid.region === region);
+      displayedRaids = displayedRaids.filter(raid => raid.region === translateRegion(region));
     }
     return (
       <div className="container">
