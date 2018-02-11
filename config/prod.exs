@@ -72,14 +72,4 @@ config :seed_raid, :channels, %{
   248_861_564_008_923_147 => %{region: :na, side: :horde}
 }
 
-config :nostrum, token: "${DISCORD_TOKEN}"
-
-config :seed_raid, SeedRaidWeb.Endpoint, secret_key_base: {:system, "SECRET_KEY_BASE"}
-
-# Configure your database
-config :seed_raid, SeedRaid.Repo,
-  adapter: Ecto.Adapters.Postgres,
-  username: {:system, "DB_USER", "seedraid"},
-  password: {:system, "DB_PASSWORD"},
-  database: "seed_raid_prod",
-  pool_size: 15
+import_config "prod.secret.exs"
