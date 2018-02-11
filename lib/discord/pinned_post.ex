@@ -32,6 +32,7 @@ defmodule SeedRaid.Discord.PinnedPost do
     case Api.get_pinned_messages(channel_id) do
       {:ok, messages} ->
         messages
+        |> SeedRaid.Pin.reject_blacklisted()
         |> Enum.each(&analyze/1)
 
       error ->
