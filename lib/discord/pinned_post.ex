@@ -44,6 +44,9 @@ defmodule SeedRaid.Discord.PinnedPost do
         messages
         |> Enum.each(&analyze/1)
 
+      {:error, :upcoming} ->
+        :silence
+
       error ->
         Logger.warn("error fetching pined messages #{inspect(error)}")
     end
