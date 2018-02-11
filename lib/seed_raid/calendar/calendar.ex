@@ -18,7 +18,8 @@ defmodule SeedRaid.Calendar do
 
   """
   def list_raids do
-    Repo.all(Raid)
+    query = from(r in Raid, order_by: [desc: r.when])
+    Repo.all(query)
   end
 
   @doc """
