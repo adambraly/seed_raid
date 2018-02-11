@@ -11,9 +11,21 @@ defmodule SeedRaid.Discord.PinnedPost do
       {:ok, raid} ->
         Calendar.create_or_update_raid(raid)
 
-      _ ->
-        :noop
+      {:error, error} ->
+        Logger.warn(
+          "error: '#{error}' parsing message (#{message.id}) #{short_message(message.content)}"
+        )
     end
+  end
+
+  defp short_message(message) do
+    starting =
+      message
+      |> String.slice(0..180)
+      |> String.trim()
+
+    ~r/\n/
+    |> Regex.replace(starting, " ")
   end
 
   def all(channel_id) do
