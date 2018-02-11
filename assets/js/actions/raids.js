@@ -21,7 +21,7 @@ export function raidsFetchSuccess(items) {
 export function fetchRaids() {
   return (dispatch) => {
     dispatch(isFetching(true));
-    return fetch('http://localhost:4000/api/raids')
+    return fetch('/api/raids')
       .then(response => response.json())
       .then(json => dispatch(raidsFetchSuccess(json.data)));
   };
