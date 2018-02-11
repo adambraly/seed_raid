@@ -12,7 +12,7 @@ defmodule Mix.Tasks.Pins.ParseAll do
     |> Application.get_env(:channels)
     |> Enum.each(fn {channel_id, _} ->
       PinnedPost.all(channel_id)
-      :timer.sleep(3000)
+      :timer.sleep(5000)
     end)
   end
 end
