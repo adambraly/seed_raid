@@ -21,6 +21,9 @@ defmodule SeedRaid.Discord.PinnedPost do
       {:ok, raid} ->
         Calendar.create_or_update_raid(raid)
 
+      {:error, :upcoming} ->
+        :silence
+
       {:error, error} ->
         Logger.warn(
           "error: '#{error}' parsing message (#{message.id}) #{short_message(message.content)}"
@@ -43,9 +46,6 @@ defmodule SeedRaid.Discord.PinnedPost do
       {:ok, messages} ->
         messages
         |> Enum.each(&analyze/1)
-
-      {:error, :upcoming} ->
-        :silence
 
       error ->
         Logger.warn("error fetching pined messages #{inspect(error)}")
