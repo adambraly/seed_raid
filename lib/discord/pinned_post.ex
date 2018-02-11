@@ -34,7 +34,16 @@ defmodule SeedRaid.Discord.PinnedPost do
   defp parse(message) do
     case message.content |> Decoder.decode() do
       {:ok, metadata} ->
-        channel = channels() |> Map.fetch!(message.channel_id |> String.to_integer())
+        channel_id =
+          case message.channel_id do
+            id when is_binary(id) ->
+              id |> String.to_integer()
+
+            id ->
+              id
+          end
+
+        channel = channels() |> Map.fetch!(channel_id)
         datetime = Timex.to_datetime({Date.to_erl(metadata.date), Time.to_erl(metadata.time)})
 
         seedraid = %{
@@ -42,7 +51,7 @@ defmodule SeedRaid.Discord.PinnedPost do
           author_id: message.author["id"],
           side: channel.side,
           region: channel.region,
-          content: message.content,
+          content: Decoder.format(message.content),
           seeds: metadata.seeds,
           type: metadata.type,
           when: datetime
