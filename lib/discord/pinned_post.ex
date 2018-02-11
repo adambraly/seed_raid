@@ -17,7 +17,7 @@ defmodule SeedRaid.Discord.PinnedPost do
   end
 
   defp do_analyze(message) do
-    case message |> parse do
+    case message |> parse() do
       {:ok, raid} ->
         Calendar.create_or_update_raid(raid)
 
@@ -54,18 +54,20 @@ defmodule SeedRaid.Discord.PinnedPost do
   end
 
   defp parse(message) do
-    case message.content |> Decoder.decode() do
+    channel_id =
+      case message.channel_id do
+        id when is_binary(id) ->
+          id |> String.to_integer()
+
+        id ->
+          id
+      end
+
+    channel = channels() |> Map.fetch!(channel_id)
+    options = [date: channel.region]
+
+    case message.content |> Decoder.decode(options) do
       {:ok, metadata} ->
-        channel_id =
-          case message.channel_id do
-            id when is_binary(id) ->
-              id |> String.to_integer()
-
-            id ->
-              id
-          end
-
-        channel = channels() |> Map.fetch!(channel_id)
         datetime = Timex.to_datetime({Date.to_erl(metadata.date), Time.to_erl(metadata.time)})
 
         seedraid = %{
