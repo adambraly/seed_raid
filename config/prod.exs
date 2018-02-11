@@ -61,7 +61,7 @@ config :logger, level: :info
 
 # Finally import the config/prod.secret.exs
 # which should be versioned separately.
-config :logger, level: :debug
+config :logger, level: :warn
 
 config :seed_raid, :guild, 248_859_295_414_878_208
 
