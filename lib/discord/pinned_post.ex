@@ -7,6 +7,16 @@ defmodule SeedRaid.Discord.PinnedPost do
   require Logger
 
   def analyze(message) do
+    case message |> SeedRaid.Pin.is_blacklisted?() do
+      true ->
+        :noop
+
+      false ->
+        do_analyze(message)
+    end
+  end
+
+  defp do_analyze(message) do
     case message |> parse do
       {:ok, raid} ->
         Calendar.create_or_update_raid(raid)
@@ -32,7 +42,6 @@ defmodule SeedRaid.Discord.PinnedPost do
     case Api.get_pinned_messages(channel_id) do
       {:ok, messages} ->
         messages
-        |> SeedRaid.Pin.reject_blacklisted()
         |> Enum.each(&analyze/1)
 
       error ->
