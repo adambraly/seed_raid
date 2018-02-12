@@ -22,6 +22,11 @@ config :logger, :console,
   format: "$time $metadata[$level] $message\n",
   metadata: [:request_id]
 
+config :sentry,
+  dsn: System.get_env("SENTRY_DSN"),
+  included_environments: [:prod],
+  environment_name: Mix.env()
+
 config :nostrum, num_shards: 1
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

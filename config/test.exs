@@ -18,4 +18,8 @@ config :seed_raid, SeedRaid.Repo,
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
 
+config :seed_raid, :channels, %{
+  400_443_211_127_980_044 => %{region: :eu, side: :horde}
+}
+
 import_config "test.secret.exs"

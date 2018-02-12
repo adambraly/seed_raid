@@ -45,6 +45,7 @@ defmodule SeedRaid.Mixfile do
       {:plug, "1.5.0-rc.0", override: true},
       {:cowlib, "~> 2.1", override: true},
       {:ranch, "~> 1.4", override: true},
+      {:sentry, "~> 6.1.0"},
       {:postgrex, "~> 0.13.5"},
       {:seed_parser, github: "wow-sweetlie/seedparser"},
       {:nostrum, git: "https://github.com/Kraigie/nostrum.git"},
