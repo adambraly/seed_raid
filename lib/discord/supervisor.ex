@@ -2,7 +2,7 @@ defmodule SeedRaid.Discord.Supervisor do
   @moduledoc false
   use Supervisor
 
-  alias SeedRaid.Discord.Consumer
+  alias SeedRaid.Discord.{Consumer, PinnedPost}
 
   def start_link() do
     Supervisor.start_link(__MODULE__, [], name: __MODULE__)
@@ -12,6 +12,7 @@ defmodule SeedRaid.Discord.Supervisor do
     # List comprehension creates a consumer per cpu core
     children = [
       {Consumer, []},
+      {PinnedPost, []},
       {Task.Supervisor, [name: SeedRaid.Discord.TaskSupervisor]}
     ]
 

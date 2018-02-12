@@ -23,15 +23,11 @@ defmodule SeedRaid.Discord.Consumer do
   end
 
   defp parse_message(message) do
-    Task.Supervisor.start_child(SeedRaid.Discord.TaskSupervisor, PinnedPost, :analyze, [
-      message
-    ])
+    PinnedPost.analyze(message)
   end
 
   defp all_pins(channel_id) do
-    Task.Supervisor.start_child(SeedRaid.Discord.TaskSupervisor, PinnedPost, :all, [
-      channel_id
-    ])
+    PinnedPost.all(channel_id)
   end
 
   def handle_event({:CHANNEL_PINS_UPDATE, {%{channel_id: channel_id}}, _ws_state}, state) do
