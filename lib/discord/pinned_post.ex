@@ -2,6 +2,7 @@ defmodule SeedRaid.Discord.PinnedPost do
   @moduledoc false
 
   use GenServer
+  use Timex
 
   alias Nostrum.Api
   alias SeedParser.Decoder
@@ -11,7 +12,7 @@ defmodule SeedRaid.Discord.PinnedPost do
   @timezone_map %{us: "EST", eu: "CET"}
 
   def start_link(default) do
-    GenServer.start_link(__MODULE__, default)
+    GenServer.start_link(__MODULE__, default, name: __MODULE__)
   end
 
   def init(_args) do
@@ -20,14 +21,15 @@ defmodule SeedRaid.Discord.PinnedPost do
   end
 
   def analyze(message) do
-    GenServer.cast(PinnedPost, {:analyze, message})
+    GenServer.cast(__MODULE__, {:analyze, message})
   end
 
   def all(channel_id) do
-    GenServer.cast(PinnedPost, {:all, channel_id})
+    GenServer.cast(__MODULE__, {:all, channel_id})
   end
 
   def handle_cast({:all, channel_id}, state) do
+    Logger.info("handle_cast all, #{channel_id}")
     do_all(channel_id)
     {:noreply, state}
   end
@@ -54,6 +56,11 @@ defmodule SeedRaid.Discord.PinnedPost do
     {:noreply, state}
   end
 
+  def handle_info({:all, channel_id}, state) do
+    do_all(channel_id)
+    {:noreply, state}
+  end
+
   defp message_channel_id(message) do
     case message.channel_id do
       id when is_binary(id) ->
@@ -67,6 +74,14 @@ defmodule SeedRaid.Discord.PinnedPost do
   defp do_analyze(message, channel) do
     case parse(message, channel) do
       {:ok, raid} ->
+        time_string = raid.when |> Timex.format!("%d/%m/%y %H:%M", :strftime)
+
+        Logger.info(
+          "#{raid.region}-#{raid.side} sucessfully parsed: [#{raid.seeds} #{raid.type}] at #{
+            time_string
+          }"
+        )
+
         Calendar.create_or_update_raid(raid)
 
       {:error, :upcoming} ->
@@ -96,7 +111,8 @@ defmodule SeedRaid.Discord.PinnedPost do
         |> Enum.each(&analyze/1)
 
       {:error, %{status_code: 429, message: %{"retry_after" => retry_after}}} ->
-        Process.send_after(self(), :all, retry_after)
+        Logger.warn("error 429, will retry to parse channe: #{channel_id} after #{retry_after}")
+        Process.send_after(self(), {:all, channel_id}, retry_after)
 
       error ->
         Logger.warn("error fetching pined messages #{inspect(error)}")

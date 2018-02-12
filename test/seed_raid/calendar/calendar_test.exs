@@ -7,6 +7,7 @@ defmodule SeedRaid.CalendarTest do
     alias SeedRaid.Calendar.Raid
 
     @datetime {{2010, 04, 17}, {12, 00, 00}}
+    @updated_datetime {{2011, 04, 17}, {12, 00, 00}}
 
     @valid_attrs %{
       seeds: 42,
@@ -29,8 +30,8 @@ defmodule SeedRaid.CalendarTest do
       content: "updated raid..."
     }
     @create_update_attrs %{
-      seeds: 43,
-      when: Timex.to_datetime(@datetime),
+      seeds: 45,
+      when: Timex.to_datetime(@updated_datetime),
       side: :horde,
       region: :us,
       discord_id: 123,
@@ -94,11 +95,14 @@ defmodule SeedRaid.CalendarTest do
       assert raid.when == Timex.to_datetime({{2010, 04, 17}, {12, 00, 00}})
       assert(raid.type == :mix)
 
-      assert {:ok, %Raid{} = updated_raid} = Calendar.create_or_update_raid(@create_update_attrs)
-      assert updated_raid.seeds == 43
-      assert updated_raid.content == "updated raid..."
-      assert raid.side == :alliance
-      assert raid.region == :eu
+      assert {:ok, %Raid{}} = Calendar.create_or_update_raid(@create_update_attrs)
+      saved_raid = Calendar.get_raid!(raid.id)
+      assert %Raid{} = saved_raid
+      assert saved_raid.seeds == 45
+      assert saved_raid.content == "updated raid..."
+      assert saved_raid.side == :alliance
+      assert saved_raid.region == :eu
+      assert saved_raid.when == Timex.to_datetime({{2011, 04, 17}, {12, 00, 00}})
     end
 
     test "update_raid/2 with invalid data returns error changeset" do
