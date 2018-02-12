@@ -27,7 +27,7 @@ const Raid = (props) => {
   const whenHere = moment.utc(when).tz(timezone(region));
   const dayOfWeek = whenHere.format('dddd');
   const dayOfMonth = whenHere.date();
-  const time = whenHere.format('hh:mm a');
+  const time = whenHere.format('HH:mm');
 
   const timelineImgClasses = raidType => (
     `timeline-img ${raidType}`
