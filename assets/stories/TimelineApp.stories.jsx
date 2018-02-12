@@ -34,7 +34,7 @@ const store = configureStore();
 const payload = {
   data: [
     {
-      when: '2017-01-29T00:00:00Z',
+      when: '2019-01-29T00:00:00Z',
       type: 'starlight-rose',
       seeds: 200,
       side: 'alliance',
@@ -43,7 +43,7 @@ const payload = {
       content: raid1,
     },
     {
-      when: '2017-01-25T00:00:00Z',
+      when: '2019-01-25T00:00:00Z',
       title: 'AHOUU 100',
       type: 'foxflower',
       seeds: 50,
@@ -55,7 +55,7 @@ const payload = {
       `,
     },
     {
-      when: '2017-01-24T00:00:00Z',
+      when: '2019-01-24T00:00:00Z',
       type: 'mix',
       seeds: 50,
       side: 'alliance',
@@ -70,7 +70,7 @@ storiesOf('App', module).add('success', () => {
   fetchMock
     .restore()
     .getOnce(
-      'http://localhost:4000/api/raids',
+      '/api/raids',
       payload,
     );
   return <Root store={store} />;

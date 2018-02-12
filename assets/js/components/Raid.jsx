@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import ReactMarkdown from 'react-markdown';
 import CodeBlock from './CodeBlock';
 
@@ -10,12 +10,24 @@ const Raid = (props) => {
     seeds,
     when,
     type,
+    region,
   } = props;
 
-  moment.locale('en');
-  const dayOfWeek = moment.utc(when).format('dddd');
-  const dayOfMonth = moment.utc(when).date();
-  const time = moment.utc(when).format('hh:mm a');
+  const timezone = (locale) => {
+    switch (locale) {
+      case 'us':
+        return 'EST';
+      case 'eu':
+        return 'CET';
+      default:
+        return 'CET';
+    }
+  };
+
+  const whenHere = moment.utc(when).tz(timezone(region));
+  const dayOfWeek = whenHere.format('dddd');
+  const dayOfMonth = whenHere.date();
+  const time = whenHere.format('hh:mm a');
 
   const timelineImgClasses = raidType => (
     `timeline-img ${raidType}`
@@ -55,6 +67,7 @@ Raid.propTypes = {
   content: PropTypes.string.isRequired,
   seeds: PropTypes.number.isRequired,
   type: PropTypes.string.isRequired,
+  region: PropTypes.string.isRequired,
 };
 
 

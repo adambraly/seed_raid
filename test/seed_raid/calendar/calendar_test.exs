@@ -51,7 +51,7 @@ defmodule SeedRaid.CalendarTest do
 
     test "list_raids/0 returns all raids" do
       raid = raid_fixture()
-      assert Calendar.list_raids() == [raid]
+      assert Calendar.list_raids(from: {{2010, 04, 15}, {12, 00, 00}}) == [raid]
     end
 
     test "get_raid!/1 returns the raid with given id" do

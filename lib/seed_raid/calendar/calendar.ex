@@ -17,8 +17,16 @@ defmodule SeedRaid.Calendar do
       [%Raid{}, ...]
 
   """
-  def list_raids do
-    query = from(r in Raid, order_by: [desc: r.when])
+  def list_raids(options \\ []) do
+    days_ago = Timex.now() |> Timex.shift(days: -2)
+    defaults = [from: days_ago]
+
+    options =
+      defaults
+      |> Keyword.merge(options)
+      |> Enum.into(%{})
+
+    query = from(r in Raid, where: r.when > ^options.from, order_by: [asc: r.when])
     Repo.all(query)
   end
 

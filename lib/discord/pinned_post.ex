@@ -71,7 +71,11 @@ defmodule SeedRaid.Discord.PinnedPost do
 
     case message.content |> Decoder.decode(options) do
       {:ok, metadata} ->
-        datetime = Timex.to_datetime({Date.to_erl(metadata.date), Time.to_erl(metadata.time)})
+        tz =
+          %{us: "EST", eu: "CET"}
+          |> Map.get!(channel.side)
+
+        datetime = Timex.to_datetime({Date.to_erl(metadata.date), Time.to_erl(metadata.time)}, tz)
 
         seedraid = %{
           discord_id: message.id,

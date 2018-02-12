@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import moment from 'moment';
 import Raid from '../components/Raid';
 import { fetchRaids } from '../actions/raids';
 
@@ -24,13 +25,15 @@ class Timeline extends React.Component {
           return regionCode;
       }
     };
-    let displayedRaids = raids;
-    if (side) {
-      displayedRaids = displayedRaids.filter(raid => raid.side === side);
-    }
-    if (region) {
-      displayedRaids = displayedRaids.filter(raid => raid.region === translateRegion(region));
-    }
+
+    const startOfDay = moment().startOf('day');
+    const hourAgo = moment().subtract(4, 'hour');
+    const fromDate = moment.min(startOfDay, hourAgo);
+    const displayedRaids = raids
+      .filter(raid => raid.side === side)
+      .filter(raid => raid.region === translateRegion(region))
+      .filter(raid => moment.utc(raid.when).isAfter(fromDate));
+
     return (
       <div className="container">
         {isFetching && raids.length === 0 && <h2>Loading...</h2>}

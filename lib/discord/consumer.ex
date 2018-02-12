@@ -28,7 +28,21 @@ defmodule SeedRaid.Discord.Consumer do
     ])
   end
 
-  def handle_event({:CHANNEL_PINS_UPDATE, {_map}, _ws_state}, state) do
+  defp all_pins(channel_id) do
+    Task.Supervisor.start_child(SeedRaid.Discord.TaskSupervisor, PinnedPost, :all, [
+      channel_id
+    ])
+  end
+
+  def handle_event({:CHANNEL_PINS_UPDATE, {%{channel_id: channel_id}}, _ws_state}, state) do
+    case channels() |> Map.fetch(channel_id) do
+      {:ok, _channel} ->
+        all_pins(channel_id)
+
+      :error ->
+        :noop
+    end
+
     {:ok, state}
   end
 
@@ -36,11 +50,8 @@ defmodule SeedRaid.Discord.Consumer do
         {:MESSAGE_UPDATE, {msg = %{pinned: true, channel_id: channel_id}}, _ws_state},
         state
       ) do
-    Logger.info("message update")
-
     case channels() |> Map.fetch(channel_id) do
       {:ok, _channel} ->
-        Logger.info("watched channel")
         parse_message(msg)
 
       :error ->
