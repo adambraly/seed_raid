@@ -73,7 +73,7 @@ defmodule SeedRaid.Discord.PinnedPost do
       {:ok, metadata} ->
         tz =
           %{us: "EST", eu: "CET"}
-          |> Map.get!(channel.side)
+          |> Map.fetch!(channel.region)
 
         datetime = Timex.to_datetime({Date.to_erl(metadata.date), Time.to_erl(metadata.time)}, tz)
 
