@@ -57,15 +57,6 @@ defmodule SeedRaid.Discord.Consumer do
     {:ok, state}
   end
 
-  def handle_event(
-        {:MESSAGE_UPDATE, {msg}, _ws_state},
-        state
-      ) do
-    Logger.info(inspect(msg))
-
-    {:ok, state}
-  end
-
   def handle_event(_, state) do
     {:ok, state}
   end
