@@ -5,11 +5,11 @@
   "author": "Sweetlie",
   "license": "MIT",
   "dependencies": {
-    "bourbon": "^5.0.0",
     "highlight.js": "^9.12.0",
     "history": "^4.7.2",
     "jquery": "^3.3.1",
     "lodash": "^4.17.4",
+    "material-ui": "^1.0.0-beta.33",
     "moment": "^2.20.1",
     "moment-timezone": "^0.5.14",
     "phoenix": "file:../deps/phoenix",
@@ -35,11 +35,12 @@
     "build-storybook": "build-storybook"
   },
   "devDependencies": {
-    "@babel/core": "^7.0.0-beta.39",
-    "@babel/preset-env": "^7.0.0-beta.38",
-    "@babel/preset-react": "^7.0.0-beta.38",
+    "@babel/core": "7.0.0-beta.40",
+    "@babel/preset-env": "^7.0.0-beta.40",
+    "@babel/preset-react": "^7.0.0-beta.40",
     "@storybook/addon-actions": "^3.3.11",
     "@storybook/addon-links": "^3.3.11",
+    "@storybook/addons": "^3.3.13",
     "@storybook/react": "^3.3.11",
     "autoprefixer": "^7.2.5",
     "babel-core": "^7.0.0-0",
@@ -61,7 +62,6 @@
     "sass-loader": "^6.0.6",
     "style-loader": "^0.19.1",
     "url-loader": "^0.6.2",
-    "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.11.1"
+    "webpack": "^3.11.0"
   }
 }
