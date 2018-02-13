@@ -7,18 +7,21 @@ const SeedLink = (props) => {
   const itemsID = {
     aethril: 129284,
     felwort: 129289,
+    'starlight-rose': 124105,
+    foxflower: 124103,
   };
-  const { name } = props;
-  const itemID = itemsID[name];
+  const { seed, value } = props;
+  const itemID = itemsID[seed];
   return (
     <WowheadItemLink id={itemID}>
-      {`[${name} seed]`}
+      {value}
     </WowheadItemLink>
   );
 };
 
 SeedLink.propTypes = {
-  name: PropTypes.string.isRequired,
+  seed: PropTypes.string.isRequired,
+  value: PropTypes.string.isRequired,
 };
 
 export default SeedLink;

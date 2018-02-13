@@ -5,11 +5,13 @@
   "author": "Sweetlie",
   "license": "MIT",
   "dependencies": {
+    "classnames": "^2.2.5",
     "highlight.js": "^9.12.0",
     "history": "^4.7.2",
     "jquery": "^3.3.1",
     "lodash": "^4.17.4",
     "material-ui": "^1.0.0-beta.33",
+    "material-ui-icons": "^1.0.0-beta.17",
     "moment": "^2.20.1",
     "moment-timezone": "^0.5.14",
     "phoenix": "file:../deps/phoenix",
