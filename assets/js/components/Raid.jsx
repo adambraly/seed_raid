@@ -19,8 +19,7 @@ import mix from '../../static/images/mix.png';
 
 const styles = theme => ({
   card: {
-    maxWidth: 600,
-    width: 400,
+    width: '100%',
   },
   seedsAvatar: {
     position: 'relative',
@@ -88,50 +87,48 @@ class Raid extends React.Component {
     const utcDate = moment.utc(when);
 
     return (
-      <div>
-        <Card className={classes.card}>
-          <CardHeader
-            avatar={
-              <div>
-                <Avatar className={classes.avatar}>
-                  <div className={classes.avatarBlock}>
-                    <img
-                      className={classes.seedsAvatar}
-                      alt={type}
-                      src={typeAvatar(type)}
-                    />
-                    <span className={classes.seedsQuantity}>{seeds}</span>
-                  </div>
-                </Avatar>
-              </div>
-            }
-            title={<RaidTitle type={type} seeds={seeds} />}
-            subheader={fulldate(utcDate, region)}
-          />
-          <CardContent>
-            <CardActions>
-              <IconButton
-                className={classnames(classes.expand, {
-                  [classes.expandOpen]: this.state.expanded,
-                })}
-                onClick={this.handleExpandClick}
-                aria-expanded={this.state.expanded}
-                aria-label="Show more"
-              >
-                <ExpandMoreIcon />
-              </IconButton>
-            </CardActions>
-            <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-              <ReactMarkdown
-                source={content}
-                skipHtml
-                escapeHtml
-                renderers={{ code: CodeBlock }}
-              />,
-            </Collapse>
-          </CardContent>
-        </Card>
-      </div>
+      <Card className={classes.card}>
+        <CardHeader
+          avatar={
+            <div>
+              <Avatar className={classes.avatar}>
+                <div className={classes.avatarBlock}>
+                  <img
+                    className={classes.seedsAvatar}
+                    alt={type}
+                    src={typeAvatar(type)}
+                  />
+                  <span className={classes.seedsQuantity}>{seeds}</span>
+                </div>
+              </Avatar>
+            </div>
+          }
+          title={<RaidTitle type={type} seeds={seeds} />}
+          subheader={fulldate(utcDate, region)}
+        />
+        <CardContent>
+          <CardActions>
+            <IconButton
+              className={classnames(classes.expand, {
+                [classes.expandOpen]: this.state.expanded,
+              })}
+              onClick={this.handleExpandClick}
+              aria-expanded={this.state.expanded}
+              aria-label="Show more"
+            >
+              <ExpandMoreIcon />
+            </IconButton>
+          </CardActions>
+          <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+            <ReactMarkdown
+              source={content}
+              skipHtml
+              escapeHtml
+              renderers={{ code: CodeBlock }}
+            />,
+          </Collapse>
+        </CardContent>
+      </Card>
     );
   }
 }

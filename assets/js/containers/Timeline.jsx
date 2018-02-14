@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import moment from 'moment';
+import { Grid, Row, Col } from 'react-flexbox-grid';
+import List, { ListItem } from 'material-ui/List';
 import Raid from '../components/Raid';
 import { fetchRaids } from '../actions/raids';
-import List, { ListItem } from 'material-ui/List';
 
 class Timeline extends React.Component {
   componentDidMount() {
@@ -36,18 +37,22 @@ class Timeline extends React.Component {
       .filter(raid => moment.utc(raid.when).isAfter(fromDate));
 
     return (
-      <div>
-        <List>
-          {isFetching && raids.length === 0 && <h2>Loading...</h2>}
-          {
-            displayedRaids.map(raid => (
-              <ListItem>
-                <Raid key={raid.id} {...raid} />
-              </ListItem>
-            ))
-          }
-        </List>
-      </div>
+      <Grid fluid>
+        <Row center="xs">
+          <Col xs={6}>
+            <List>
+              {isFetching && raids.length === 0 && <h2>Loading...</h2>}
+              {
+                displayedRaids.map(raid => (
+                  <ListItem>
+                    <Raid key={raid.id} {...raid} />
+                  </ListItem>
+                ))
+              }
+            </List>
+          </Col>
+        </Row>
+      </Grid>
     );
   }
 }

@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { storiesOf } from '@storybook/react';
 import React from 'react';
 import WowheadSpellLink from '../js/components/WowheadSpellLink';

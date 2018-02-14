@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import fetchMock from 'fetch-mock';
 import { storiesOf } from '@storybook/react';
 import React from 'react';
@@ -26,7 +27,7 @@ To sign up write "@Ozdi#8253 "
 [1/10]: @Ozdi#8253
 [backups 0/3]:
 \`\`\`
-`
+`;
 
 const store = configureStore();
 
@@ -49,7 +50,7 @@ const payload = {
       seeds: 50,
       side: 'alliance',
       region: 'eu',
-      id: '3d903e60-19f5-4298-9052-1842ec7a508f',
+      id: '4d903e60-19f5-4298-9052-1842ec7a508f',
       content: `
       @EUHorde
       `,
@@ -60,7 +61,7 @@ const payload = {
       seeds: 50,
       side: 'alliance',
       region: 'eu',
-      id: '3d903e60-19f5-5698-9052-1842ec7a508f',
+      id: '5d903e60-19f5-5698-9052-1842ec7a508f',
       content: '',
     },
   ],

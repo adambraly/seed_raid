@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { storiesOf } from '@storybook/react';
 import React from 'react';
 import SpellRank from '../js/components/SpellRank';

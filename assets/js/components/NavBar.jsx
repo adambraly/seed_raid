@@ -1,37 +1,72 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../scripts/navbar';
+import { withStyles } from 'material-ui/styles';
+import AppBar from 'material-ui/AppBar';
+import PropTypes from 'prop-types';
+import Toolbar from 'material-ui/Toolbar';
+import Typography from 'material-ui/Typography';
+import IconButton from 'material-ui/IconButton';
+import MenuIcon from 'material-ui-icons/Menu';
 
-import logo from '../../static/images/logo.png';
 
-const NavBar = () => {
+const styles = {
+  root: {
+    width: '100%',
+  },
+  flex: {
+    flex: 1,
+  },
+  menuButton: {
+    marginLeft: -12,
+    marginRight: 20,
+  },
+  materialLink: {
+    textDecoration: 'none',
+    color: 'inherit',
+  },
+};
+
+const NavBar = (props) => {
+  const { classes } = props;
   return (
-    <div className="menu-container">
-      <nav>
-        <div className="nav-fostrap">
-          <ul className="navigation-menu">
-            <li className="nav-link logo">
-              <Link to="/">
-                <img src={logo} alt="Logo" />
-                <span className="brand">Seed Raid</span>
-              </Link>
-            </li>
-            <li className="nav-link"><Link to="/calendar/eu/alliance">EU Alliance</Link></li>
-            <li className="nav-link"><Link to="/calendar/eu/horde">EU Horde</Link></li>
-            <li className="nav-link"><Link to="/calendar/na/alliance">NA Alliance</Link></li>
-            <li className="nav-link"><Link to="/calendar/na/horde">NA Horde</Link></li>
-          </ul>
-        </div>
-        <div className="nav-bg-fostrap">
-          <div className="navbar-fostrap">
-            <span /><span /><span />
-          </div>
-          <Link to="/" className="title-mobile">Seed Raid</Link>
-        </div>
-      </nav>
-    </div>
+    <AppBar position="static">
+      <Toolbar>
+        <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
+          <MenuIcon />
+        </IconButton>
+        <Typography variant="title" color="inherit" className={classes.flex}>
+          <Link to="/" className={classes.materialLink}>
+            Seed Raid
+          </Link>
+        </Typography>
+        <Typography color="inherit" className={classes.flex}>
+          <Link to="/calendar/eu/alliance" className={classes.materialLink}>
+            EU Alliance
+          </Link>
+        </Typography>
+        <Typography color="inherit" className={classes.flex}>
+          <Link to="/calendar/eu/horde" className={classes.materialLink}>
+            EU Horde
+          </Link>
+        </Typography>
+        <Typography color="inherit" className={classes.flex}>
+          <Link to="/calendar/na/alliance" className={classes.materialLink}>
+            NA Alliance
+          </Link>
+        </Typography>
+        <Typography color="inherit" className={classes.flex}>
+          <Link to="/calendar/eu/horde" className={classes.materialLink}>
+            NA Horde
+          </Link>
+        </Typography>
+      </Toolbar>
+    </AppBar>
   );
 };
 
+NavBar.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
 
-export default NavBar;
+
+export default withStyles(styles)(NavBar);
