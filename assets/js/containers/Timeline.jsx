@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import moment from 'moment';
 import Raid from '../components/Raid';
 import { fetchRaids } from '../actions/raids';
+import List, { ListItem } from 'material-ui/List';
 
 class Timeline extends React.Component {
   componentDidMount() {
@@ -35,13 +36,17 @@ class Timeline extends React.Component {
       .filter(raid => moment.utc(raid.when).isAfter(fromDate));
 
     return (
-      <div className="container">
-        {isFetching && raids.length === 0 && <h2>Loading...</h2>}
-        {
-          displayedRaids.map(raid => (
-            <Raid key={raid.id} {...raid} />
-          ))
-        }
+      <div>
+        <List>
+          {isFetching && raids.length === 0 && <h2>Loading...</h2>}
+          {
+            displayedRaids.map(raid => (
+              <ListItem>
+                <Raid key={raid.id} {...raid} />
+              </ListItem>
+            ))
+          }
+        </List>
       </div>
     );
   }

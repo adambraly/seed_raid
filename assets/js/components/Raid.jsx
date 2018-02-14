@@ -20,6 +20,7 @@ import mix from '../../static/images/mix.png';
 const styles = theme => ({
   card: {
     maxWidth: 600,
+    width: 400,
   },
   seedsAvatar: {
     position: 'relative',
