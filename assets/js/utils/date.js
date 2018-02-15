@@ -25,10 +25,10 @@ export const localNow = (locale) => {
 const dateFormatString = (locale) => {
   switch (locale) {
     case 'us':
-      return 'MMMM DD, YYYY hh:mm';
+      return 'MMMM DD, YYYY HH:mm';
     case 'eu':
     default:
-      return 'DD MMMM YYYY hh:mm';
+      return 'DD MMMM YYYY HH:mm';
   }
 };
 
