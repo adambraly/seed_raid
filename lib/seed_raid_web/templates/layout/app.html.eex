@@ -7,8 +7,10 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SeedRaid</title>
+    <title>Seedraid.pw</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <script>var whTooltips = {colorLinks: false, iconizeLinks: false, renameLinks: false};</script>
+    <script src="//wow.zamimg.com/widgets/power.js"></script>
   </head>
 
   <body>
