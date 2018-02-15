@@ -1,14 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
 import WowheadItemLink from './WowheadItemLink';
 
-const styles = () => ({
-  link: {
-    color: 'inherit',
-    'text-decoration': 'none',
-  },
-});
 
 const SeedLink = (props) => {
   const itemsID = {
@@ -17,10 +10,10 @@ const SeedLink = (props) => {
     'starlight-rose': 124105,
     foxflower: 124103,
   };
-  const { seed, value, classes } = props;
+  const { seed, value } = props;
   const itemID = itemsID[seed];
   return (
-    <WowheadItemLink id={itemID} className={classes.link}>
+    <WowheadItemLink id={itemID}>
       {value}
     </WowheadItemLink>
   );
@@ -29,7 +22,6 @@ const SeedLink = (props) => {
 SeedLink.propTypes = {
   seed: PropTypes.string.isRequired,
   value: PropTypes.string.isRequired,
-  classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(SeedLink);
+export default SeedLink;

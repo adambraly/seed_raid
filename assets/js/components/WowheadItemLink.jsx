@@ -1,7 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withStyles } from 'material-ui/styles';
+
+
+const styles = () => ({
+  link: {
+    color: 'inherit',
+    'text-decoration': 'none',
+  },
+});
 
 const WowheadItemLink = (props) => {
+  const { classes } = props;
   const wowheadData = (bonuses, gems, enchant) => {
     const rel = [];
     if (bonuses.length > 0) {
@@ -24,7 +34,7 @@ const WowheadItemLink = (props) => {
   return (
     <a
       href={wowheadLink(props.id)}
-      className="wowhead-item-link"
+      className={classes.link}
       data-wowhead={wowheadData(props.bonuses, props.gems, props.enchant)}
     >
       {props.children}
@@ -44,6 +54,7 @@ WowheadItemLink.propTypes = {
   enchant: PropTypes.number,
   gems: PropTypes.arrayOf(PropTypes.number),
   children: PropTypes.node.isRequired,
+  classes: PropTypes.object.isRequired,
 };
 
-export default WowheadItemLink;
+export default withStyles(styles)(WowheadItemLink);
