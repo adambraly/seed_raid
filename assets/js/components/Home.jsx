@@ -1,12 +1,46 @@
 import React from 'react';
-
-const Home = () => (
-  <div className="hero">
-    <h1>Hello there</h1>
-      this is an experimentation made for <a className="green" href="https://discord.gg/wT8ZdSj">discord seed raid </a>
-      fell free to look around :)
-  </div>
-);
+import PropTypes from 'prop-types';
+import Paper from 'material-ui/Paper';
+import Typography from 'material-ui/Typography';
+import { withStyles } from 'material-ui/styles';
 
 
-export default Home;
+const styles = () => ({
+  container: {
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    left: 0,
+    right: 0,
+    display: 'flex',
+    backround: 'transparent',
+    'justify-content': 'space-around',
+    'align-items': 'center',
+    'flex-wrap': 'wrap',
+    'z-index': -1,
+  },
+  paper: {
+    padding: '20px',
+  },
+});
+
+const Home = (props) => {
+  const { classes } = props;
+  return (
+    <div className={classes.container}>
+      <Paper className={classes.paper}>
+        <Typography variant="headline" component="h3">Hello there</Typography>
+        <Typography component="p">
+          this is an experimentation made for <a className="green" href="https://discord.gg/wT8ZdSj">discord seed raid </a>
+          fell free to look around :)
+        </Typography>
+      </Paper>
+    </div>
+  );
+};
+
+Home.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(Home);

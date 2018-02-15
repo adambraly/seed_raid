@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { Grid } from 'react-flexbox-grid';
 import List, { ListItem } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
+import Typography from 'material-ui/Typography';
+import { CircularProgress } from 'material-ui/Progress';
 import DayView from '../containers/DayView';
 import { fetchRaids } from '../actions/raids';
 import { localNow, groupByDay } from '../utils/date';
@@ -42,21 +43,27 @@ class Timeline extends React.Component {
     const dayViews = groupByDay(filteredRaid, fromDate, region);
 
     return (
-      <Grid container>
-        {isFetching && raids.length === 0 && <h2>Loading...</h2>}
-        <List>
-          {
+      <List>
+        {
+          isFetching && raids.length === 0 &&
+          <div>
+            <CircularProgress size={50} />
+            <Typography variant="display1">
+              Loading...
+            </Typography>
+          </div>
+        }
+        {
           dayViews.map(view => (
-            <React.Fragment>
+            <React.Fragment key={view.day}>
               <ListItem>
-                <DayView key={view.day} raids={view.raids} day={view.day} />
+                <DayView raids={view.raids} day={view.day} />
               </ListItem>
               <Divider inset component="li" />
             </React.Fragment>
-            ))
-          }
-        </List>
-      </Grid>
+          ))
+        }
+      </List>
     );
   }
 }

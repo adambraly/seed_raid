@@ -19,8 +19,8 @@ const DayView = (props) => {
   const dayName = moment(day).format('dddd');
   const dayOfMonth = moment(day).format('DD');
   return (
-    <Grid container>
-      <Row center>
+    <Grid className="container">
+      <Row center="xs">
         <Col xs={2}>
           <div className={classes.dayBlock}>
             <Typography variant="headline" align="center">
@@ -35,8 +35,8 @@ const DayView = (props) => {
           <List>
             {
               raids.map(raid => (
-                <ListItem>
-                  <Raid key={raid.id} {...raid} />
+                <ListItem key={raid.id}>
+                  <Raid {...raid} />
                 </ListItem>
               ))
             }
