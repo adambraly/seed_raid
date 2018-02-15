@@ -6,7 +6,7 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const publicPath = '/';
 const destDir = path.resolve(__dirname, '..', 'priv', 'static');
 
-const bourbon = require('bourbon');
+
 const autoprefixer = require('autoprefixer');
 
 
@@ -69,7 +69,6 @@ module.exports = () => {
         },
         {
           test: /\.(css|sass|scss)$/,
-          exclude: /node_modules/,
           use: ExtractTextPlugin.extract({
             fallback: 'style-loader',
             use: [{
@@ -85,11 +84,6 @@ module.exports = () => {
                     autoprefixer,
                   ],
                 },
-              },
-            }, {
-              loader: 'sass-loader',
-              options: {
-                includePaths: [bourbon.includePaths],
               },
             },
             ],
