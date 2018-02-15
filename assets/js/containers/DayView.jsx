@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
-import { Row, Col } from 'react-flexbox-grid';
+import { Row, Col, Grid } from 'react-flexbox-grid';
 import List, { ListItem } from 'material-ui/List';
 import Raid from '../components/Raid';
 
@@ -19,29 +19,31 @@ const DayView = (props) => {
   const dayName = moment(day).format('dddd');
   const dayOfMonth = moment(day).format('DD');
   return (
-    <Row center="xs">
-      <Col xs={2}>
-        <div className={classes.dayBlock}>
-          <Typography variant="headline" align="center">
-            {dayName}
-          </Typography>
-          <Typography variant="subheading" align="center">
-            {dayOfMonth}
-          </Typography>
-        </div>
-      </Col>
-      <Col xs={6} sm={6} lg={8} >
-        <List>
-          {
-            raids.map(raid => (
-              <ListItem>
-                <Raid key={raid.id} {...raid} />
-              </ListItem>
-            ))
-          }
-        </List>
-      </Col>
-    </Row>
+    <Grid container>
+      <Row center>
+        <Col xs={2}>
+          <div className={classes.dayBlock}>
+            <Typography variant="headline" align="center">
+              {dayName}
+            </Typography>
+            <Typography variant="subheading" align="center">
+              {dayOfMonth}
+            </Typography>
+          </div>
+        </Col>
+        <Col xs={6} lg={8} >
+          <List>
+            {
+              raids.map(raid => (
+                <ListItem>
+                  <Raid key={raid.id} {...raid} />
+                </ListItem>
+              ))
+            }
+          </List>
+        </Col>
+      </Row>
+    </Grid>
   );
 };
 

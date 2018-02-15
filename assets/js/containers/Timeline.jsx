@@ -42,14 +42,14 @@ class Timeline extends React.Component {
     const dayViews = groupByDay(filteredRaid, fromDate, region);
 
     return (
-      <Grid fluid>
+      <Grid container>
         {isFetching && raids.length === 0 && <h2>Loading...</h2>}
         <List>
           {
           dayViews.map(view => (
             <React.Fragment>
               <ListItem>
-                <DayView raids={view.raids} day={view.day} />
+                <DayView key={view.day} raids={view.raids} day={view.day} />
               </ListItem>
               <Divider inset component="li" />
             </React.Fragment>

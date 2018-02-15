@@ -6,16 +6,13 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const publicPath = '/';
 const destDir = path.resolve(__dirname, '..', 'priv', 'static');
 
-const bourbon = require('bourbon');
+
 const autoprefixer = require('autoprefixer');
 
 
-module.exports = (env) => {
-  const isDev = !(env && env.prod);
-  const devtool = isDev ? 'eval' : 'cheap-module-source-map';
-
-  return {
-    devtool,
+module.exports = () => (
+  {
+    devtool: 'eval',
 
     context: __dirname,
 
@@ -78,7 +75,6 @@ module.exports = (env) => {
         },
         {
           test: /\.(css|sass|scss)$/,
-          exclude: /node_modules/,
           use: ExtractTextPlugin.extract({
             fallback: 'style-loader',
             use: [{
@@ -97,12 +93,6 @@ module.exports = (env) => {
                   ],
                 },
               },
-            }, {
-              loader: 'sass-loader',
-              options: {
-                sourceMap: true,
-                includePaths: [bourbon.includePaths],
-              },
             },
             ],
           }),
@@ -114,7 +104,7 @@ module.exports = (env) => {
       modules: ['node_modules', __dirname],
       extensions: ['.js', '.json', '.jsx', '.css'],
     },
-    plugins: isDev ? [
+    plugins: [
       new webpack.ProvidePlugin({
         $: 'jquery',
         jQuery: 'jquery',
@@ -127,49 +117,6 @@ module.exports = (env) => {
       new ExtractTextPlugin({
         filename: 'css/[name].css',
         allChunks: true,
-      }),
-    ] : [
-      new webpack.ProvidePlugin({
-        $: 'jquery',
-        jQuery: 'jquery',
-      }),
-      new CopyWebpackPlugin([{
-        from: './static',
-        to: path.resolve(__dirname, '../priv/static'),
-      }]),
-
-      new ExtractTextPlugin({
-        filename: 'css/[name].css',
-        allChunks: true,
-      }),
-      new webpack.DefinePlugin({
-        'process.env.NODE_ENV': JSON.stringify('production'),
-      }),
-      new webpack.optimize.ModuleConcatenationPlugin(),
-      new webpack.optimize.CommonsChunkPlugin({
-        name: 'vendor',
-        filename: 'vendor.[chunkhash].js',
-        minChunks(module) {
-          return module.context && module.context.indexOf('node_modules') >= 0;
-        },
-      }),
-      new webpack.optimize.UglifyJsPlugin({
-        compress: {
-          warnings: false,
-          screw_ie8: true,
-          conditionals: true,
-          unused: true,
-          comparisons: true,
-          sequences: true,
-          dead_code: true,
-          evaluate: true,
-          if_return: true,
-          join_vars: true,
-        },
-        output: {
-          comments: false,
-        },
       }),
     ],
-  };
-};
+  });
