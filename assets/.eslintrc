@@ -4,9 +4,11 @@
   "extends": "airbnb",
   "env": {
     "browser": true,
+    "jest/globals": true,
   },
   "plugins": [
-    "react"
+    "react",
+    "jest"
   ],
   "rules": {
     "jsx-a11y/anchor-is-valid": [ "error", {

@@ -2,10 +2,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import moment from 'moment';
-import { Grid, Row, Col } from 'react-flexbox-grid';
+import { Grid } from 'react-flexbox-grid';
 import List, { ListItem } from 'material-ui/List';
-import Raid from '../components/Raid';
+import Divider from 'material-ui/Divider';
+import DayView from '../containers/DayView';
 import { fetchRaids } from '../actions/raids';
+import { localNow, groupByDay } from '../utils/date';
+
 
 class Timeline extends React.Component {
   componentDidMount() {
@@ -28,30 +31,31 @@ class Timeline extends React.Component {
       }
     };
 
-    const startOfDay = moment().startOf('day');
-    const hourAgo = moment().subtract(4, 'hour');
+    const now = localNow(region);
+    const startOfDay = now.startOf('day');
+    const hourAgo = now.subtract(4, 'hour');
     const fromDate = moment.min(startOfDay, hourAgo);
-    const displayedRaids = raids
+    const filteredRaid = raids
       .filter(raid => raid.side === side)
       .filter(raid => raid.region === translateRegion(region))
       .filter(raid => moment.utc(raid.when).isAfter(fromDate));
+    const dayViews = groupByDay(filteredRaid, fromDate, region);
 
     return (
       <Grid fluid>
-        <Row center="xs">
-          <Col xs={6}>
-            <List>
-              {isFetching && raids.length === 0 && <h2>Loading...</h2>}
-              {
-                displayedRaids.map(raid => (
-                  <ListItem>
-                    <Raid key={raid.id} {...raid} />
-                  </ListItem>
-                ))
-              }
-            </List>
-          </Col>
-        </Row>
+        {isFetching && raids.length === 0 && <h2>Loading...</h2>}
+        <List>
+          {
+          dayViews.map(view => (
+            <React.Fragment>
+              <ListItem>
+                <DayView raids={view.raids} day={view.day} />
+              </ListItem>
+              <Divider inset component="li" />
+            </React.Fragment>
+            ))
+          }
+        </List>
       </Grid>
     );
   }
