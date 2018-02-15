@@ -28,6 +28,15 @@ const styles = theme => ({
     textAlign: 'center',
     objectFit: 'cover',
   },
+  header: {
+    padding: '12px',
+  },
+  cardActions: {
+    height: '20px',
+  },
+  cardContent: {
+    padding: '12px',
+  },
   avatarBlock: {
     width: '100%',
     height: '100%',
@@ -89,6 +98,7 @@ class Raid extends React.Component {
     return (
       <Card className={classes.card}>
         <CardHeader
+          className={classes.header}
           avatar={
             <div>
               <Avatar className={classes.avatar}>
@@ -107,7 +117,7 @@ class Raid extends React.Component {
           subheader={fulldate(utcDate, region)}
         />
         <CardContent>
-          <CardActions>
+          <CardActions className={classes.cardActions}>
             <IconButton
               className={classnames(classes.expand, {
                 [classes.expandOpen]: this.state.expanded,
