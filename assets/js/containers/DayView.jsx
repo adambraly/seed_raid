@@ -30,7 +30,7 @@ const DayView = (props) => {
           </Typography>
         </div>
       </Col>
-      <Col xs={6}>
+      <Col xs={6} sm={6} lg={8} >
         <List>
           {
             raids.map(raid => (
