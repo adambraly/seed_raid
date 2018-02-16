@@ -1,5 +1,10 @@
 import 'whatwg-fetch';
 import * as types from './actionTypes';
+import { configureChannel } from '../utils/channel';
+
+
+const socket = configureChannel();
+const channel = socket.channel('raids');
 
 
 export function isFetching(bool) {
@@ -21,8 +26,14 @@ export function raidsFetchSuccess(items) {
 export function fetchRaids() {
   return (dispatch) => {
     dispatch(isFetching(true));
-    return fetch('/api/raids')
-      .then(response => response.json())
-      .then(json => dispatch(raidsFetchSuccess(json.data)));
+    channel.join()
+      .receive('ok', (messages) => {
+        console.log('catching up', messages);
+        dispatch(raidsFetchSuccess(messages.raids));
+      })
+      .receive('error', (reason) => {
+        console.log('failed join', reason);
+        dispatch(raidsFetchSuccess(reason));
+      });
   };
 }
