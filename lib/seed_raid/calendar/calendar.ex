@@ -86,7 +86,13 @@ defmodule SeedRaid.Calendar do
     |> Raid.changeset(attrs)
     |> Repo.insert(
       on_conflict: [
-        set: [when: attrs.when, seeds: attrs.seeds, type: attrs.type, content: attrs.content]
+        set: [
+          when: attrs.when,
+          seeds: attrs.seeds,
+          type: attrs.type,
+          content: attrs.content,
+          pinned: attrs.pinned
+        ]
       ],
       conflict_target: :discord_id
     )

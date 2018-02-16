@@ -150,7 +150,8 @@ defmodule SeedRaid.Discord.PinnedPost do
           content: Decoder.format(message.content),
           seeds: metadata.seeds,
           type: metadata.type,
-          when: datetime
+          when: datetime,
+          pinned: true
         }
 
         {:ok, seedraid}
