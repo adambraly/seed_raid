@@ -125,5 +125,61 @@ defmodule SeedRaid.CalendarTest do
       raid = raid_fixture()
       assert %Ecto.Changeset{} = Calendar.change_raid(raid)
     end
+
+    test "unpin_all/2 unpin all raid from a channel" do
+      raid_attrs =
+        @valid_attrs
+        |> Map.put(:region, :eu)
+        |> Map.put(:side, :alliance)
+        |> Map.put(:discord_id, 1)
+
+      assert {:ok, %Raid{id: to_unpin}} = Calendar.create_or_update_raid(raid_attrs)
+
+      raid_attrs =
+        @valid_attrs
+        |> Map.put(:region, :eu)
+        |> Map.put(:side, :alliance)
+        |> Map.put(:discord_id, 2)
+
+      assert {:ok, %Raid{}} = Calendar.create_or_update_raid(raid_attrs)
+
+      raid_attrs =
+        @valid_attrs
+        |> Map.put(:region, :eu)
+        |> Map.put(:side, :horde)
+        |> Map.put(:discord_id, 3)
+
+      assert {:ok, %Raid{}} = Calendar.create_or_update_raid(raid_attrs)
+
+      raid_attrs =
+        @valid_attrs
+        |> Map.put(:region, :us)
+        |> Map.put(:side, :alliance)
+        |> Map.put(:discord_id, 4)
+
+      assert {:ok, %Raid{id: other_region_raid}} = Calendar.create_or_update_raid(raid_attrs)
+
+      raid_attrs =
+        @valid_attrs
+        |> Map.put(:region, :eu)
+        |> Map.put(:side, :alliance)
+        |> Map.put(:discord_id, 5)
+        |> Map.put(:pinned, false)
+
+      assert {:ok, %Raid{}} = Calendar.create_or_update_raid(raid_attrs)
+
+      inserted_raid_count =
+        Calendar.list_raids(from: {{2010, 04, 15}, {12, 00, 00}}) |> Enum.count()
+
+      assert inserted_raid_count == 4
+
+      assert Calendar.unpin_all(:eu, :alliance) == 2
+
+      always_pinned = Calendar.get_raid!(other_region_raid)
+      assert always_pinned.pinned == true
+
+      unpinned = Calendar.get_raid!(to_unpin)
+      assert unpinned.pinned == false
+    end
   end
 end

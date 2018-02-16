@@ -58,10 +58,19 @@ config :seed_raid, SeedRaid.Repo,
   hostname: "localhost",
   pool_size: 10
 
-config :seed_raid, :guild, 358_681_085_246_308_353
+# config :seed_raid, :guild, 358_681_085_246_308_353
+#
+# config :seed_raid, :channels, %{
+#   400_443_211_127_980_044 => %{region: :eu, side: :horde}
+# }
+
+config :seed_raid, :guild, 248_859_295_414_878_208
 
 config :seed_raid, :channels, %{
-  400_443_211_127_980_044 => %{region: :eu, side: :horde}
+  248_861_585_811_046_410 => %{region: :eu, side: :alliance},
+  248_861_600_998_621_184 => %{region: :eu, side: :horde},
+  248_901_465_291_096_064 => %{region: :us, side: :alliance},
+  248_861_564_008_923_147 => %{region: :us, side: :horde}
 }
 
 import_config "dev.secret.exs"

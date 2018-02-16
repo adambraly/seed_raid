@@ -28,9 +28,9 @@ defmodule SeedRaid.Discord.PinnedPost do
     GenServer.cast(__MODULE__, {:all, channel_id})
   end
 
-  def handle_cast({:all, channel_id}, state) do
+  def handle_cast({:all, channel_id}, %{channels: channels} = state) do
     Logger.info("handle_cast all, #{channel_id}")
-    do_all(channel_id)
+    do_all(channel_id, channels)
     {:noreply, state}
   end
 
@@ -56,8 +56,8 @@ defmodule SeedRaid.Discord.PinnedPost do
     {:noreply, state}
   end
 
-  def handle_info({:all, channel_id}, state) do
-    do_all(channel_id)
+  def handle_info({:all, channel_id}, %{channels: channels} = state) do
+    do_all(channel_id, channels)
     {:noreply, state}
   end
 
@@ -104,9 +104,17 @@ defmodule SeedRaid.Discord.PinnedPost do
     |> Regex.replace(starting, " ")
   end
 
-  defp do_all(channel_id) do
+  defp do_all(channel_id, channels) do
     case Api.get_pinned_messages(channel_id) do
       {:ok, messages} ->
+        case channels |> Map.fetch(channel_id) do
+          {:ok, channel} ->
+            Calendar.unpin_all(channel.region, channel.side)
+
+          _ ->
+            Logger.warn("Unkwown channel id: #{channel_id}")
+        end
+
         messages
         |> Enum.each(&analyze/1)
 

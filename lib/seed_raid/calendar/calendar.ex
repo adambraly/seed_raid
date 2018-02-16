@@ -26,7 +26,9 @@ defmodule SeedRaid.Calendar do
       |> Keyword.merge(options)
       |> Enum.into(%{})
 
-    query = from(r in Raid, where: r.when > ^options.from, order_by: [asc: r.when])
+    query =
+      from(r in Raid, where: r.when > ^options.from and r.pinned == true, order_by: [asc: r.when])
+
     Repo.all(query)
   end
 
@@ -35,7 +37,14 @@ defmodule SeedRaid.Calendar do
   """
   def unpin_all(region, side) do
     query = from(r in Raid, where: r.region == ^region and r.side == ^side and r.pinned == true)
-    Repo.update_all(query, set: [pinned: false])
+
+    case Repo.update_all(query, set: [pinned: false]) do
+      {changed, _} when is_integer(changed) ->
+        changed
+
+      _ ->
+        0
+    end
   end
 
   @doc """
