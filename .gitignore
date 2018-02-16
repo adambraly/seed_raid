@@ -16,5 +16,3 @@ erl_crash.dump
 /config/*.secret.exs
 
 /priv/static/*
-
-fabfile.py
