@@ -31,6 +31,14 @@ defmodule SeedRaid.Calendar do
   end
 
   @doc """
+   unpin all post from a given channel
+  """
+  def unpin_all(region, side) do
+    query = from(r in Raid, where: r.region == ^region and r.side == ^side and r.pinned == true)
+    Repo.update_all(query, set: [pinned: false])
+  end
+
+  @doc """
   Gets a single raid.
 
   Raises `Ecto.NoResultsError` if the Raid does not exist.

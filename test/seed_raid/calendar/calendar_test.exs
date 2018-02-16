@@ -17,7 +17,8 @@ defmodule SeedRaid.CalendarTest do
       discord_id: 123,
       author_id: 345,
       type: :mix,
-      content: "raid..."
+      content: "raid...",
+      pinned: true
     }
     @update_attrs %{
       seeds: 43,
@@ -27,7 +28,8 @@ defmodule SeedRaid.CalendarTest do
       discord_id: 123,
       author_id: 345,
       type: :mix,
-      content: "updated raid..."
+      content: "updated raid...",
+      pinned: true
     }
     @create_update_attrs %{
       seeds: 45,
@@ -37,7 +39,8 @@ defmodule SeedRaid.CalendarTest do
       discord_id: 123,
       author_id: 345,
       type: :mix,
-      content: "updated raid..."
+      content: "updated raid...",
+      pinned: true
     }
     @invalid_attrs %{size: nil, date: nil, when: nil}
 
@@ -66,6 +69,7 @@ defmodule SeedRaid.CalendarTest do
       assert raid.when == Timex.to_datetime({{2010, 04, 17}, {12, 00, 00}})
       assert raid.content == "raid..."
       assert raid.author_id == 345
+      assert raid.pinned == true
     end
 
     test "create_raid/1 with invalid data returns error changeset" do

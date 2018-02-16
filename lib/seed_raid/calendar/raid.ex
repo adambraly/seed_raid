@@ -18,6 +18,8 @@ defmodule SeedRaid.Calendar.Raid do
     field(:seeds, :integer)
     field(:type, RaidTypeEnum)
 
+    field(:pinned, :boolean)
+
     timestamps()
   end
 
@@ -32,7 +34,8 @@ defmodule SeedRaid.Calendar.Raid do
       :content,
       :when,
       :seeds,
-      :type
+      :type,
+      :pinned
     ])
     |> validate_required([:discord_id, :author_id, :side, :region, :content, :when])
   end
