@@ -55,7 +55,7 @@ const NavBar = (props) => {
           </Link>
         </Typography>
         <Typography color="inherit" className={classes.flex}>
-          <Link to="/calendar/eu/horde" className={classes.materialLink}>
+          <Link to="/calendar/na/horde" className={classes.materialLink}>
             NA Horde
           </Link>
         </Typography>
