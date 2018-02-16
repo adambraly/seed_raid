@@ -29,7 +29,6 @@ defmodule SeedRaid.Discord.PinnedPost do
   end
 
   def handle_cast({:all, channel_id}, %{channels: channels} = state) do
-    Logger.info("handle_cast all, #{channel_id}")
     do_all(channel_id, channels)
     {:noreply, state}
   end
@@ -119,7 +118,18 @@ defmodule SeedRaid.Discord.PinnedPost do
         |> Enum.each(&analyze/1)
 
       {:error, %{status_code: 429, message: %{"retry_after" => retry_after}}} ->
-        Logger.warn("error 429, will retry to parse channe: #{channel_id} after #{retry_after}")
+        channel_name =
+          case channels |> Map.fetch(channel_id) do
+            {:ok, channel} ->
+              "#{channel.region}-#{channel.side}"
+              |> String.upcase()
+
+            _ ->
+              "#{channel_id}"
+          end
+
+        Logger.warn("error 429, will retry to parse channel #{channel_name} after #{retry_after}")
+
         Process.send_after(self(), {:all, channel_id}, retry_after)
 
       error ->
