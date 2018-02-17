@@ -9,6 +9,7 @@
     "highlight.js": "^9.12.0",
     "history": "^4.7.2",
     "jquery": "^3.3.1",
+    "js-logger": "^1.4.1",
     "lodash": "^4.17.4",
     "material-ui": "^1.0.0-beta.33",
     "material-ui-icons": "^1.0.0-beta.17",
@@ -28,8 +29,7 @@
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
     "redux-thunk": "^2.2.0",
-    "whatwg-fetch": "^2.0.3",
-    "winston": "^3.0.0-rc1"
+    "whatwg-fetch": "^2.0.3"
   },
   "scripts": {
     "start": "yarn run watch",
@@ -51,6 +51,7 @@
     "babel-core": "^7.0.0-0",
     "babel-jest": "^22.2.2",
     "babel-loader": "8.0.0-beta.0",
+    "babel-plugin-js-logger": "^1.0.17",
     "copy-webpack-plugin": "^4.3.1",
     "css-loader": "^0.28.9",
     "enzyme": "^3.3.0",

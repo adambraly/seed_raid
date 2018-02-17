@@ -11,9 +11,11 @@ import { render } from 'react-dom';
 import configureStore from './store';
 import Root from './containers/Root';
 
+import './utils/logger-init';
+
 const store = configureStore();
 
 render(
-  <Root store={store} history={history} />,
+  <Root store={store} />,
   document.getElementById('root'),
 );

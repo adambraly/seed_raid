@@ -1,7 +1,7 @@
 import 'whatwg-fetch';
+import Logger from 'js-logger';
 import * as types from './actionTypes';
 import configureChannel from '../utils/channel';
-import logger from '../utils/logger';
 
 
 const socket = configureChannel();
@@ -36,16 +36,16 @@ export function fetchRaids() {
     dispatch(isFetching(true));
     channel.join()
       .receive('ok', (messages) => {
-        logger.debug('catching up', messages);
+        Logger.debug('catching up', messages);
         dispatch(raidsFetchSuccess(messages.raids));
       })
       .receive('error', (reason) => {
-        logger.debug('failed join', reason);
+        Logger.debug('failed join', reason);
         dispatch(raidsFetchSuccess(reason));
       });
 
     channel.on('sync_channel', (msg) => {
-      logger.debug('sync_channel', msg);
+      Logger.debug('sync_channel', msg);
       dispatch(syncChannelSuccess(msg));
     });
   };
