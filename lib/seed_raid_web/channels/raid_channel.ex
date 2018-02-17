@@ -7,6 +7,10 @@ defmodule SeedRaidWeb.RaidChannel do
     raids =
       Calendar.list_raids()
       |> Enum.group_by(fn raid -> raid.channel_slug end)
+      |> Map.put_new("eu-alliance", [])
+      |> Map.put_new("eu-horde", [])
+      |> Map.put_new("na-alliance", [])
+      |> Map.put_new("na-horde", [])
 
     {:ok, %{raids: raids}, socket}
   end

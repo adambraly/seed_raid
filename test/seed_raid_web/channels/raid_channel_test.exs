@@ -33,7 +33,15 @@ defmodule SeedRaidWeb.RaidChannelTest do
 
   test "join raids when there is no raids", %{socket: socket} do
     assert {:ok, reply, _socket} = subscribe_and_join(socket, "raids")
-    assert %{raids: %{}} == reply
+
+    assert %{
+             raids: %{
+               "eu-alliance" => [],
+               "eu-horde" => [],
+               "na-alliance" => [],
+               "na-horde" => []
+             }
+           } == reply
   end
 
   test "join raids when there is two raids", %{socket: socket} do
