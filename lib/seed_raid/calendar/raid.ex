@@ -8,8 +8,7 @@ defmodule SeedRaid.Calendar.Raid do
     field(:discord_id, :integer)
     field(:author_id, :integer)
 
-    field(:side, SideEnum)
-    field(:region, RegionEnum)
+    field(:channel_slug, :string)
 
     field(:content, :string)
 
@@ -29,14 +28,13 @@ defmodule SeedRaid.Calendar.Raid do
     |> cast(attrs, [
       :author_id,
       :discord_id,
-      :side,
-      :region,
+      :channel_slug,
       :content,
       :when,
       :seeds,
       :type,
       :pinned
     ])
-    |> validate_required([:discord_id, :author_id, :side, :region, :content, :when])
+    |> validate_required([:discord_id, :author_id, :channel_slug, :content, :when])
   end
 end

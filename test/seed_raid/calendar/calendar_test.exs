@@ -12,8 +12,7 @@ defmodule SeedRaid.CalendarTest do
     @valid_attrs %{
       seeds: 42,
       when: Timex.to_datetime(@datetime),
-      side: :alliance,
-      region: :eu,
+      channel_slug: "eu-alliance",
       discord_id: 123,
       author_id: 345,
       type: :mix,
@@ -23,8 +22,7 @@ defmodule SeedRaid.CalendarTest do
     @update_attrs %{
       seeds: 43,
       when: Timex.to_datetime(@datetime),
-      side: :alliance,
-      region: :eu,
+      channel_slug: "eu-alliance",
       discord_id: 123,
       author_id: 345,
       type: :mix,
@@ -34,8 +32,7 @@ defmodule SeedRaid.CalendarTest do
     @create_update_attrs %{
       seeds: 45,
       when: Timex.to_datetime(@updated_datetime),
-      side: :horde,
-      region: :us,
+      channel_slug: "eu-alliance",
       discord_id: 123,
       author_id: 345,
       type: :mix,
@@ -55,7 +52,7 @@ defmodule SeedRaid.CalendarTest do
 
     test "list_raids/0 returns all raids" do
       raid = raid_fixture()
-      assert Calendar.list_raids(from: {{2010, 04, 15}, {12, 00, 00}}) == [raid]
+      assert Calendar.list_raids() == [raid]
     end
 
     test "get_raid!/1 returns the raid with given id" do
@@ -93,8 +90,7 @@ defmodule SeedRaid.CalendarTest do
       assert raid.seeds == 42
       assert raid.content == "raid..."
       assert raid.author_id == 345
-      assert raid.side == :alliance
-      assert raid.region == :eu
+      assert raid.channel_slug == "eu-alliance"
 
       assert raid.when == Timex.to_datetime({{2010, 04, 17}, {12, 00, 00}})
       assert(raid.type == :mix)
@@ -104,8 +100,7 @@ defmodule SeedRaid.CalendarTest do
       assert %Raid{} = saved_raid
       assert saved_raid.seeds == 45
       assert saved_raid.content == "updated raid..."
-      assert saved_raid.side == :alliance
-      assert saved_raid.region == :eu
+      assert saved_raid.channel_slug == "eu-alliance"
       assert saved_raid.when == Timex.to_datetime({{2011, 04, 17}, {12, 00, 00}})
     end
 
@@ -129,56 +124,43 @@ defmodule SeedRaid.CalendarTest do
     test "unpin_all/2 unpin all raid from a channel" do
       raid_attrs =
         @valid_attrs
-        |> Map.put(:region, :eu)
-        |> Map.put(:side, :alliance)
+        |> Map.put(:channel_slug, "eu-alliance")
         |> Map.put(:discord_id, 1)
 
-      assert {:ok, %Raid{id: to_unpin}} = Calendar.create_or_update_raid(raid_attrs)
+      assert {:ok, %Raid{id: to_unpin_id}} = Calendar.create_or_update_raid(raid_attrs)
 
       raid_attrs =
         @valid_attrs
-        |> Map.put(:region, :eu)
-        |> Map.put(:side, :alliance)
+        |> Map.put(:channel_slug, "eu-alliance")
         |> Map.put(:discord_id, 2)
 
       assert {:ok, %Raid{}} = Calendar.create_or_update_raid(raid_attrs)
 
       raid_attrs =
         @valid_attrs
-        |> Map.put(:region, :eu)
-        |> Map.put(:side, :horde)
+        |> Map.put(:channel_slug, "eu-horde")
         |> Map.put(:discord_id, 3)
 
-      assert {:ok, %Raid{}} = Calendar.create_or_update_raid(raid_attrs)
+      assert {:ok, %Raid{id: other_channel_raid_id}} = Calendar.create_or_update_raid(raid_attrs)
 
       raid_attrs =
         @valid_attrs
-        |> Map.put(:region, :us)
-        |> Map.put(:side, :alliance)
-        |> Map.put(:discord_id, 4)
-
-      assert {:ok, %Raid{id: other_region_raid}} = Calendar.create_or_update_raid(raid_attrs)
-
-      raid_attrs =
-        @valid_attrs
-        |> Map.put(:region, :eu)
-        |> Map.put(:side, :alliance)
+        |> Map.put(:channel_slug, "eu-alliance")
         |> Map.put(:discord_id, 5)
         |> Map.put(:pinned, false)
 
       assert {:ok, %Raid{}} = Calendar.create_or_update_raid(raid_attrs)
 
-      inserted_raid_count =
-        Calendar.list_raids(from: {{2010, 04, 15}, {12, 00, 00}}) |> Enum.count()
+      inserted_raid_count = Calendar.list_raids() |> Enum.count()
 
-      assert inserted_raid_count == 4
+      assert inserted_raid_count == 3
 
-      assert Calendar.unpin_all(:eu, :alliance) == 2
+      assert Calendar.unpin_all("eu-alliance") == 2
 
-      always_pinned = Calendar.get_raid!(other_region_raid)
+      always_pinned = Calendar.get_raid!(other_channel_raid_id)
       assert always_pinned.pinned == true
 
-      unpinned = Calendar.get_raid!(to_unpin)
+      unpinned = Calendar.get_raid!(to_unpin_id)
       assert unpinned.pinned == false
     end
   end

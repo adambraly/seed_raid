@@ -14,8 +14,7 @@ defmodule SeedRaidWeb.RaidView do
     %{
       id: raid.id,
       when: raid.when |> Timex.format!("{ISO:Extended:Z}"),
-      region: raid.region,
-      side: raid.side,
+      channel_slug: raid.channel_slug,
       type: raid.type |> Atom.to_string() |> String.replace("_", "-"),
       seeds: raid.seeds,
       content: raid.content

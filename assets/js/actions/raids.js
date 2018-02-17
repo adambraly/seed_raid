@@ -1,6 +1,6 @@
 import 'whatwg-fetch';
 import * as types from './actionTypes';
-import { configureChannel } from '../utils/channel';
+import configureChannel from '../utils/channel';
 
 
 const socket = configureChannel();

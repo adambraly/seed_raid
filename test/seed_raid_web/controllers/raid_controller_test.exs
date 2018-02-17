@@ -8,8 +8,7 @@ defmodule SeedRaidWeb.RaidControllerTest do
     seeds: 42,
     title: "some title",
     when: "2010-04-17 14:00:00.000000Z",
-    side: :alliance,
-    region: :eu,
+    channel_slug: "eu-alliance",
     discord_id: 123,
     content: "content...",
     type: :starlight_rose,
@@ -18,8 +17,7 @@ defmodule SeedRaidWeb.RaidControllerTest do
   @update_attrs %{
     seeds: 43,
     when: "2011-05-18 15:01:01.000000Z",
-    side: :alliance,
-    region: :eu,
+    channel_slug: "eu-alliance",
     discord_id: 123,
     content: "updated content...",
     type: :starlight_rose,
@@ -56,8 +54,7 @@ defmodule SeedRaidWeb.RaidControllerTest do
                "content" => "content...",
                "when" => "2010-04-17T14:00:00Z",
                "type" => "starlight-rose",
-               "side" => "alliance",
-               "region" => "eu"
+               "channel_slug" => "eu-alliance"
              }
     end
 
@@ -82,8 +79,7 @@ defmodule SeedRaidWeb.RaidControllerTest do
                "content" => "updated content...",
                "type" => "starlight-rose",
                "when" => "2011-05-18T15:01:01Z",
-               "side" => "alliance",
-               "region" => "eu"
+               "channel_slug" => "eu-alliance"
              }
     end
 

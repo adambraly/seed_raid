@@ -17,17 +17,28 @@ defmodule SeedRaid.Calendar do
       [%Raid{}, ...]
 
   """
-  def list_raids(options \\ []) do
-    days_ago = Timex.now() |> Timex.shift(days: -2)
-    defaults = [from: days_ago]
+  def list_raids() do
+    query = from(r in Raid, where: r.pinned == true, order_by: [asc: r.when])
 
-    options =
-      defaults
-      |> Keyword.merge(options)
-      |> Enum.into(%{})
+    Repo.all(query)
+  end
 
+  def raids_by_channel() do
+    channels = [{:eu, :alliance}, {:eu, :horde}, {:us, :alliance}, {:us, :horde}]
+
+    channels
+    |> Enum.map(fn {side, region} ->
+      {{side, region}, list_channel_raids(side, region)}
+    end)
+  end
+
+  def list_channel_raids(side, region) do
     query =
-      from(r in Raid, where: r.when > ^options.from and r.pinned == true, order_by: [asc: r.when])
+      from(
+        r in Raid,
+        where: r.side == ^side and r.region == ^region and r.pinned == true,
+        order_by: [asc: r.when]
+      )
 
     Repo.all(query)
   end
@@ -35,8 +46,8 @@ defmodule SeedRaid.Calendar do
   @doc """
    unpin all post from a given channel
   """
-  def unpin_all(region, side) do
-    query = from(r in Raid, where: r.region == ^region and r.side == ^side and r.pinned == true)
+  def unpin_all(channel_slug) do
+    query = from(r in Raid, where: r.channel_slug == ^channel_slug and r.pinned == true)
 
     case Repo.update_all(query, set: [pinned: false]) do
       {changed, _} when is_integer(changed) ->

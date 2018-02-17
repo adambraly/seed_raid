@@ -2,10 +2,11 @@ defmodule SeedRaidWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", SeedRaidWeb.RoomChannel
+  channel("raids:*", SeedRaidWeb.RaidChannel)
+  channel("raids", SeedRaidWeb.RaidChannel)
 
   ## Transports
-  transport :websocket, Phoenix.Transports.WebSocket
+  transport(:websocket, Phoenix.Transports.WebSocket)
   # transport :longpoll, Phoenix.Transports.LongPoll
 
   # Socket params are passed from the client and can
