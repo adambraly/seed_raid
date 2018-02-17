@@ -23,20 +23,11 @@ defmodule SeedRaid.Calendar do
     Repo.all(query)
   end
 
-  def raids_by_channel() do
-    channels = [{:eu, :alliance}, {:eu, :horde}, {:us, :alliance}, {:us, :horde}]
-
-    channels
-    |> Enum.map(fn {side, region} ->
-      {{side, region}, list_channel_raids(side, region)}
-    end)
-  end
-
-  def list_channel_raids(side, region) do
+  def list_raids_of_channel(slug) do
     query =
       from(
         r in Raid,
-        where: r.side == ^side and r.region == ^region and r.pinned == true,
+        where: r.channel_slug == ^slug and r.pinned == true,
         order_by: [asc: r.when]
       )
 
@@ -102,7 +93,7 @@ defmodule SeedRaid.Calendar do
           seeds: attrs.seeds,
           type: attrs.type,
           content: attrs.content,
-          pinned: attrs.pinned
+          pinned: true
         ]
       ],
       conflict_target: :discord_id
