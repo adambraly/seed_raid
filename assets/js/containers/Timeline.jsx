@@ -1,15 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import moment from 'moment';
 import List, { ListItem } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Typography from 'material-ui/Typography';
 import { CircularProgress } from 'material-ui/Progress';
 import DayView from '../containers/DayView';
 import { fetchRaids } from '../actions/raids';
-import { localNow, groupByDay } from '../utils/date';
-
+import { groupByDay } from '../utils/date';
+import channels from '../channels';
 
 class Timeline extends React.Component {
   componentDidMount() {
@@ -20,27 +19,12 @@ class Timeline extends React.Component {
     const {
       raids,
       isFetching,
-      region,
-      side,
+      slug,
     } = this.props;
-    const translateRegion = (regionCode) => {
-      switch (regionCode) {
-        case 'na':
-          return 'us';
-        default:
-          return regionCode;
-      }
-    };
 
-    const now = localNow(region);
-    const startOfDay = now.startOf('day');
-    const hourAgo = now.subtract(4, 'hour');
-    const fromDate = moment.min(startOfDay, hourAgo);
-    const filteredRaid = raids
-      .filter(raid => raid.side === side)
-      .filter(raid => raid.region === translateRegion(region))
-      .filter(raid => moment.utc(raid.when).isAfter(fromDate));
-    const dayViews = groupByDay(filteredRaid, fromDate, region);
+    const tz = channels[slug].timezone;
+    const viewRaids = raids[slug];
+    const dayViews = groupByDay(viewRaids, tz);
 
     return (
       <List>
@@ -57,7 +41,7 @@ class Timeline extends React.Component {
           dayViews.map(view => (
             <React.Fragment key={view.day}>
               <ListItem>
-                <DayView raids={view.raids} day={view.day} />
+                <DayView raids={view.raids} day={view.day} slug={slug} />
               </ListItem>
               <Divider inset component="li" />
             </React.Fragment>
@@ -78,15 +62,10 @@ Timeline.propTypes = {
     seeds: PropTypes.number.isRequired,
     type: PropTypes.string.isRequired,
   })).isRequired,
-  region: PropTypes.string,
-  side: PropTypes.string,
+  slug: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
-Timeline.defaultProps = {
-  region: null,
-  side: null,
-};
 
 const mapStateToProps = (state, ownProps) => {
   const {
@@ -97,13 +76,12 @@ const mapStateToProps = (state, ownProps) => {
     items: [],
   };
 
-  const { region, side } = ownProps.match.params;
+  const { slug } = ownProps.match.params;
 
   return {
     isFetching,
     raids,
-    region,
-    side,
+    slug,
   };
 };
 

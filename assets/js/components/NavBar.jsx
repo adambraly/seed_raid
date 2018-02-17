@@ -40,22 +40,22 @@ const NavBar = (props) => {
           </Link>
         </Typography>
         <Typography color="inherit" className={classes.flex}>
-          <Link to="/calendar/eu/alliance" className={classes.materialLink}>
+          <Link to="/calendar/eu-alliance" className={classes.materialLink}>
             EU Alliance
           </Link>
         </Typography>
         <Typography color="inherit" className={classes.flex}>
-          <Link to="/calendar/eu/horde" className={classes.materialLink}>
+          <Link to="/calendar/eu-horde" className={classes.materialLink}>
             EU Horde
           </Link>
         </Typography>
         <Typography color="inherit" className={classes.flex}>
-          <Link to="/calendar/na/alliance" className={classes.materialLink}>
+          <Link to="/calendar/na-alliance" className={classes.materialLink}>
             NA Alliance
           </Link>
         </Typography>
         <Typography color="inherit" className={classes.flex}>
-          <Link to="/calendar/na/horde" className={classes.materialLink}>
+          <Link to="/calendar/na-horde" className={classes.materialLink}>
             NA Horde
           </Link>
         </Typography>

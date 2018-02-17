@@ -10,8 +10,8 @@ import IconButton from 'material-ui/IconButton';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
 import Avatar from 'material-ui/Avatar';
 import CodeBlock from './CodeBlock';
-import fulldate from '../utils/date';
 import RaidTitle from './RaidTitle';
+import channels from '../channels';
 
 import starlightRose from '../../static/images/starlight-rose.png';
 import foxflower from '../../static/images/foxflower.png';
@@ -89,11 +89,12 @@ class Raid extends React.Component {
       seeds,
       when,
       type,
-      region,
       classes,
+      slug,
     } = this.props;
 
-    const utcDate = moment.utc(when);
+
+    const { timezone, format } = channels[slug];
 
     return (
       <Card className={classes.card}>
@@ -114,7 +115,7 @@ class Raid extends React.Component {
             </div>
           }
           title={<RaidTitle type={type} seeds={seeds} />}
-          subheader={fulldate(utcDate, region)}
+          subheader={moment.utc(when).tz(timezone).format(format)}
         />
         <CardContent>
           <CardActions className={classes.cardActions}>
@@ -144,11 +145,11 @@ class Raid extends React.Component {
 }
 
 Raid.propTypes = {
+  type: PropTypes.string.isRequired,
   when: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,
   seeds: PropTypes.number.isRequired,
-  type: PropTypes.string.isRequired,
-  region: PropTypes.string.isRequired,
+  slug: PropTypes.string.isRequired,
   classes: PropTypes.object.isRequired,
 };
 

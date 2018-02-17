@@ -14,7 +14,12 @@ const styles = () => ({
 });
 
 const DayView = (props) => {
-  const { raids, day, classes } = props;
+  const {
+    raids,
+    day,
+    classes,
+    slug,
+  } = props;
 
   const dayName = moment(day).format('dddd');
   const dayOfMonth = moment(day).format('DD');
@@ -36,7 +41,7 @@ const DayView = (props) => {
             {
               raids.map(raid => (
                 <ListItem key={raid.id}>
-                  <Raid {...raid} />
+                  <Raid slug={slug} {...raid} />
                 </ListItem>
               ))
             }
@@ -49,6 +54,7 @@ const DayView = (props) => {
 
 DayView.propTypes = {
   day: PropTypes.object.isRequired,
+  slug: PropTypes.string.isRequired,
   raids: PropTypes.arrayOf(PropTypes.shape({
     id: PropTypes.string.isRequired,
     when: PropTypes.string.isRequired,
