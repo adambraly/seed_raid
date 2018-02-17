@@ -9,8 +9,6 @@ defmodule SeedRaid.Discord.PinnedPost do
   alias SeedRaid.Calendar
   require Logger
 
-  @timezone_map %{us: "EST", eu: "CET"}
-
   def start_link(default) do
     GenServer.start_link(__MODULE__, default, name: __MODULE__)
   end
@@ -76,9 +74,7 @@ defmodule SeedRaid.Discord.PinnedPost do
         time_string = raid.when |> Timex.format!("%d/%m/%y %H:%M", :strftime)
 
         Logger.info(
-          "#{raid.region}-#{raid.side} sucessfully parsed: [#{raid.seeds} #{raid.type}] at #{
-            time_string
-          }"
+          "#{raid.channel_slug} sucessfully parsed: [#{raid.seeds} #{raid.type}] at #{time_string}"
         )
 
         Calendar.create_or_update_raid(raid)
@@ -108,7 +104,7 @@ defmodule SeedRaid.Discord.PinnedPost do
       {:ok, messages} ->
         case channels |> Map.fetch(channel_id) do
           {:ok, channel} ->
-            Calendar.unpin_all(channel.region, channel.side)
+            Calendar.unpin_all(channel.slug)
 
           _ ->
             Logger.warn("Unkwown channel id: #{channel_id}")
@@ -121,7 +117,7 @@ defmodule SeedRaid.Discord.PinnedPost do
         channel_name =
           case channels |> Map.fetch(channel_id) do
             {:ok, channel} ->
-              "#{channel.region}-#{channel.side}"
+              "#{channel.slug}"
               |> String.upcase()
 
             _ ->
@@ -146,17 +142,16 @@ defmodule SeedRaid.Discord.PinnedPost do
 
     case message.content |> Decoder.decode(options) do
       {:ok, metadata} ->
-        tz =
-          @timezone_map
-          |> Map.fetch!(channel.region)
-
-        datetime = Timex.to_datetime({Date.to_erl(metadata.date), Time.to_erl(metadata.time)}, tz)
+        datetime =
+          Timex.to_datetime(
+            {Date.to_erl(metadata.date), Time.to_erl(metadata.time)},
+            channel.timezone
+          )
 
         seedraid = %{
           discord_id: message.id,
           author_id: message.author["id"],
-          side: channel.side,
-          region: channel.region,
+          channel_slug: channel.slug,
           content: Decoder.format(message.content),
           seeds: metadata.seeds,
           type: metadata.type,

@@ -67,10 +67,10 @@ config :seed_raid, SeedRaid.Repo,
 config :seed_raid, :guild, 248_859_295_414_878_208
 
 config :seed_raid, :channels, %{
-  248_861_585_811_046_410 => %{region: :eu, side: :alliance},
-  248_861_600_998_621_184 => %{region: :eu, side: :horde},
-  248_901_465_291_096_064 => %{region: :us, side: :alliance},
-  248_861_564_008_923_147 => %{region: :us, side: :horde}
+  248_861_585_811_046_410 => %{slug: "eu-alliance", timezone: "CET", region: :eu},
+  248_861_600_998_621_184 => %{slug: "eu-horde", timezone: "CET", region: :eu},
+  248_901_465_291_096_064 => %{slug: "us-alliance", timezone: "EST", region: :us},
+  248_861_564_008_923_147 => %{slug: "us-horde", timezone: "EST", region: :us}
 }
 
 import_config "dev.secret.exs"
