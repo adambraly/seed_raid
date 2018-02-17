@@ -33,38 +33,40 @@ const store = configureStore();
 
 
 const payload = {
-  data: [
-    {
-      when: '2019-01-29T00:00:00Z',
-      type: 'starlight-rose',
-      seeds: 200,
-      side: 'alliance',
-      region: 'eu',
-      id: '3d903e60-19f5-4896-9052-1842ec7a508f',
-      content: raid1,
-    },
-    {
-      when: '2019-01-25T00:00:00Z',
-      title: 'AHOUU 100',
-      type: 'foxflower',
-      seeds: 50,
-      side: 'alliance',
-      region: 'eu',
-      id: '4d903e60-19f5-4298-9052-1842ec7a508f',
-      content: `
-      @EUHorde
-      `,
-    },
-    {
-      when: '2019-01-24T00:00:00Z',
-      type: 'mix',
-      seeds: 50,
-      side: 'alliance',
-      region: 'eu',
-      id: '5d903e60-19f5-5698-9052-1842ec7a508f',
-      content: '',
-    },
-  ],
+  data: {
+    'eu-alliance: ': [
+      {
+        when: '2019-01-29T00:00:00Z',
+        type: 'starlight-rose',
+        seeds: 200,
+        side: 'alliance',
+        region: 'eu',
+        id: '3d903e60-19f5-4896-9052-1842ec7a508f',
+        content: raid1,
+      },
+      {
+        when: '2019-01-25T00:00:00Z',
+        title: 'AHOUU 100',
+        type: 'foxflower',
+        seeds: 50,
+        side: 'alliance',
+        region: 'eu',
+        id: '4d903e60-19f5-4298-9052-1842ec7a508f',
+        content: `
+        @EUHorde
+        `,
+      },
+      {
+        when: '2019-01-24T00:00:00Z',
+        type: 'mix',
+        seeds: 50,
+        side: 'alliance',
+        region: 'eu',
+        id: '5d903e60-19f5-5698-9052-1842ec7a508f',
+        content: '',
+      },
+    ],
+  },
 };
 
 storiesOf('App', module).add('success', () => {
