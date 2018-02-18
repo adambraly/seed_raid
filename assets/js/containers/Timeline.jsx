@@ -7,7 +7,7 @@ import Typography from 'material-ui/Typography';
 import { CircularProgress } from 'material-ui/Progress';
 import DayView from '../containers/DayView';
 import { fetchRaids } from '../actions/raids';
-import { groupByDay } from '../utils/date';
+import groupByDay from '../utils/date';
 import channels from '../channels';
 
 class Timeline extends React.Component {
@@ -23,7 +23,7 @@ class Timeline extends React.Component {
     } = this.props;
 
     const tz = channels[channel].timezone;
-    const viewRaids = raids[channel];
+    const viewRaids = raids[channel] || [];
     const dayViews = groupByDay(viewRaids, tz);
 
     return (

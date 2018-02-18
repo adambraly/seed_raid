@@ -1,15 +1,11 @@
 import moment from 'moment-timezone';
 
-const fulldate = (when, format, tz) => {
-  const whenHere = when.tz(tz);
-  return whenHere.format(format);
-};
 
 const filterByDay = (raids, day, tz) => (
   raids.filter(raid => moment.utc(raid.when).tz(tz).isSame(day, 'day'))
 );
 
-export const groupByDay = (raids, tz) => {
+const groupByDay = (raids, tz) => {
   if (raids.length === 0) {
     return [];
   }
@@ -24,4 +20,4 @@ export const groupByDay = (raids, tz) => {
   return views;
 };
 
-export default fulldate;
+export default groupByDay;

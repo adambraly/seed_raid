@@ -1,5 +1,4 @@
 import 'whatwg-fetch';
-import Logger from 'js-logger';
 import * as types from './actionTypes';
 import configureChannel from '../utils/channel';
 
@@ -33,19 +32,20 @@ export function syncChannelSuccess(payload) {
 
 export function fetchRaids() {
   return (dispatch) => {
+    console.log("will fetch");
     dispatch(isFetching(true));
     channel.join()
       .receive('ok', (messages) => {
-        Logger.debug('catching up', messages);
+        console.log('catching up', messages);
         dispatch(raidsFetchSuccess(messages.raids));
       })
       .receive('error', (reason) => {
-        Logger.debug('failed join', reason);
+        console.log('failed join', reason);
         dispatch(raidsFetchSuccess(reason));
       });
 
     channel.on('sync_channel', (msg) => {
-      Logger.debug('sync_channel', msg);
+      console.log('sync_channel', msg);
       dispatch(syncChannelSuccess(msg));
     });
   };
