@@ -7,6 +7,7 @@ defmodule SeedRaid.Discord.PinnedPost do
   alias Nostrum.Api
   alias SeedParser.Decoder
   alias SeedRaid.Calendar
+  alias SeedRaidWeb.RaidChannel
   require Logger
 
   def start_link(default) do
@@ -37,17 +38,8 @@ defmodule SeedRaid.Discord.PinnedPost do
         :noop
 
       false ->
-        channel_id =
-          message
-          |> message_channel_id()
-
-        case channels |> Map.fetch(channel_id) do
-          {:ok, channel} ->
-            do_analyze(message, channel)
-
-          _ ->
-            Logger.warn("Unkwown channel id: #{channel_id}")
-        end
+        channel = channels |> Map.fetch!(message.channel_id)
+        do_analyze(message, channel)
     end
 
     {:noreply, state}
@@ -58,35 +50,57 @@ defmodule SeedRaid.Discord.PinnedPost do
     {:noreply, state}
   end
 
-  defp message_channel_id(message) do
-    case message.channel_id do
-      id when is_binary(id) ->
-        id |> String.to_integer()
+  defp do_analyze(message, channel) do
+    message = message_to_struct(message)
 
-      id ->
-        id
+    case message |> SeedRaid.Pin.is_blacklisted?() do
+      true ->
+        :noop
+
+      false ->
+        case parse(message, channel) do
+          {:ok, raid} ->
+            time_string = raid.when |> Timex.format!("%d/%m/%y %H:%M", :strftime)
+
+            Logger.info(
+              "#{raid.channel_slug} sucessfully parsed: [#{raid.seeds} #{raid.type}] at #{
+                time_string
+              }"
+            )
+
+            {:ok, raid} = Calendar.create_or_update_raid(raid)
+            RaidChannel.update_raid(raid)
+
+          {:error, :upcoming} ->
+            :silence
+
+          {:error, error} ->
+            Logger.warn(
+              "error: '#{error}' parsing message (#{message.id}) #{short_message(message.content)}"
+            )
+        end
     end
   end
 
-  defp do_analyze(message, channel) do
-    case parse(message, channel) do
-      {:ok, raid} ->
-        time_string = raid.when |> Timex.format!("%d/%m/%y %H:%M", :strftime)
+  def key_to_atom(map) do
+    Enum.reduce(map, %{}, fn
+      {key, value}, acc when is_atom(key) -> Map.put(acc, key, value)
+      {key, value}, acc when is_binary(key) -> Map.put(acc, String.to_existing_atom(key), value)
+    end)
+  end
 
-        Logger.info(
-          "#{raid.channel_slug} sucessfully parsed: [#{raid.seeds} #{raid.type}] at #{time_string}"
-        )
+  defp message_to_struct(message = %Nostrum.Struct.Message{}) do
+    case message |> Map.fetch!(:author) do
+      %Nostrum.Struct.User{} ->
+        message
 
-        Calendar.create_or_update_raid(raid)
-
-      {:error, :upcoming} ->
-        :silence
-
-      {:error, error} ->
-        Logger.warn(
-          "error: '#{error}' parsing message (#{message.id}) #{short_message(message.content)}"
-        )
+      author ->
+        message |> Map.put(:author, author |> key_to_atom |> Nostrum.Struct.User.to_struct())
     end
+  end
+
+  defp message_to_struct(message) do
+    Nostrum.Struct.Message.to_struct(message)
   end
 
   defp short_message(message) do
@@ -102,16 +116,13 @@ defmodule SeedRaid.Discord.PinnedPost do
   defp do_all(channel_id, channels) do
     case Api.get_pinned_messages(channel_id) do
       {:ok, messages} ->
-        case channels |> Map.fetch(channel_id) do
-          {:ok, channel} ->
-            Calendar.unpin_all(channel.slug)
-
-          _ ->
-            Logger.warn("Unkwown channel id: #{channel_id}")
-        end
+        channel = channels |> Map.fetch!(channel_id)
+        Calendar.unpin_all(channel.slug)
 
         messages
-        |> Enum.each(&analyze/1)
+        |> Enum.each(&do_analyze(&1, channel))
+
+        RaidChannel.sync_channel(channel.slug)
 
       {:error, %{status_code: 429, message: %{"retry_after" => retry_after}}} ->
         channel_name =
@@ -150,7 +161,7 @@ defmodule SeedRaid.Discord.PinnedPost do
 
         seedraid = %{
           discord_id: message.id,
-          author_id: message.author["id"],
+          author_id: message.author |> Map.fetch!(:id),
           channel_slug: channel.slug,
           content: Decoder.format(message.content),
           seeds: metadata.seeds,
