@@ -30,9 +30,15 @@ export function syncChannelSuccess(payload) {
   };
 }
 
+export function updateRaidSuccess(raid) {
+  return {
+    type: types.UPDATE_RAID_SUCCESS,
+    raid,
+  };
+}
+
 export function fetchRaids() {
   return (dispatch) => {
-    console.log("will fetch");
     dispatch(isFetching(true));
     channel.join()
       .receive('ok', (messages) => {
@@ -47,6 +53,10 @@ export function fetchRaids() {
     channel.on('sync_channel', (msg) => {
       console.log('sync_channel', msg);
       dispatch(syncChannelSuccess(msg));
+    });
+    channel.on('update_raid', (msg) => {
+      console.log('update_raid', msg);
+      dispatch(updateRaidSuccess(msg));
     });
   };
 }

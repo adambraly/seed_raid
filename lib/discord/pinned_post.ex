@@ -39,7 +39,14 @@ defmodule SeedRaid.Discord.PinnedPost do
 
       false ->
         channel = channels |> Map.fetch!(message.channel_id)
-        do_analyze(message, channel)
+
+        case do_analyze(message, channel) do
+          {:ok, raid = %Calendar.Raid{}} ->
+            RaidChannel.update_raid(raid)
+
+          _ ->
+            :noop
+        end
     end
 
     {:noreply, state}
@@ -68,8 +75,7 @@ defmodule SeedRaid.Discord.PinnedPost do
               }"
             )
 
-            {:ok, raid} = Calendar.create_or_update_raid(raid)
-            RaidChannel.update_raid(raid)
+            Calendar.create_or_update_raid(raid)
 
           {:error, :upcoming} ->
             :silence

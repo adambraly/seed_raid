@@ -56,7 +56,7 @@ DayView.propTypes = {
   day: PropTypes.object.isRequired,
   slug: PropTypes.string.isRequired,
   raids: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    id: PropTypes.number.isRequired,
     when: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
     seeds: PropTypes.number.isRequired,

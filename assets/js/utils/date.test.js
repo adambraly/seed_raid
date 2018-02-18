@@ -1,5 +1,5 @@
 import moment from 'moment-timezone';
-import { groupByDay } from './date';
+import groupByDay from './date';
 
 
 describe('groupByDay', () => {

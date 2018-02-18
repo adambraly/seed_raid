@@ -19,7 +19,7 @@ defmodule SeedRaidWeb.RaidChannel do
 
   def encode(raid) do
     %{
-      id: raid.id,
+      id: raid.discord_id,
       when: raid.when |> Timex.format!("{ISO:Extended:Z}"),
       channel_slug: raid.channel_slug,
       type: raid.type |> Atom.to_string() |> String.replace("_", "-"),
@@ -29,9 +29,9 @@ defmodule SeedRaidWeb.RaidChannel do
   end
 
   def update_raid(raid) do
-    playload = raid |> encode
+    payload = raid |> encode
 
-    Endpoint.broadcast!("raids", "update_raid", raid)
+    Endpoint.broadcast!("raids", "update_raid", payload)
   end
 
   def sync_channel(slug) do
