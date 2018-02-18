@@ -16,7 +16,7 @@ const Root = ({ store }) => (
     <Router>
       <App>
         <Route exact path="/" component={Home} />
-        <Route path="/calendar/:region/:side" component={Timeline} />
+        <Route path="/calendar/:channel" component={Timeline} />
       </App>
     </Router>
   </Provider>

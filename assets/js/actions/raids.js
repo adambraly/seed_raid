@@ -16,10 +16,10 @@ export function isFetching(bool) {
 }
 
 
-export function raidsFetchSuccess(items) {
+export function raidsFetchSuccess(raids) {
   return {
     type: types.RAID_FETCH_SUCCESS,
-    items,
+    raids,
   };
 }
 

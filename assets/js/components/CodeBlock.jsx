@@ -53,4 +53,4 @@ CodeBlock.propTypes = {
   language: PropTypes.string,
 };
 
-export default  withStyles(styles)(CodeBlock);
+export default withStyles(styles)(CodeBlock);

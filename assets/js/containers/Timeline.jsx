@@ -19,11 +19,11 @@ class Timeline extends React.Component {
     const {
       raids,
       isFetching,
-      slug,
+      channel,
     } = this.props;
 
-    const tz = channels[slug].timezone;
-    const viewRaids = raids[slug];
+    const tz = channels[channel].timezone;
+    const viewRaids = raids[channel];
     const dayViews = groupByDay(viewRaids, tz);
 
     return (
@@ -41,7 +41,7 @@ class Timeline extends React.Component {
           dayViews.map(view => (
             <React.Fragment key={view.day}>
               <ListItem>
-                <DayView raids={view.raids} day={view.day} slug={slug} />
+                <DayView raids={view.raids} day={view.day} slug={channel} />
               </ListItem>
               <Divider inset component="li" />
             </React.Fragment>
@@ -55,14 +55,8 @@ class Timeline extends React.Component {
 
 Timeline.propTypes = {
   isFetching: PropTypes.bool.isRequired,
-  raids: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
-    when: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired,
-    seeds: PropTypes.number.isRequired,
-    type: PropTypes.string.isRequired,
-  })).isRequired,
-  slug: PropTypes.string.isRequired,
+  raids: PropTypes.object.isRequired,
+  channel: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,
 };
 
@@ -70,18 +64,18 @@ Timeline.propTypes = {
 const mapStateToProps = (state, ownProps) => {
   const {
     isFetching,
-    items: raids,
+    raids,
   } = state.raids || {
     isFetching: true,
-    items: [],
+    raids: {},
   };
 
-  const { slug } = ownProps.match.params;
+  const { channel } = ownProps.match.params;
 
   return {
     isFetching,
     raids,
-    slug,
+    channel,
   };
 };
 

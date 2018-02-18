@@ -5,7 +5,7 @@ import {
 } from '../actions/actionTypes';
 
 const initialState = {
-  items: [],
+  raids: {},
   isFetching: true,
 };
 
@@ -24,7 +24,7 @@ function raids(state = initialState, action = {}) {
     case RAID_FETCH_SUCCESS:
       return Object.assign({}, state, {
         isFetching: false,
-        raids: action.items,
+        raids: action.raids,
       });
     case SYNC_CHANNEL_SUCCESS:
       return Object.assign({}, state, {

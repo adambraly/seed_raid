@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import NavBar from './NavBar';
 
 const App = props => (
@@ -12,5 +13,8 @@ const App = props => (
   </React.Fragment>
 );
 
+App.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 
 export default App;
