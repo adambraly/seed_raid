@@ -20,9 +20,9 @@ function updateChannel(state, action) {
   };
 }
 
-function replaceRaid(channel, raid) {
-  const filtered = channel.filter(item => (item.discord_id === raid.discord_id));
-  filtered.push(raid);
+function replaceRaid(channel, newRaid) {
+  const filtered = channel.filter(raid => (raid.id !== newRaid.id));
+  filtered.push(newRaid);
   return filtered;
 }
 
