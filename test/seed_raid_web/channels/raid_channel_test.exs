@@ -101,7 +101,7 @@ defmodule SeedRaidWeb.RaidChannelTest do
     RaidChannel.update_raid(raid)
 
     assert_broadcast("update_raid", %{
-      discord_id: 2,
+      id: 2,
       content: "updated_content"
     })
   end
