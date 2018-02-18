@@ -36,7 +36,7 @@ describe('updateRaid', () => {
 
     const expected = {
       raids: {
-        'eu-europe': [ { id: 2, content: 'second raid', channel_slug: 'eu-europe' }, { id: 1, content: 'old raid updated', channel_slug: 'eu-europe' },],
+        'eu-europe': [{ id: 2, content: 'second raid', channel_slug: 'eu-europe' }, { id: 1, content: 'old raid updated', channel_slug: 'eu-europe' }],
       },
     };
     expect(reducer.updateRaid(state, action)).toEqual(expected);
