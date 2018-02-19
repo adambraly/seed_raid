@@ -1,8 +1,8 @@
-defmodule SeedRaid.Discord.Consumer do
+defmodule Discord.Consumer do
   @moduledoc false
 
   use Nostrum.Consumer
-  alias SeedRaid.Discord.PinnedPost
+  alias Discord.PinnedPost
   # alias Nostrum.Api
   require Logger
 

@@ -3,7 +3,7 @@ defmodule Mix.Tasks.Pins.ParseChannel do
 
   require Logger
   use Mix.Task
-  alias SeedRaid.Discord.PinnedPost
+  alias Discord.PinnedPost
 
   def run([channel_id]) do
     Mix.Task.run("app.start")

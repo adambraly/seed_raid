@@ -1,4 +1,4 @@
-defmodule SeedRaid.Discord.PinnedPost do
+defmodule Discord.PinnedPost do
   @moduledoc false
 
   use GenServer

@@ -1,8 +1,8 @@
-defmodule SeedRaid.Discord.Supervisor do
+defmodule Discord.Supervisor do
   @moduledoc false
   use Supervisor
 
-  alias SeedRaid.Discord.{Consumer, PinnedPost}
+  alias Discord.{Consumer, PinnedPost, Member}
 
   def start_link() do
     Supervisor.start_link(__MODULE__, [], name: __MODULE__)
@@ -13,7 +13,8 @@ defmodule SeedRaid.Discord.Supervisor do
     children = [
       {Consumer, []},
       {PinnedPost, []},
-      {Task.Supervisor, [name: SeedRaid.Discord.TaskSupervisor]}
+      {Member, []},
+      {Task.Supervisor, [name: Discord.TaskSupervisor]}
     ]
 
     Supervisor.init(children, strategy: :one_for_one)
