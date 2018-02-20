@@ -7,6 +7,7 @@ defmodule SeedRaid.CalendarTest do
 
   describe "raids" do
     alias SeedRaid.Calendar.Raid
+    alias SeedRaid.Discord.Member
 
     @datetime {{2010, 04, 17}, {12, 00, 00}}
     @updated_datetime {{2011, 04, 17}, {12, 00, 00}}
@@ -61,7 +62,7 @@ defmodule SeedRaid.CalendarTest do
       raid
     end
 
-    def author_fixture(attrs \\ %{}) do
+    def member_fixture(attrs \\ %{}) do
       {:ok, raid} =
         attrs
         |> Enum.into(@valid_user)
@@ -77,8 +78,35 @@ defmodule SeedRaid.CalendarTest do
       assert raids |> List.first() |> Map.fetch!(:discord_id) == raid.discord_id
     end
 
+    test "add_members/1 returns the raid with all members" do
+      member = member_fixture()
+      member2 = member_fixture(discord_id: 1111)
+      raid = raid_fixture()
+      Calendar.add_members_to_raid(raid.discord_id, [member.discord_id, member2.discord_id])
+
+      raid = Calendar.get_raid!(raid.discord_id)
+
+      assert raid.members |> Enum.count() == 2
+      assert [%Member{} = first_member | _] = raid.members
+      assert first_member.discord_id == member.discord_id
+    end
+
+    test "add_members when there is already members" do
+      member = member_fixture(discord_id: 5501)
+      raid = raid_fixture()
+      Calendar.add_members_to_raid(raid.discord_id, [member.discord_id])
+      raid = Calendar.get_raid!(raid.discord_id)
+      assert raid.members |> Enum.count() == 1
+
+      member2 = member_fixture(discord_id: 5502)
+      member3 = member_fixture(discord_id: 5503)
+      Calendar.add_members_to_raid(raid.discord_id, [member2.discord_id, member3.discord_id])
+      raid = Calendar.get_raid!(raid.discord_id)
+      assert raid.members |> Enum.count() == 2
+    end
+
     test "get_raid!/1 returns the raid with given id" do
-      author = author_fixture()
+      author = member_fixture()
       raid = raid_fixture()
       assert db_raid = Calendar.get_raid!(raid.discord_id)
       assert db_raid.discord_id == raid.discord_id

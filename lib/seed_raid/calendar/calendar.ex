@@ -5,6 +5,7 @@ defmodule SeedRaid.Calendar do
 
   import Ecto.Query, warn: false
   alias SeedRaid.Repo
+  alias SeedRaid.Calendar.RaidsMembers
 
   alias SeedRaid.Calendar.Raid
 
@@ -21,6 +22,7 @@ defmodule SeedRaid.Calendar do
     Raid
     |> where(pinned: true)
     |> preload(:author)
+    |> preload(:members)
     |> order_by(asc: :when)
     |> Repo.all()
   end
@@ -30,6 +32,7 @@ defmodule SeedRaid.Calendar do
     |> where(channel_slug: ^slug)
     |> where(pinned: true)
     |> preload(:author)
+    |> preload(:members)
     |> order_by(asc: :when)
     |> Repo.all()
   end
@@ -67,6 +70,7 @@ defmodule SeedRaid.Calendar do
     Raid
     |> where(discord_id: ^id)
     |> preload(:author)
+    |> preload(:members)
     |> Repo.one!()
   end
 
@@ -88,7 +92,22 @@ defmodule SeedRaid.Calendar do
     |> Repo.insert()
   end
 
-  def create_or_update_raid(attrs, members \\ []) do
+  def add_members_to_raid(raid_id, members) do
+    RaidsMembers
+    |> where(seedraid_id: ^raid_id)
+    |> Repo.delete_all()
+
+    raids_members =
+      members
+      |> Enum.map(fn member_id ->
+        [member_id: member_id, seedraid_id: raid_id]
+      end)
+
+    RaidsMembers
+    |> Repo.insert_all(raids_members)
+  end
+
+  def create_or_update_raid(attrs) do
     %Raid{}
     |> Raid.changeset(attrs)
     |> Repo.insert(

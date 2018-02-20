@@ -25,7 +25,7 @@ defmodule SeedRaid.Calendar.Raid do
       :members,
       SeedRaid.Discord.Member,
       join_through: SeedRaid.Calendar.RaidsMembers,
-      join_keys: [seedraid_id: :discord_id, member_id: :id]
+      join_keys: [seedraid_id: :discord_id, member_id: :discord_id]
     )
 
     timestamps()

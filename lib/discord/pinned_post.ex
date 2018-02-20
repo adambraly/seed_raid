@@ -76,6 +76,7 @@ defmodule Discord.PinnedPost do
             )
 
             Calendar.create_or_update_raid(raid)
+            Calendar.add_members_to_raid(raid.discord_id, raid.members)
 
           {:error, :upcoming} ->
             :silence
@@ -172,6 +173,7 @@ defmodule Discord.PinnedPost do
           content: Decoder.format(message.content),
           seeds: metadata.seeds,
           type: metadata.type,
+          members: metadata.members,
           when: datetime,
           pinned: true
         }
