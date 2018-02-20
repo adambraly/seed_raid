@@ -1,6 +1,8 @@
 defmodule SeedRaid.CalendarTest do
   use SeedRaid.DataCase
 
+  require Logger
+
   alias SeedRaid.Calendar
 
   describe "raids" do
@@ -19,6 +21,15 @@ defmodule SeedRaid.CalendarTest do
       content: "raid...",
       pinned: true
     }
+
+    @valid_user %{
+      avatar: "avatar",
+      discriminator: 1234,
+      nick: "nick",
+      username: "username",
+      discord_id: 345
+    }
+
     @update_attrs %{
       seeds: 43,
       when: Timex.to_datetime(@datetime),
@@ -50,14 +61,31 @@ defmodule SeedRaid.CalendarTest do
       raid
     end
 
+    def author_fixture(attrs \\ %{}) do
+      {:ok, raid} =
+        attrs
+        |> Enum.into(@valid_user)
+        |> SeedRaid.Discord.create_or_update_member()
+
+      raid
+    end
+
     test "list_raids/0 returns all raids" do
       raid = raid_fixture()
-      assert Calendar.list_raids() == [raid]
+      assert raids = Calendar.list_raids()
+      assert raids |> Enum.count() == 1
+      assert raids |> List.first() |> Map.fetch!(:discord_id) == raid.discord_id
     end
 
     test "get_raid!/1 returns the raid with given id" do
+      author = author_fixture()
       raid = raid_fixture()
-      assert Calendar.get_raid!(raid.id) == raid
+      assert db_raid = Calendar.get_raid!(raid.discord_id)
+      assert db_raid.discord_id == raid.discord_id
+
+      db_author = db_raid.author
+      assert db_author.discord_id == author.discord_id
+      assert db_author.nick == author.nick
     end
 
     test "create_raid/1 with valid data creates a raid" do
@@ -96,7 +124,7 @@ defmodule SeedRaid.CalendarTest do
       assert(raid.type == :mix)
 
       assert {:ok, %Raid{}} = Calendar.create_or_update_raid(@create_update_attrs)
-      saved_raid = Calendar.get_raid!(raid.id)
+      saved_raid = Calendar.get_raid!(raid.discord_id)
       assert %Raid{} = saved_raid
       assert saved_raid.seeds == 45
       assert saved_raid.content == "updated raid..."
@@ -104,16 +132,10 @@ defmodule SeedRaid.CalendarTest do
       assert saved_raid.when == Timex.to_datetime({{2011, 04, 17}, {12, 00, 00}})
     end
 
-    test "update_raid/2 with invalid data returns error changeset" do
-      raid = raid_fixture()
-      assert {:error, %Ecto.Changeset{}} = Calendar.update_raid(raid, @invalid_attrs)
-      assert raid == Calendar.get_raid!(raid.id)
-    end
-
     test "delete_raid/1 deletes the raid" do
       raid = raid_fixture()
       assert {:ok, %Raid{}} = Calendar.delete_raid(raid)
-      assert_raise Ecto.NoResultsError, fn -> Calendar.get_raid!(raid.id) end
+      assert_raise Ecto.NoResultsError, fn -> Calendar.get_raid!(raid.discord_id) end
     end
 
     test "change_raid/1 returns a raid changeset" do
@@ -127,7 +149,7 @@ defmodule SeedRaid.CalendarTest do
         |> Map.put(:channel_slug, "eu-alliance")
         |> Map.put(:discord_id, 1)
 
-      assert {:ok, %Raid{id: to_unpin_id}} = Calendar.create_or_update_raid(raid_attrs)
+      assert {:ok, %Raid{}} = Calendar.create_or_update_raid(raid_attrs)
 
       raid_attrs =
         @valid_attrs
@@ -141,7 +163,7 @@ defmodule SeedRaid.CalendarTest do
         |> Map.put(:channel_slug, "eu-horde")
         |> Map.put(:discord_id, 3)
 
-      assert {:ok, %Raid{id: other_channel_raid_id}} = Calendar.create_or_update_raid(raid_attrs)
+      assert {:ok, %Raid{}} = Calendar.create_or_update_raid(raid_attrs)
 
       raid_attrs =
         @valid_attrs
@@ -157,10 +179,10 @@ defmodule SeedRaid.CalendarTest do
 
       assert Calendar.unpin_all("eu-alliance") == 2
 
-      always_pinned = Calendar.get_raid!(other_channel_raid_id)
+      always_pinned = Calendar.get_raid!(3)
       assert always_pinned.pinned == true
 
-      unpinned = Calendar.get_raid!(to_unpin_id)
+      unpinned = Calendar.get_raid!(1)
       assert unpinned.pinned == false
     end
   end

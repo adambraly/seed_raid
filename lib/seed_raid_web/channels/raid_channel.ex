@@ -17,9 +17,10 @@ defmodule SeedRaidWeb.RaidChannel do
     {:ok, %{raids: raids}, socket}
   end
 
-  def encode(raid) do
+  def encode(%SeedRaid.Calendar.Raid{} = raid) do
     %{
       id: raid.discord_id,
+      author: encode(raid.author),
       when: raid.when |> Timex.format!("{ISO:Extended:Z}"),
       channel_slug: raid.channel_slug,
       type: raid.type |> Atom.to_string() |> String.replace("_", "-"),
@@ -28,8 +29,22 @@ defmodule SeedRaidWeb.RaidChannel do
     }
   end
 
+  def encode(%SeedRaid.Discord.Member{} = member) do
+    %{
+      id: member.discord_id |> Integer.to_string(),
+      avatar: member.avatar,
+      nick: member.nick,
+      discriminator: member.discriminator,
+      username: member.username
+    }
+  end
+
+  def encode(_) do
+    nil
+  end
+
   def update_raid(raid) do
-    payload = raid |> encode
+    payload = Calendar.get_raid!(raid.discord_id) |> encode
 
     Endpoint.broadcast!("raids", "update_raid", payload)
   end

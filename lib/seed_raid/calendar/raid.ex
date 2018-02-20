@@ -19,6 +19,8 @@ defmodule SeedRaid.Calendar.Raid do
 
     field(:pinned, :boolean)
 
+    has_one(:author, SeedRaid.Discord.Member, foreign_key: :discord_id, references: :author_id)
+
     timestamps()
   end
 

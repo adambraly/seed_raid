@@ -25,11 +25,11 @@ const seedLink = (type) => {
 };
 
 const RaidTitle = (props) => {
-  const { type, seeds } = props;
+  const { type, seeds, author } = props;
 
   return (
     <span>
-      {seeds} x {seedLink(type)}
+      {seeds}  x {seedLink(type)} - {author}
     </span>
   );
 };
@@ -37,6 +37,7 @@ const RaidTitle = (props) => {
 RaidTitle.propTypes = {
   seeds: PropTypes.number.isRequired,
   type: PropTypes.string.isRequired,
+  author: PropTypes.string.isRequired,
 };
 
 export default RaidTitle;

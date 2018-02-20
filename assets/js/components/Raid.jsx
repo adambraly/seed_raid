@@ -4,7 +4,7 @@ import moment from 'moment-timezone';
 import ReactMarkdown from 'react-markdown';
 import { withStyles } from 'material-ui/styles';
 import classnames from 'classnames';
-import Card, { CardHeader, CardContent, CardActions } from 'material-ui/Card';
+import Card, { CardContent, CardActions } from 'material-ui/Card';
 import Collapse from 'material-ui/transitions/Collapse';
 import IconButton from 'material-ui/IconButton';
 import ExpandMoreIcon from 'material-ui-icons/ExpandMore';
@@ -12,6 +12,8 @@ import Avatar from 'material-ui/Avatar';
 import CodeBlock from './CodeBlock';
 import RaidTitle from './RaidTitle';
 import channels from '../channels';
+import DiscordAvatar from './DiscordAvatar';
+import RaidHeader from './RaidHeader';
 
 import starlightRose from '../../static/images/starlight-rose.png';
 import foxflower from '../../static/images/foxflower.png';
@@ -85,6 +87,7 @@ class Raid extends React.Component {
 
   render() {
     const {
+      author,
       content,
       seeds,
       when,
@@ -93,12 +96,18 @@ class Raid extends React.Component {
       slug,
     } = this.props;
 
-
     const { timezone, format } = channels[slug];
+
+    const authorName = (nickParam, usernameParam) => {
+      if (nickParam) {
+        return nickParam;
+      }
+      return usernameParam;
+    };
 
     return (
       <Card className={classes.card}>
-        <CardHeader
+        <RaidHeader
           className={classes.header}
           avatar={
             <div>
@@ -114,7 +123,13 @@ class Raid extends React.Component {
               </Avatar>
             </div>
           }
-          title={<RaidTitle type={type} seeds={seeds} />}
+          author={<DiscordAvatar {...author} />}
+          title={
+            <RaidTitle
+              type={type}
+              seeds={seeds}
+              author={authorName(author.nick, author.username)}
+            />}
           subheader={moment.utc(when).tz(timezone).format(format)}
         />
         <CardContent>
@@ -145,6 +160,7 @@ class Raid extends React.Component {
 }
 
 Raid.propTypes = {
+  author: PropTypes.object.isRequired,
   type: PropTypes.string.isRequired,
   when: PropTypes.string.isRequired,
   content: PropTypes.string.isRequired,

@@ -18,20 +18,20 @@ defmodule SeedRaid.Calendar do
 
   """
   def list_raids() do
-    query = from(r in Raid, where: r.pinned == true, order_by: [asc: r.when])
-
-    Repo.all(query)
+    Raid
+    |> where(pinned: true)
+    |> preload(:author)
+    |> order_by(asc: :when)
+    |> Repo.all()
   end
 
   def list_raids_of_channel(slug) do
-    query =
-      from(
-        r in Raid,
-        where: r.channel_slug == ^slug and r.pinned == true,
-        order_by: [asc: r.when]
-      )
-
-    Repo.all(query)
+    Raid
+    |> where(channel_slug: ^slug)
+    |> where(pinned: true)
+    |> preload(:author)
+    |> order_by(asc: :when)
+    |> Repo.all()
   end
 
   @doc """
@@ -63,7 +63,12 @@ defmodule SeedRaid.Calendar do
       ** (Ecto.NoResultsError)
 
   """
-  def get_raid!(id), do: Repo.get!(Raid, id)
+  def get_raid!(id) do
+    Raid
+    |> where(discord_id: ^id)
+    |> preload(:author)
+    |> Repo.one!()
+  end
 
   @doc """
   Creates a raid.
