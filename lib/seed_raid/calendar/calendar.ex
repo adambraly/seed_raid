@@ -88,7 +88,7 @@ defmodule SeedRaid.Calendar do
     |> Repo.insert()
   end
 
-  def create_or_update_raid(attrs \\ %{}) do
+  def create_or_update_raid(attrs, members \\ []) do
     %Raid{}
     |> Raid.changeset(attrs)
     |> Repo.insert(

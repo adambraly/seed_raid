@@ -10,6 +10,13 @@ defmodule SeedRaid.Discord.Member do
     field(:discriminator, :integer)
     field(:nick, :string)
     field(:username, :string)
+
+    many_to_many(
+      :seedraids,
+      SeedRaid.Calendar.Raid,
+      join_through: SeedRaid.Calendar.RaidsMembers,
+      join_keys: [member_id: :discord_id, seedraid_id: :discord_id]
+    )
   end
 
   @doc false

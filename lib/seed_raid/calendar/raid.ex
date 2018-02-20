@@ -21,6 +21,13 @@ defmodule SeedRaid.Calendar.Raid do
 
     has_one(:author, SeedRaid.Discord.Member, foreign_key: :discord_id, references: :author_id)
 
+    many_to_many(
+      :members,
+      SeedRaid.Discord.Member,
+      join_through: SeedRaid.Calendar.RaidsMembers,
+      join_keys: [seedraid_id: :discord_id, member_id: :id]
+    )
+
     timestamps()
   end
 
