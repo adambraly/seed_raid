@@ -5,7 +5,12 @@ defmodule SeedRaid.Discord do
 
   alias SeedRaid.Discord.Member
 
-  def create_or_update_member(attrs \\ %{}) do
+  def all_members() do
+    Member
+    |> Repo.all()
+  end
+
+  def create_or_update_member(attrs) do
     %Member{}
     |> Member.changeset(attrs)
     |> Repo.insert(
@@ -19,6 +24,17 @@ defmodule SeedRaid.Discord do
       ],
       conflict_target: :discord_id
     )
+  end
+
+  def delete_member(member) do
+    member
+    |> Repo.delete()
+  end
+
+  def get_member(id) do
+    Member
+    |> where(discord_id: ^id)
+    |> Repo.one()
   end
 
   def add_members(members) do

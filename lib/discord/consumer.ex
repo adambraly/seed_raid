@@ -30,6 +30,24 @@ defmodule Discord.Consumer do
     PinnedPost.all(channel_id)
   end
 
+  def handle_event({:GUILD_MEMBER_ADD, {_guild_id, newmember}, _ws_state}, state) do
+    Logger.info("new guild member: #{newmember.user.id}")
+    Discord.Member.add(newmember)
+    {:ok, state}
+  end
+
+  def handle_event({:GUILD_MEMBER_REMOVE, {_guild_id, oldmember}, _ws_state}, state) do
+    Logger.info("guild member removed: #{oldmember.user.id}")
+    Discord.Member.delete(oldmember)
+    {:ok, state}
+  end
+
+  def handle_event({:GUILD_MEMBER_UPDATE, {_guild_id, _oldmember, newmember}, _ws_state}, state) do
+    Logger.info("guild member updated: #{newmember.user.id}")
+    Discord.Member.update(newmember)
+    {:ok, state}
+  end
+
   def handle_event({:CHANNEL_PINS_UPDATE, {%{channel_id: channel_id}}, _ws_state}, state) do
     case channels() |> Map.fetch(channel_id) do
       {:ok, _channel} ->

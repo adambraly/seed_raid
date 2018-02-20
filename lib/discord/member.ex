@@ -17,8 +17,36 @@ defmodule Discord.Member do
     GenServer.call(__MODULE__, :all, 30000)
   end
 
+  def delete(member) do
+    GenServer.call(__MODULE__, {:remove, member})
+  end
+
+  def add(member) do
+    GenServer.call(__MODULE__, {:add, member})
+  end
+
+  def update(member) do
+    GenServer.call(__MODULE__, {:add, member})
+  end
+
   def handle_call(:all, _from, state) do
     do_all(0)
+
+    {:reply, :ok, state}
+  end
+
+  def handle_call({:remove, member}, _from, state) do
+    member.user.id
+    |> SeedRaid.Discord.get_member()
+    |> SeedRaid.Discord.delete_member()
+
+    {:reply, :ok, state}
+  end
+
+  def handle_call({:add, member}, _from, state) do
+    member
+    |> parse
+    |> SeedRaid.Discord.create_or_update_member()
 
     {:reply, :ok, state}
   end
@@ -41,13 +69,19 @@ defmodule Discord.Member do
     end
   end
 
+  defp to_integer(term) when is_number(term), do: term
+
+  defp to_integer(term) when is_binary(term) do
+    term |> String.to_integer()
+  end
+
   defp parse(member) do
     %{
       avatar: member.user.avatar,
-      discriminator: member.user.discriminator |> String.to_integer(),
+      discriminator: to_integer(member.user.discriminator),
       nick: member.nick,
       username: member.user.username,
-      discord_id: member.user.id |> String.to_integer()
+      discord_id: to_integer(member.user.id)
     }
   end
 

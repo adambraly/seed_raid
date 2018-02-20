@@ -20,7 +20,13 @@ defmodule SeedRaid.DiscordTest do
     discord_id: 1
   }
 
-  test "create_or_update with valid data updates the raid" do
+  test "delete the member" do
+    assert {:ok, %Member{}} = Discord.create_or_update_member(@valid_attrs)
+    assert member = Discord.get_member(@valid_attrs.discord_id)
+    Discord.delete_member(member)
+  end
+
+  test "create_or_update with valid data updates the member" do
     assert {:ok, %Member{} = member} = Discord.create_or_update_member(@valid_attrs)
     assert member.avatar == "avatar"
     assert member.discriminator == 1234
