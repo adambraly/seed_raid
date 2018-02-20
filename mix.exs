@@ -20,7 +20,7 @@ defmodule SeedRaid.Mixfile do
   def application do
     [
       mod: {SeedRaid.Application, []},
-      extra_applications: [:timex_ecto, :logger, :runtime_tools]
+      extra_applications: [:sentry, :timex_ecto, :logger, :runtime_tools]
     ]
   end
 
