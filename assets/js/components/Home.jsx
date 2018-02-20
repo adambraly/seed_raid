@@ -5,7 +5,7 @@ import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 
 
-const styles = () => ({
+const styles = theme => ({
   container: {
     position: 'absolute',
     top: 0,
@@ -13,11 +13,11 @@ const styles = () => ({
     left: 0,
     right: 0,
     display: 'flex',
-    backround: 'transparent',
     'justify-content': 'space-around',
     'align-items': 'center',
     'flex-wrap': 'wrap',
     'z-index': -1,
+    backgroundColor: theme.palette.background.default,
   },
   paper: {
     padding: '20px',

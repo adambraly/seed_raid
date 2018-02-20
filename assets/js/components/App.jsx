@@ -1,13 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { withStyles } from 'material-ui/styles';
 import NavBar from './NavBar';
+
+export const styles = theme => ({
+  main: {
+    backgroundColor: theme.palette.background.default,
+  },
+  header: {
+    backgroundColor: theme.palette.default,
+  },
+});
 
 const App = props => (
   <React.Fragment>
     <header>
       <NavBar />
     </header>
-    <main>
+    <main className={props.classes.main}>
       {props.children}
     </main>
   </React.Fragment>
@@ -15,6 +25,7 @@ const App = props => (
 
 App.propTypes = {
   children: PropTypes.node.isRequired,
+  classes: PropTypes.object.isRequired,
 };
 
-export default App;
+export default withStyles(styles)(App);

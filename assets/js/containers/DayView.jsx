@@ -7,9 +7,12 @@ import { Row, Col, Grid } from 'react-flexbox-grid';
 import List, { ListItem } from 'material-ui/List';
 import Raid from '../components/Raid';
 
-const styles = () => ({
+const styles = theme => ({
   dayBlock: {
     'padding-top': 32,
+  },
+  root: {
+    backgroundColor: theme.palette.background.default,
   },
 });
 
@@ -24,7 +27,7 @@ const DayView = (props) => {
   const dayName = moment(day).format('dddd');
   const dayOfMonth = moment(day).format('DD');
   return (
-    <Grid className="container">
+    <Grid className={classes.root}>
       <Row center="xs">
         <Col xs={2}>
           <div className={classes.dayBlock}>
