@@ -17,6 +17,8 @@ defmodule SeedRaid.Application do
       # worker(SeedRaid.Worker, [arg1, arg2, arg3]),
     ]
 
+    :ok = :error_logger.add_report_handler(Sentry.Logger)
+
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: SeedRaid.Supervisor]
