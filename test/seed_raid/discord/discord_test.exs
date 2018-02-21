@@ -22,7 +22,7 @@ defmodule SeedRaid.DiscordTest do
 
   test "delete the member" do
     assert {:ok, %Member{}} = Discord.create_or_update_member(@valid_attrs)
-    assert member = Discord.get_member(@valid_attrs.discord_id)
+    assert {:ok, member} = Discord.get_member(@valid_attrs.discord_id)
     Discord.delete_member(member)
   end
 

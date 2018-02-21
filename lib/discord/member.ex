@@ -36,9 +36,13 @@ defmodule Discord.Member do
   end
 
   def handle_call({:remove, member}, _from, state) do
-    member.user.id
-    |> SeedRaid.Discord.get_member()
-    |> SeedRaid.Discord.delete_member()
+    case SeedRaid.Discord.get_member(member.user.id) do
+      {:ok, member} ->
+        member |> SeedRaid.Discord.delete_member()
+
+      _ ->
+        :noop
+    end
 
     {:reply, :ok, state}
   end

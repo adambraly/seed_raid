@@ -32,9 +32,15 @@ defmodule SeedRaid.Discord do
   end
 
   def get_member(id) do
-    Member
-    |> where(discord_id: ^id)
-    |> Repo.one()
+    member =
+      Member
+      |> where(discord_id: ^id)
+      |> Repo.one()
+
+    case member do
+      nil -> {:error, :notfound}
+      member -> {:ok, member}
+    end
   end
 
   def add_members(members) do
