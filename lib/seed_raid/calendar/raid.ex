@@ -18,6 +18,7 @@ defmodule SeedRaid.Calendar.Raid do
     field(:type, RaidTypeEnum)
 
     field(:pinned, :boolean)
+    field(:participants, :integer)
 
     has_one(:author, SeedRaid.Discord.Member, foreign_key: :discord_id, references: :author_id)
 
@@ -72,7 +73,8 @@ defmodule SeedRaid.Calendar.Raid do
       :when,
       :seeds,
       :type,
-      :pinned
+      :pinned,
+      :participants
     ])
     |> validate_required([:discord_id, :author_id, :channel_slug, :content, :when])
   end

@@ -49,6 +49,9 @@ const styles = theme => ({
     left: '50%',
     transform: 'translate(-50%, -50%)',
   },
+  markdown: {
+    whiteSpace: 'pre',
+  },
   expand: {
     transform: 'rotate(0deg)',
     transition: theme.transitions.create('transform', {
@@ -148,10 +151,11 @@ class Raid extends React.Component {
           <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
             <ReactMarkdown
               source={content}
+              className={classes.markdown}
               skipHtml
               escapeHtml
               renderers={{ code: CodeBlock }}
-            />,
+            />
           </Collapse>
         </CardContent>
       </Card>

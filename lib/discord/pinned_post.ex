@@ -175,6 +175,7 @@ defmodule Discord.PinnedPost do
           type: metadata.type,
           members: metadata.users,
           when: datetime,
+          participants: metadata.participants,
           pinned: true
         }
 

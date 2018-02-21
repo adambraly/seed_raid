@@ -70,8 +70,7 @@ config :seed_raid, :channels, %{
   248_861_585_811_046_410 => %{slug: "eu-alliance", timezone: "CET", region: :eu},
   248_861_600_998_621_184 => %{slug: "eu-horde", timezone: "CET", region: :eu},
   248_901_465_291_096_064 => %{slug: "na-alliance", timezone: "EST", region: :na},
-  248_861_564_008_923_147 => %{slug: "na-horde", timezone: "EST", region: :na},
-  400_443_211_127_980_044 => %{slug: "eu-alliance", timezone: "CET", region: :eu}
+  248_861_564_008_923_147 => %{slug: "na-horde", timezone: "EST", region: :na}
 }
 
 import_config "dev.secret.exs"

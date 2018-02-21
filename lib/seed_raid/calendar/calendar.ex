@@ -117,7 +117,8 @@ defmodule SeedRaid.Calendar do
           seeds: attrs.seeds,
           type: attrs.type,
           content: attrs.content,
-          pinned: true
+          pinned: true,
+          participants: attrs.participants
         ]
       ],
       conflict_target: :discord_id
