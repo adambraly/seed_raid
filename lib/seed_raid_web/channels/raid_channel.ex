@@ -18,6 +18,8 @@ defmodule SeedRaidWeb.RaidChannel do
   end
 
   def encode(%SeedRaid.Calendar.Raid{} = raid) do
+    raid = raid |> SeedRaid.Calendar.Raid.postprocess_content()
+
     %{
       id: raid.discord_id,
       author: encode(raid.author),
