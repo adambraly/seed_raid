@@ -30,9 +30,17 @@ defmodule Discord.Consumer do
     PinnedPost.all(channel_id)
   end
 
+  def handle_event({:GUILD_MEMBER_ADD, {_guild_id, nil}, _ws_state}, state) do
+    {:ok, state}
+  end
+
   def handle_event({:GUILD_MEMBER_ADD, {_guild_id, newmember}, _ws_state}, state) do
     Logger.info("new guild member: #{newmember.user.id}")
     Discord.Member.add(newmember)
+    {:ok, state}
+  end
+
+  def handle_event({:GUILD_MEMBER_REMOVE, {_guild_id, nil}, _ws_state}, state) do
     {:ok, state}
   end
 
