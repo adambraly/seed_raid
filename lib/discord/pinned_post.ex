@@ -167,13 +167,13 @@ defmodule Discord.PinnedPost do
           )
 
         seedraid = %{
-          discord_id: message.id,
-          author_id: message.author |> Map.fetch!(:id),
+          discord_id: to_integer(message.id),
+          author_id: to_integer(message.author |> Map.fetch!(:id)),
           channel_slug: channel.slug,
           content: Decoder.format(message.content),
           seeds: metadata.seeds,
           type: metadata.type,
-          members: metadata.members,
+          members: metadata.users,
           when: datetime,
           pinned: true
         }
@@ -183,5 +183,11 @@ defmodule Discord.PinnedPost do
       {:error, error} ->
         {:error, error}
     end
+  end
+
+  defp to_integer(term) when is_number(term), do: term
+
+  defp to_integer(term) when is_binary(term) do
+    term |> String.to_integer()
   end
 end
