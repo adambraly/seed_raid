@@ -18,6 +18,8 @@ import RaidHeader from './RaidHeader';
 import starlightRose from '../../static/images/starlight-rose.png';
 import foxflower from '../../static/images/foxflower.png';
 import mix from '../../static/images/mix.png';
+import dreamleaf from '../../static/images/dreamleaf.png';
+import fjarnskaggl from '../../static/images/fjarnskaggl.png';
 
 const styles = theme => ({
   card: {
@@ -70,6 +72,10 @@ const typeAvatar = (type) => {
       return starlightRose;
     case 'foxflower':
       return foxflower;
+    case 'dreamleaf':
+      return dreamleaf;
+    case 'fjarnskaggl':
+      return fjarnskaggl;
     case 'mix':
     default:
       return mix;

@@ -85,7 +85,8 @@ defmodule SeedRaid.CalendarTest do
       member = member_fixture()
       member2 = member_fixture(discord_id: 1111)
       raid = raid_fixture()
-      Calendar.add_members_to_raid(raid.discord_id, [member.discord_id, member2.discord_id])
+
+      Calendar.add_members_to_raid_roster(raid.discord_id, [member.discord_id, member2.discord_id])
 
       raid = Calendar.get_raid!(raid.discord_id)
 
@@ -97,13 +98,18 @@ defmodule SeedRaid.CalendarTest do
     test "add_members when there is already members" do
       member = member_fixture(discord_id: 5501)
       raid = raid_fixture()
-      Calendar.add_members_to_raid(raid.discord_id, [member.discord_id])
+      Calendar.add_members_to_raid_roster(raid.discord_id, [member.discord_id])
       raid = Calendar.get_raid!(raid.discord_id)
       assert raid.members |> Enum.count() == 1
 
       member2 = member_fixture(discord_id: 5502)
       member3 = member_fixture(discord_id: 5503)
-      Calendar.add_members_to_raid(raid.discord_id, [member2.discord_id, member3.discord_id])
+
+      Calendar.add_members_to_raid_roster(raid.discord_id, [
+        member2.discord_id,
+        member3.discord_id
+      ])
+
       raid = Calendar.get_raid!(raid.discord_id)
       assert raid.members |> Enum.count() == 2
     end

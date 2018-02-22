@@ -76,7 +76,8 @@ defmodule Discord.PinnedPost do
             )
 
             Calendar.create_or_update_raid(raid)
-            Calendar.add_members_to_raid(raid.discord_id, raid.members)
+            Calendar.add_members_to_raid_roster(raid.discord_id, raid.roster)
+            Calendar.add_members_to_raid_backup(raid.discord_id, raid.backup)
 
           {:error, :upcoming} ->
             :silence
@@ -166,14 +167,17 @@ defmodule Discord.PinnedPost do
             channel.timezone
           )
 
+        author_id = to_integer(message.author |> Map.fetch!(:id))
+
         seedraid = %{
           discord_id: to_integer(message.id),
-          author_id: to_integer(message.author |> Map.fetch!(:id)),
+          author_id: author_id,
           channel_slug: channel.slug,
           content: Decoder.format(message.content),
           seeds: metadata.seeds,
           type: metadata.type,
-          members: metadata.users,
+          roster: [author_id | metadata.roster] |> Enum.uniq(),
+          backup: metadata.backup,
           when: datetime,
           participants: metadata.participants,
           pinned: true

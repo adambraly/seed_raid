@@ -16,5 +16,7 @@ defmodule SeedRaid.Calendar.RaidsMembers do
       foreign_key: :member_id,
       references: :discord_id
     )
+
+    field(:type, :string)
   end
 end

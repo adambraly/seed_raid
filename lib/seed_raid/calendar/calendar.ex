@@ -92,7 +92,15 @@ defmodule SeedRaid.Calendar do
     |> Repo.insert()
   end
 
-  def add_members_to_raid(raid_id, members) do
+  def add_members_to_raid_roster(raid_id, members) do
+    add_members_to_raid(raid_id, members, "roster")
+  end
+
+  def add_members_to_raid_backup(raid_id, members) do
+    add_members_to_raid(raid_id, members, "backup")
+  end
+
+  defp add_members_to_raid(raid_id, members, type) do
     RaidsMembers
     |> where(seedraid_id: ^raid_id)
     |> Repo.delete_all()
@@ -100,7 +108,7 @@ defmodule SeedRaid.Calendar do
     raids_members =
       members
       |> Enum.map(fn member_id ->
-        [member_id: member_id, seedraid_id: raid_id]
+        [member_id: member_id, seedraid_id: raid_id, type: type]
       end)
 
     RaidsMembers
