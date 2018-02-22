@@ -30,7 +30,14 @@ defmodule SeedRaid.Calendar.Raid do
     )
 
     many_to_many(
-      :members,
+      :roster,
+      SeedRaid.Discord.Member,
+      join_through: SeedRaid.Calendar.Registration,
+      join_keys: [raid_id: :discord_id, member_id: :discord_id]
+    )
+
+    many_to_many(
+      :backup,
       SeedRaid.Discord.Member,
       join_through: SeedRaid.Calendar.Registration,
       join_keys: [raid_id: :discord_id, member_id: :discord_id]
@@ -39,21 +46,22 @@ defmodule SeedRaid.Calendar.Raid do
     timestamps()
   end
 
-  def postprocess_content(%__MODULE__{members: members} = raid) when is_list(members) do
-    content = do_postprocess_content(raid.content, members)
+  def postprocess_content(%__MODULE__{registrations: registrations} = raid)
+      when is_list(registrations) do
+    content = do_postprocess_content(raid.content, registrations)
     %{raid | content: content}
   end
 
   def postprocess_content(raid), do: raid
 
-  defp do_postprocess_content(content, [member | rest]) do
-    username_reference = "<@#{member.discord_id}>"
-    nick_reference = "<@!#{member.discord_id}>"
+  defp do_postprocess_content(content, [registration | rest]) do
+    username_reference = "<@#{registration.member.discord_id}>"
+    nick_reference = "<@!#{registration.member.discord_id}>"
 
     member_name =
-      case member.nick do
+      case registration.member.nick do
         nil ->
-          member.username
+          registration.member.username
 
         nick ->
           nick

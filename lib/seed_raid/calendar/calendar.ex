@@ -3,7 +3,7 @@ defmodule SeedRaid.Calendar do
   The Calendar context.
   """
 
-  import Ecto.Query, warn: false
+  import Ecto.Query
   alias SeedRaid.Repo
   alias SeedRaid.Calendar.Registration
 
@@ -20,26 +20,24 @@ defmodule SeedRaid.Calendar do
   """
 
   def list_raids() do
-    Raid
-    |> pinned_raid_with_members
+    raid_with_members()
+    |> where(pinned: true)
     |> order_by(asc: :when)
     |> Repo.all()
   end
 
   def list_raids_of_channel(slug) do
-    Raid
-    |> pinned_raid_with_members
+    raid_with_members()
+    |> where(pinned: true)
     |> where(channel_slug: ^slug)
     |> order_by(asc: :when)
     |> Repo.all()
   end
 
-  defp pinned_raid_with_members(query) do
-    query
-    |> where(pinned: true)
-    |> join(:left, [raid], registrations in assoc(raid, :registrations))
-    |> join(:left, [raid, registrations], member in assoc(registrations, :member))
-    |> preload([raid, registrations, member], registrations: {registrations, member: member})
+  defp raid_with_members() do
+    Raid
+    |> preload(:author)
+    |> preload(registrations: :member)
   end
 
   @doc """
@@ -72,10 +70,8 @@ defmodule SeedRaid.Calendar do
 
   """
   def get_raid!(id) do
-    Raid
+    raid_with_members()
     |> where(discord_id: ^id)
-    |> preload(:author)
-    |> preload(:members)
     |> Repo.one!()
   end
 
