@@ -12,10 +12,10 @@ defmodule SeedRaid.Discord.Member do
     field(:username, :string)
 
     many_to_many(
-      :seedraids,
+      :raids,
       SeedRaid.Calendar.Raid,
-      join_through: SeedRaid.Calendar.RaidsMembers,
-      join_keys: [member_id: :discord_id, seedraid_id: :discord_id]
+      join_through: SeedRaid.Calendar.Registration,
+      join_keys: [member_id: :discord_id, raid_id: :discord_id]
     )
   end
 

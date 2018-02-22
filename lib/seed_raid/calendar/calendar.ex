@@ -5,7 +5,7 @@ defmodule SeedRaid.Calendar do
 
   import Ecto.Query, warn: false
   alias SeedRaid.Repo
-  alias SeedRaid.Calendar.RaidsMembers
+  alias SeedRaid.Calendar.Registration
 
   alias SeedRaid.Calendar.Raid
 
@@ -18,23 +18,28 @@ defmodule SeedRaid.Calendar do
       [%Raid{}, ...]
 
   """
+
   def list_raids() do
     Raid
-    |> where(pinned: true)
-    |> preload(:author)
-    |> preload(:members)
+    |> pinned_raid_with_members
     |> order_by(asc: :when)
     |> Repo.all()
   end
 
   def list_raids_of_channel(slug) do
     Raid
+    |> pinned_raid_with_members
     |> where(channel_slug: ^slug)
-    |> where(pinned: true)
-    |> preload(:author)
-    |> preload(:members)
     |> order_by(asc: :when)
     |> Repo.all()
+  end
+
+  defp pinned_raid_with_members(query) do
+    query
+    |> where(pinned: true)
+    |> join(:left, [raid], registrations in assoc(raid, :registrations))
+    |> join(:left, [raid, registrations], member in assoc(registrations, :member))
+    |> preload([raid, registrations, member], registrations: {registrations, member: member})
   end
 
   @doc """
@@ -101,17 +106,17 @@ defmodule SeedRaid.Calendar do
   end
 
   defp add_members_to_raid(raid_id, members, type) do
-    RaidsMembers
-    |> where(seedraid_id: ^raid_id)
+    Registration
+    |> where(raid_id: ^raid_id)
     |> Repo.delete_all()
 
     raids_members =
       members
       |> Enum.map(fn member_id ->
-        [member_id: member_id, seedraid_id: raid_id, type: type]
+        [member_id: member_id, raid_id: raid_id, type: type]
       end)
 
-    RaidsMembers
+    Registration
     |> Repo.insert_all(raids_members)
   end
 

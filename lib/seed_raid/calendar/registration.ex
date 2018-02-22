@@ -1,12 +1,12 @@
-defmodule SeedRaid.Calendar.RaidsMembers do
+defmodule SeedRaid.Calendar.Registration do
   use Ecto.Schema
 
   @primary_key false
-  schema "seedraids_members" do
+  schema "registrations" do
     belongs_to(
-      :seedraid,
+      :raid,
       SeedRaid.Calendar.Raid,
-      foreign_key: :seedraid_id,
+      foreign_key: :raid_id,
       references: :discord_id
     )
 
