@@ -20,6 +20,24 @@ defmodule SeedRaidWeb.RaidChannel do
   def encode(%SeedRaid.Calendar.Raid{} = raid) do
     raid = raid |> SeedRaid.Calendar.Raid.postprocess_content()
 
+    roster =
+      raid.registrations
+      |> Enum.filter(fn registration ->
+        registration.type == "roster"
+      end)
+      |> Enum.map(fn registration ->
+        encode(registration.member)
+      end)
+
+    backup =
+      raid.registrations
+      |> Enum.filter(fn registration ->
+        registration.type == "backup"
+      end)
+      |> Enum.map(fn registration ->
+        encode(registration.member)
+      end)
+
     %{
       id: raid.discord_id,
       author: encode(raid.author),
@@ -27,8 +45,14 @@ defmodule SeedRaidWeb.RaidChannel do
       channel_slug: raid.channel_slug,
       type: raid.type |> Atom.to_string() |> String.replace("_", "-"),
       seeds: raid.seeds,
-      content: raid.content
+      content: raid.content,
+      roster: roster,
+      backup: backup
     }
+  end
+
+  def encode(%SeedRaid.Calendar.Registration{} = registration) do
+    encode(registration.member)
   end
 
   def encode(%SeedRaid.Discord.Member{} = member) do
