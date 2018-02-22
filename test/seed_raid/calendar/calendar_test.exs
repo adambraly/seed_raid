@@ -20,6 +20,7 @@ defmodule SeedRaid.CalendarTest do
       author_id: 345,
       type: :mix,
       content: "raid...",
+      participants: nil,
       pinned: true
     }
 
@@ -39,6 +40,7 @@ defmodule SeedRaid.CalendarTest do
       author_id: 345,
       type: :mix,
       content: "updated raid...",
+      participants: nil,
       pinned: true
     }
     @create_update_attrs %{
@@ -49,6 +51,7 @@ defmodule SeedRaid.CalendarTest do
       author_id: 345,
       type: :mix,
       content: "updated raid...",
+      participants: nil,
       pinned: true
     }
     @invalid_attrs %{size: nil, date: nil, when: nil}

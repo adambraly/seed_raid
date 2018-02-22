@@ -11,6 +11,7 @@ defmodule SeedRaidWeb.RaidChannelTest do
     discord_id: 1,
     content: "eu-horde",
     type: :starlight_rose,
+    participants: nil,
     author_id: 345
   }
 
@@ -21,6 +22,7 @@ defmodule SeedRaidWeb.RaidChannelTest do
     discord_id: 2,
     content: "eu-alliance",
     type: :starlight_rose,
+    participants: nil,
     author_id: 345
   }
 
@@ -31,6 +33,7 @@ defmodule SeedRaidWeb.RaidChannelTest do
     discord_id: 2,
     content: "updated_content",
     type: :starlight_rose,
+    participants: nil,
     author_id: 345
   }
 
@@ -41,6 +44,7 @@ defmodule SeedRaidWeb.RaidChannelTest do
     discord_id: 3,
     content: "new-raid",
     type: :starlight_rose,
+    participants: nil,
     author_id: 345
   }
 
