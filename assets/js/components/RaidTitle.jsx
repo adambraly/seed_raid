@@ -14,6 +14,20 @@ const seedLink = (type) => {
           value="starlight roses"
         />
       );
+    case 'fjarnskaggl':
+      return (
+        <SeedLink
+          seed="fjarnskaggl"
+          value="fjarnskaggl"
+        />
+      );
+    case 'dreamleaf':
+      return (
+        <SeedLink
+          seed="dreamleaf"
+          value="dreamleaf"
+        />
+      );
     case 'foxflower':
       return (
         <SeedLink

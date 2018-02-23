@@ -104,6 +104,7 @@ defmodule SeedRaid.Calendar do
   defp add_members_to_raid(raid_id, members, type) do
     Registration
     |> where(raid_id: ^raid_id)
+    |> where(type: ^type)
     |> Repo.delete_all()
 
     raids_members =

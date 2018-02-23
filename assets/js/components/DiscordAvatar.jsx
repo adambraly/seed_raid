@@ -9,6 +9,7 @@ const DiscordAvatar = (props) => {
     avatar,
     id,
     username,
+    className,
   } = props;
 
   const author = (nickParam, usernameParam) => {
@@ -31,6 +32,7 @@ const DiscordAvatar = (props) => {
     <Avatar
       alt={author(nick, username)}
       src={avatarURL(id, avatar, discriminator)}
+      className={className}
     />
   );
 };
@@ -41,12 +43,14 @@ DiscordAvatar.propTypes = {
   username: PropTypes.string.isRequired,
   discriminator: PropTypes.number.isRequired,
   id: PropTypes.string.isRequired,
+  className: PropTypes.string,
 };
 
 
 DiscordAvatar.defaultProps = {
   nick: '',
   avatar: '',
+  className: null,
 };
 
 export default DiscordAvatar;

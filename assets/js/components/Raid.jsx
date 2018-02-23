@@ -14,6 +14,7 @@ import RaidTitle from './RaidTitle';
 import channels from '../channels';
 import DiscordAvatar from './DiscordAvatar';
 import RaidHeader from './RaidHeader';
+import Roster from './Roster';
 
 import starlightRose from '../../static/images/starlight-rose.png';
 import foxflower from '../../static/images/foxflower.png';
@@ -24,6 +25,10 @@ import fjarnskaggl from '../../static/images/fjarnskaggl.png';
 const styles = theme => ({
   card: {
     width: '100%',
+  },
+  bigAvatar: {
+    width: 54,
+    height: 54,
   },
   seedsAvatar: {
     position: 'relative',
@@ -52,7 +57,7 @@ const styles = theme => ({
     transform: 'translate(-50%, -50%)',
   },
   markdown: {
-    whiteSpace: 'pre',
+    whiteSpace: 'pre-wrap',
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -103,6 +108,8 @@ class Raid extends React.Component {
       type,
       classes,
       slug,
+      roster,
+      backup,
     } = this.props;
 
     const { timezone, format } = channels[slug];
@@ -132,7 +139,7 @@ class Raid extends React.Component {
               </Avatar>
             </div>
           }
-          author={<DiscordAvatar {...author} />}
+          author={<DiscordAvatar className={classes.bigAvatar} {...author} />}
           title={
             <RaidTitle
               type={type}
@@ -142,6 +149,8 @@ class Raid extends React.Component {
           subheader={moment.utc(when).tz(timezone).format(format)}
         />
         <CardContent>
+          <Roster roster={roster} max={10} />
+          <Roster roster={backup} max={3} />
           <CardActions className={classes.cardActions}>
             <IconButton
               className={classnames(classes.expand, {
@@ -176,6 +185,8 @@ Raid.propTypes = {
   content: PropTypes.string.isRequired,
   seeds: PropTypes.number.isRequired,
   slug: PropTypes.string.isRequired,
+  roster: PropTypes.array.isRequired,
+  backup: PropTypes.array.isRequired,
   classes: PropTypes.object.isRequired,
 };
 
