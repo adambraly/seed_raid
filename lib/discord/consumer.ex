@@ -36,7 +36,6 @@ defmodule Discord.Consumer do
 
   def handle_event({:GUILD_MEMBER_ADD, {_guild_id, newmember}, _ws_state}, state) do
     Logger.info("new guild member: #{newmember.user.id}")
-    Logger.info(inspect(newmember))
     Discord.Member.add(newmember)
     {:ok, state}
   end
@@ -53,7 +52,6 @@ defmodule Discord.Consumer do
 
   def handle_event({:GUILD_MEMBER_UPDATE, {_guild_id, _oldmember, newmember}, _ws_state}, state) do
     Logger.info("guild member updated: #{newmember.user.id}")
-    Logger.info(inspect(newmember))
     Discord.Member.update(newmember)
     {:ok, state}
   end

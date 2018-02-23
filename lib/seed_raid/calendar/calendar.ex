@@ -101,20 +101,20 @@ defmodule SeedRaid.Calendar do
     add_members_to_raid(raid_id, members, "backup")
   end
 
-  defp add_members_to_raid(raid_id, members, type) do
+  defp add_members_to_raid(raid_id, members_id, type) do
     Registration
     |> where(raid_id: ^raid_id)
     |> where(type: ^type)
     |> Repo.delete_all()
 
-    raids_members =
-      members
-      |> Enum.map(fn member_id ->
-        [member_id: member_id, raid_id: raid_id, type: type]
-      end)
+    members_id
+    |> Enum.each(fn member_id ->
+      changeset = %{member_id: member_id, raid_id: raid_id, type: type}
 
-    Registration
-    |> Repo.insert_all(raids_members)
+      %Registration{}
+      |> Registration.changeset(changeset)
+      |> Repo.insert()
+    end)
   end
 
   def create_or_update_raid(attrs) do

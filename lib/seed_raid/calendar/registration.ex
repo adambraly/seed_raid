@@ -1,6 +1,8 @@
 defmodule SeedRaid.Calendar.Registration do
   use Ecto.Schema
 
+  import Ecto.Changeset
+
   @primary_key false
   schema "registrations" do
     belongs_to(
@@ -18,5 +20,18 @@ defmodule SeedRaid.Calendar.Registration do
     )
 
     field(:type, :string)
+  end
+
+  def changeset(registration, attrs \\ %{}) do
+    registration
+    |> cast(attrs, [
+      :raid_id,
+      :member_id,
+      :type
+    ])
+    |> validate_required([:raid_id, :member_id, :type])
+    |> foreign_key_constraint(:raid_id)
+    |> foreign_key_constraint(:member_id)
+    |> unique_constraint(:member_id, name: :registrations_pkey)
   end
 end
