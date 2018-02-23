@@ -23,6 +23,6 @@ defmodule SeedRaid.Discord.Member do
   def changeset(member, attrs) do
     member
     |> cast(attrs, [:discord_id, :bot, :nick, :username, :discriminator, :avatar])
-    |> validate_required([:discord_id, :bot, :nick, :username, :discriminator, :avatar])
+    |> validate_required([:discord_id, :bot, :username, :discriminator, :avatar])
   end
 end
