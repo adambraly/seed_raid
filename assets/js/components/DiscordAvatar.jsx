@@ -12,6 +12,7 @@ const DiscordAvatar = (props) => {
     id,
     username,
     className,
+    size,
   } = props;
 
   const discordName = (nickParam, usernameParam) => {
@@ -23,11 +24,11 @@ const DiscordAvatar = (props) => {
 
   const avatarURL = (idParam, avatarParam, discriminatorParam) => {
     if (avatarParam) {
-      return `https://cdn.discordapp.com/avatars/${idParam}/${avatarParam}.png?size=64`;
+      return `https://cdn.discordapp.com/avatars/${idParam}/${avatarParam}.png?size=${size}`;
     }
 
     const defaultAvatar = discriminatorParam % 5;
-    return `https://cdn.discordapp.com/embed/avatars/${defaultAvatar}.png?size=64`;
+    return `https://cdn.discordapp.com/embed/avatars/${defaultAvatar}.png?size=${size}`;
   };
 
   return (
@@ -50,6 +51,7 @@ DiscordAvatar.propTypes = {
   discriminator: PropTypes.number.isRequired,
   id: PropTypes.string.isRequired,
   className: PropTypes.string,
+  size: PropTypes.number,
 };
 
 
@@ -57,6 +59,7 @@ DiscordAvatar.defaultProps = {
   nick: '',
   avatar: '',
   className: null,
+  size: 64,
 };
 
 export default DiscordAvatar;

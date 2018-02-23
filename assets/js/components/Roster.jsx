@@ -48,7 +48,7 @@ const Roster = (props) => {
         {
           roster.map(member => (
             <Col lg={1} key={member.id}>
-              <DiscordAvatar {...member} className={classes.member} />
+              <DiscordAvatar {...member} className={classes.member} size={32} />
             </Col>))
         }
         { roster.length < max &&
