@@ -9,6 +9,7 @@
 
     <title>Seedraid.pw</title>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono:300,400,500">
   </head>
 
   <body>

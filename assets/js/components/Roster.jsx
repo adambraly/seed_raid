@@ -25,15 +25,18 @@ const styles = theme => ({
 const Roster = (props) => {
   const { roster, max, classes } = props;
 
+  const dummy = i => (
+    <Col lg={1} key={i.toString()}>
+      <Avatar className={classNames(classes.member, classes.dummy)}>
+        {i}
+      </Avatar>
+    </Col>
+  );
+
   const dummies = (from, until) => {
     const result = [];
     for (let i = from; i <= until; i += 1) {
-      result.push(
-        <Col lg={1} key={i.toString()}>
-          <Avatar className={classNames(classes.member, classes.dummy)}>
-            {i}
-          </Avatar>
-        </Col>);
+      result.push(dummy(i));
     }
     return result;
   };

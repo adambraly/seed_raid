@@ -58,6 +58,11 @@ const styles = theme => ({
   },
   markdown: {
     whiteSpace: 'pre-wrap',
+    fontFamily: theme.typography.fontFamily,
+    fontSize: theme.typography.body1.fontSize,
+    fontWeight: theme.typography.body1.fontWeight,
+    lineHeight: theme.typography.body1.lineHeight,
+    color: theme.typography.body1.color,
   },
   expand: {
     transform: 'rotate(0deg)',
@@ -170,6 +175,7 @@ class Raid extends React.Component {
               skipHtml
               escapeHtml
               renderers={{ code: CodeBlock }}
+              disallowedTypes={['link', 'linkReference', 'image', 'imageReference']}
             />
           </Collapse>
         </CardContent>

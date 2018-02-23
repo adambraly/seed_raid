@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import Timeline from './Timeline';
 import App from '../components/App';
 import Home from '../components/Home';
+import withTracker from './withTracker';
 
 
 const propTypes = {
@@ -15,8 +16,8 @@ const Root = ({ store }) => (
   <Provider store={store}>
     <Router>
       <App>
-        <Route exact path="/" component={Home} />
-        <Route path="/calendar/:channel" component={Timeline} />
+        <Route exact path="/" component={withTracker(Home)} />
+        <Route path="/calendar/:channel" component={withTracker(Timeline)} />
       </App>
     </Router>
   </Provider>

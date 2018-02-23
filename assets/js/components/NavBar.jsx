@@ -5,8 +5,6 @@ import AppBar from 'material-ui/AppBar';
 import PropTypes from 'prop-types';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
-import IconButton from 'material-ui/IconButton';
-import MenuIcon from 'material-ui-icons/Menu';
 
 
 const styles = {
@@ -31,9 +29,6 @@ const NavBar = (props) => {
   return (
     <AppBar position="static">
       <Toolbar>
-        <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-          <MenuIcon />
-        </IconButton>
         <Typography variant="title" color="inherit" className={classes.flex}>
           <Link to="/" className={classes.materialLink}>
             Seed Raid

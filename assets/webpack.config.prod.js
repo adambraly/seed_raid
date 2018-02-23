@@ -33,6 +33,11 @@ module.exports = () => {
           exclude: /node_modules/,
           loader: 'babel-loader',
         },
+        {
+          test: /\.md$/,
+          exclude: /node_modules/,
+          use: 'raw-loader',
+        },
 
         {
           test: /\.(gif|png|jpe?g|svg)$/i,
@@ -120,6 +125,7 @@ module.exports = () => {
         extractComments: false,
         compress: {
           warnings: false,
+          drop_console: true,
           screw_ie8: true,
           conditionals: true,
           unused: true,

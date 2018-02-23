@@ -16,5 +16,6 @@
       "aspects": ["noHref"]
     }],
     "react/forbid-prop-types": "off",
+    "no-console": 0,
   }
 }

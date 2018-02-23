@@ -6,7 +6,7 @@ import 'highlight.js/styles/tomorrow.css';
 
 const styles = () => ({
   pre: {
-    'white-space': 'pre-wrap',
+    fontFamily: ['Roboto Mono', 'monospace'],
   },
 });
 

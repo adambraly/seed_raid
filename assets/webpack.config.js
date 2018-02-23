@@ -43,6 +43,16 @@ module.exports = {
         loader: 'babel-loader',
       },
       {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: ['eslint-loader']
+      },
+      {
+        test: /\.md$/,
+        exclude: /node_modules/,
+        use: 'raw-loader',
+      },
+      {
         test: /\.(gif|png|jpe?g|svg)$/i,
         exclude: /node_modules/,
         loaders: [

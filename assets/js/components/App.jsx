@@ -8,13 +8,13 @@ export const styles = theme => ({
     backgroundColor: theme.palette.background.default,
   },
   header: {
-    backgroundColor: theme.palette.default,
+    backgroundColor: theme.palette.background.default,
   },
 });
 
 const App = props => (
   <React.Fragment>
-    <header>
+    <header className={props.classes.header}>
       <NavBar />
     </header>
     <main className={props.classes.main}>
