@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Avatar from 'material-ui/Avatar';
+import ButtonBase from 'material-ui/ButtonBase';
+import Tooltip from 'material-ui/Tooltip';
 
 const DiscordAvatar = (props) => {
   const {
@@ -12,7 +14,7 @@ const DiscordAvatar = (props) => {
     className,
   } = props;
 
-  const author = (nickParam, usernameParam) => {
+  const discordName = (nickParam, usernameParam) => {
     if (nickParam) {
       return nickParam;
     }
@@ -29,11 +31,15 @@ const DiscordAvatar = (props) => {
   };
 
   return (
-    <Avatar
-      alt={author(nick, username)}
-      src={avatarURL(id, avatar, discriminator)}
-      className={className}
-    />
+    <Tooltip title={discordName(nick, username)} placement="bottom">
+      <ButtonBase >
+        <Avatar
+          alt={discordName(nick, username)}
+          src={avatarURL(id, avatar, discriminator)}
+          className={className}
+        />
+      </ButtonBase>
+    </Tooltip>
   );
 };
 
