@@ -5,10 +5,20 @@ import List, { ListItem } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Typography from 'material-ui/Typography';
 import { CircularProgress } from 'material-ui/Progress';
+import { withStyles } from 'material-ui/styles';
 import DayView from '../containers/DayView';
 import { fetchRaids } from '../actions/raids';
 import groupByDay from '../utils/date';
 import channels from '../channels';
+
+const styles = theme => ({
+  list: {
+    [theme.breakpoints.down('xs')]: {
+      paddingLeft: '4px',
+      paddingRight: '4px',
+    },
+  },
+});
 
 class Timeline extends React.Component {
   componentDidMount() {
@@ -20,6 +30,7 @@ class Timeline extends React.Component {
       raids,
       isFetching,
       channel,
+      classes,
     } = this.props;
 
     const tz = channels[channel].timezone;
@@ -40,7 +51,7 @@ class Timeline extends React.Component {
         {
           dayViews.map(view => (
             <React.Fragment key={view.day}>
-              <ListItem>
+              <ListItem className={classes.list}>
                 <DayView raids={view.raids} day={view.day} slug={channel} />
               </ListItem>
               <Divider inset component="li" />
@@ -58,6 +69,7 @@ Timeline.propTypes = {
   raids: PropTypes.object.isRequired,
   channel: PropTypes.string.isRequired,
   dispatch: PropTypes.func.isRequired,
+  classes: PropTypes.object.isRequired,
 };
 
 
@@ -80,4 +92,4 @@ const mapStateToProps = (state, ownProps) => {
 };
 
 
-export default connect(mapStateToProps)(Timeline);
+export default connect(mapStateToProps)(withStyles(styles)(Timeline));

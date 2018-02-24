@@ -8,17 +8,29 @@ import DiscordAvatar from './DiscordAvatar';
 
 const styles = theme => ({
   root: {
-    marginTop: '15px',
-    marginLeft: '10px',
-    marginRight: '10px',
-    marginBottom: '15px',
+    marginTop: '7px',
+    marginLeft: '5px',
+    marginRight: '5px',
+    marginBottom: '7px',
+
+    [theme.breakpoints.up('md')]: {
+      marginTop: '15px',
+      marginLeft: '10px',
+      marginRight: '10px',
+      marginBottom: '15px',
+    },
   },
   dummy: {
     backgroundColor: theme.palette.grey[400],
   },
   member: {
-    width: 30,
-    height: 30,
+    width: 22,
+    height: 22,
+    fontSize: theme.typography.fontSize,
+    [theme.breakpoints.up('md')]: {
+      width: 30,
+      height: 30,
+    },
   },
 });
 
@@ -26,7 +38,7 @@ const Roster = (props) => {
   const { roster, max, classes } = props;
 
   const dummy = i => (
-    <Col lg={1} key={i.toString()}>
+    <Col xs={1} key={i.toString()}>
       <Avatar className={classNames(classes.member, classes.dummy)}>
         {i}
       </Avatar>
@@ -47,7 +59,7 @@ const Roster = (props) => {
 
         {
           roster.map(member => (
-            <Col lg={1} key={member.id}>
+            <Col xs={1} key={member.id}>
               <DiscordAvatar {...member} className={classes.member} size={32} />
             </Col>))
         }

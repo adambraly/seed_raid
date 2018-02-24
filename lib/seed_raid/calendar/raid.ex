@@ -61,10 +61,10 @@ defmodule SeedRaid.Calendar.Raid do
     member_name =
       case registration.member.nick do
         nil ->
-          registration.member.username
+          "@#{registration.member.username}"
 
         nick ->
-          nick
+          "@#{nick}"
       end
 
     content =

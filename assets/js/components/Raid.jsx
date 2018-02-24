@@ -29,6 +29,9 @@ const styles = theme => ({
   bigAvatar: {
     width: 54,
     height: 54,
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
   },
   seedsAvatar: {
     position: 'relative',
@@ -63,6 +66,7 @@ const styles = theme => ({
     fontWeight: theme.typography.body1.fontWeight,
     lineHeight: theme.typography.body1.lineHeight,
     color: theme.typography.body1.color,
+    width: '95%',
   },
   expand: {
     transform: 'rotate(0deg)',

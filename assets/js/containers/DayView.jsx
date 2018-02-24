@@ -13,6 +13,10 @@ const styles = theme => ({
   },
   root: {
     backgroundColor: theme.palette.background.default,
+    [theme.breakpoints.down('xs')]: {
+      paddingLeft: '4px',
+      paddingRight: '4px',
+    },
   },
 });
 
@@ -29,7 +33,7 @@ const DayView = (props) => {
   return (
     <Grid className={classes.root}>
       <Row center="xs">
-        <Col xs={2}>
+        <Col xs={12} md={2}>
           <div className={classes.dayBlock}>
             <Typography variant="headline" align="center">
               {dayName}
@@ -39,7 +43,7 @@ const DayView = (props) => {
             </Typography>
           </div>
         </Col>
-        <Col xs={6} lg={8} >
+        <Col xs={12} md={10} lg={8}>
           <List>
             {
               raids.map(raid => (
