@@ -10,6 +10,8 @@ defmodule Discord.PinnedPost do
   alias SeedRaidWeb.RaidChannel
   require Logger
 
+  @roles [{277_668_856_741_494_785, "@na-alliance"}, {277_668_776_382_693_376, "@na-horde"}]
+
   def start_link(default) do
     GenServer.start_link(__MODULE__, default, name: __MODULE__)
   end
@@ -57,6 +59,22 @@ defmodule Discord.PinnedPost do
     {:noreply, state}
   end
 
+  def replace_roles(content) do
+    replace_roles(content, @roles)
+  end
+
+  defp replace_roles(content, []), do: content
+
+  defp replace_roles(content, [{role_id, role_name} | rest]) do
+    nick_reference = "<@&#{role_id}>"
+
+    content =
+      content
+      |> String.replace(nick_reference, role_name)
+
+    replace_roles(content, rest)
+  end
+
   defp do_analyze(message, channel) do
     message = message_to_struct(message)
 
@@ -85,6 +103,11 @@ defmodule Discord.PinnedPost do
           {:error, error} ->
             Logger.warn(
               "error: '#{error}' parsing message (#{message.id}) #{short_message(message.content)}"
+            )
+
+            Sentry.capture_exception(
+              %RuntimeError{message: "could not parse message #{message.id}"},
+              extra: %{discord_id: message.id, messge: message.content}
             )
         end
     end
@@ -169,11 +192,16 @@ defmodule Discord.PinnedPost do
 
         author_id = to_integer(message.author |> Map.fetch!(:id))
 
+        content =
+          message.content
+          |> replace_roles()
+          |> Decoder.format()
+
         seedraid = %{
           discord_id: to_integer(message.id),
           author_id: author_id,
           channel_slug: channel.slug,
-          content: Decoder.format(message.content),
+          content: content,
           seeds: metadata.seeds,
           type: metadata.type,
           roster: [author_id | metadata.roster] |> Enum.uniq(),

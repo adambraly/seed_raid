@@ -47,7 +47,7 @@ defmodule SeedRaid.RaidTests do
       raid
     end
 
-    test "postporcess_body" do
+    test "postprocess_body" do
       member = member_fixture()
       raid = raid_fixture(content: "nick: <@!345>. username: <@345>")
       Calendar.add_members_to_raid_roster(raid.discord_id, [member.discord_id])
@@ -55,7 +55,7 @@ defmodule SeedRaid.RaidTests do
 
       raid = raid |> Raid.postprocess_content()
 
-      assert raid.content == "nick: nick. username: nick"
+      assert raid.content == "nick: @nick. username: @nick"
     end
   end
 end
