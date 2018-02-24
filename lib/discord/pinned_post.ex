@@ -105,8 +105,8 @@ defmodule Discord.PinnedPost do
               "error: '#{error}' parsing message (#{message.id}) #{short_message(message.content)}"
             )
 
-            Sentry.capture_exception(
-              %RuntimeError{message: "could not parse message #{message.id}"},
+            Sentry.capture_message(
+              "could not parse message #{message.id}",
               extra: %{discord_id: message.id, messge: message.content}
             )
         end
