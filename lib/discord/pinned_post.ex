@@ -59,6 +59,10 @@ defmodule Discord.PinnedPost do
     {:noreply, state}
   end
 
+  def handle_info(_, state) do
+    {:noreply, state}
+  end
+
   def replace_roles(content) do
     replace_roles(content, @roles)
   end
