@@ -24,8 +24,8 @@ const styles = theme => ({
     backgroundColor: theme.palette.grey[400],
   },
   member: {
-    width: 22,
-    height: 22,
+    width: 16,
+    height: 16,
     fontSize: theme.typography.fontSize,
     [theme.breakpoints.up('md')]: {
       width: 30,
