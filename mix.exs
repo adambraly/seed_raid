@@ -48,11 +48,7 @@ defmodule SeedRaid.Mixfile do
       {:sentry, "~> 6.1.0"},
       {:postgrex, "~> 0.13.5"},
       {:seed_parser, github: "wow-sweetlie/seedparser"},
-      {:nostrum, git: "https://github.com/Kraigie/nostrum.git"},
-      {:gun,
-       git: "https://github.com/ninenines/gun.git",
-       ref: "dd1bfe4d6f9fb277781d922aa8bbb5648b3e6756",
-       override: true},
+      {:nostrum, git: "https://github.com/Pandentia/nostrum.git"},
       {:ecto_enum, "~> 1.1"}
     ]
   end
