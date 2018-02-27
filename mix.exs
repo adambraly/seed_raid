@@ -48,7 +48,7 @@ defmodule SeedRaid.Mixfile do
       {:sentry, "~> 6.1.0"},
       {:postgrex, "~> 0.13.5"},
       {:seed_parser, github: "wow-sweetlie/seedparser"},
-      {:nostrum, git: "https://github.com/Pandentia/nostrum.git"},
+      {:nostrum, git: "https://github.com/Pandentia/nostrum.git", branch: "patch-1"},
       {:ecto_enum, "~> 1.1"}
     ]
   end
