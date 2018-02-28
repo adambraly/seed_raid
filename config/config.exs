@@ -27,7 +27,7 @@ config :sentry,
   included_environments: [:prod],
   environment_name: Mix.env()
 
-config :nostrum, num_shards: 1
+config :nostrum, num_shards: :auto
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

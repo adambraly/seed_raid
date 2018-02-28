@@ -10,12 +10,12 @@ defmodule Discord.Supervisor do
 
   def init(_arg) do
     # List comprehension creates a consumer per cpu core
-    children = [
-      {Consumer, []},
-      {PinnedPost, []},
-      {Member, []},
-      {Task.Supervisor, [name: Discord.TaskSupervisor]}
-    ]
+    children =
+      [
+        {PinnedPost, []},
+        {Member, []},
+        {Task.Supervisor, [name: Discord.TaskSupervisor]}
+      ] ++ for i <- 1..System.schedulers_online(), do: worker(Consumer, [], id: i)
 
     Supervisor.init(children, strategy: :one_for_one)
   end
