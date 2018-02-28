@@ -21,6 +21,7 @@ import foxflower from '../../static/images/foxflower.png';
 import mix from '../../static/images/mix.png';
 import dreamleaf from '../../static/images/dreamleaf.png';
 import fjarnskaggl from '../../static/images/fjarnskaggl.png';
+import aethril from '../../static/images/aethril.png';
 
 const styles = theme => ({
   card: {
@@ -90,6 +91,8 @@ const typeAvatar = (type) => {
       return dreamleaf;
     case 'fjarnskaggl':
       return fjarnskaggl;
+    case 'aethril':
+      return aethril;
     case 'mix':
     default:
       return mix;

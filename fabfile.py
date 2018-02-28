@@ -8,6 +8,7 @@ REPO = 'http://github.com/wow-sweetlie/seed_raid.git'
 APP_DIR = '/home/seedraid/app'
 ASSETS_DIR = '/home/seedraid/app/assets'
 
+
 def deploy():
     sync_changes()
 
@@ -22,7 +23,7 @@ def deploy():
             run("rm -rf priv/static/*")
             run("yarn deploy")
         run("MIX_ENV=prod mix phx.digest")
-        run("MIX_ENV=prod PORT=4000 mix run priv/repo/seeeds.exs")
+        run("MIX_ENV=prod PORT=4000 mix run priv/repo/seeds.exs")
         run("MIX_ENV=prod PORT=4000 mix pins.parse_all")
         run("MIX_ENV=prod PORT=4000 mix discord.all_members")
         run("sudo systemctl start seedraid.service")
