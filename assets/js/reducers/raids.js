@@ -21,9 +21,12 @@ function updateChannel(state, action) {
 }
 
 function replaceRaid(channel, newRaid) {
-  const filtered = channel.filter(raid => (raid.id !== newRaid.id));
-  filtered.push(newRaid);
-  return filtered;
+  return channel.map((raid) => {
+    if (raid.id === newRaid.id) {
+      return newRaid;
+    }
+    return raid;
+  });
 }
 
 export function updateRaid(state, action) {
