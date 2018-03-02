@@ -24,9 +24,9 @@ def deploy():
             run("yarn deploy")
         run("MIX_ENV=prod mix phx.digest")
         run("MIX_ENV=prod PORT=4000 mix run priv/repo/seeds.exs")
+        local("$HOME/bin/sentry-seedraid-release")
         run("MIX_ENV=prod PORT=4000 mix pins.parse_all")
         run("MIX_ENV=prod PORT=4000 mix discord.all_members")
-        local("$HOME/bin/sentry-seedraid-release")
         run("sudo systemctl start seedraid.service")
 
 
