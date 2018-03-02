@@ -26,7 +26,7 @@ def deploy():
         run("MIX_ENV=prod PORT=4000 mix run priv/repo/seeds.exs")
         run("MIX_ENV=prod PORT=4000 mix pins.parse_all")
         run("MIX_ENV=prod PORT=4000 mix discord.all_members")
-        local("$HOME/bin/sentry-git-release")
+        local("$HOME/bin/sentry-seedraid-release")
         run("sudo systemctl start seedraid.service")
 
 
