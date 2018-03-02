@@ -107,18 +107,26 @@ defmodule Discord.PinnedPost do
             :silence
 
           {:error, error} ->
-            Logger.warn(
-              "error: '#{error}' parsing message (#{message.id}) #{short_message(message.content)}"
-            )
-
-            Sentry.capture_message(
-              "could not parse message #{message.id}",
-              extra: %{discord_id: message.id, messge: message.content}
-            )
+            log_error(message, error)
 
             {:error, error}
         end
     end
+  end
+
+  defp log_error(message, %{missing: missing, message: error_message}) do
+    log_error(message, error_message, %{missing: missing})
+  end
+
+  defp log_error(message, error_message, meta \\ %{}) do
+    Logger.warn(
+      "error: '#{error_message}' parsing message (#{message.id}) #{short_message(message.content)}"
+    )
+
+    Sentry.capture_message(
+      "could not parse message #{message.id}",
+      extra: %{discord_id: message.id, messge: message.content, meta: meta}
+    )
   end
 
   def key_to_atom(map) do
