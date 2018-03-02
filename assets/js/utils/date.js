@@ -10,8 +10,8 @@ const groupByDay = (raids, tz) => {
     return [];
   }
   const views = [];
-  const lastDay = moment.utc(raids[raids.length - 1].when).tz(tz);
-  const day = moment.utc(raids[0].when).tz(tz);
+  const lastDay = moment.utc(raids[raids.length - 1].when).tz(tz).startOf('day');
+  const day = moment.utc(raids[0].when).tz(tz).startOf('day');
   while (!day.isAfter(lastDay, 'day')) {
     const raidsOfTheDay = filterByDay(raids, day, tz);
     views.push({ raids: raidsOfTheDay, day: moment(day) });

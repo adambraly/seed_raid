@@ -18,6 +18,11 @@ const styles = theme => ({
       paddingRight: '4px',
     },
   },
+  dayTypo: {
+  },
+  todayTypo: {
+    color: theme.palette.primary.main,
+  },
 });
 
 const DayView = (props) => {
@@ -28,6 +33,8 @@ const DayView = (props) => {
     slug,
   } = props;
 
+  const dayClass = moment().isSame(day, 'day') ? classes.todayTypo : classes.dayTypo;
+
   const dayName = moment(day).format('dddd');
   const dayOfMonth = moment(day).format('DD');
   return (
@@ -35,10 +42,10 @@ const DayView = (props) => {
       <Row center="xs">
         <Col xs={12} md={2}>
           <div className={classes.dayBlock}>
-            <Typography variant="headline" align="center">
+            <Typography variant="headline" align="center" className={dayClass}>
               {dayName}
             </Typography>
-            <Typography variant="subheading" align="center">
+            <Typography variant="subheading" className={dayClass}>
               {dayOfMonth}
             </Typography>
           </div>
