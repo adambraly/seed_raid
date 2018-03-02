@@ -115,6 +115,8 @@ defmodule Discord.PinnedPost do
               "could not parse message #{message.id}",
               extra: %{discord_id: message.id, messge: message.content}
             )
+
+            {:error, error}
         end
     end
   end
