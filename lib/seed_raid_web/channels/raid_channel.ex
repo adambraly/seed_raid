@@ -69,8 +69,8 @@ defmodule SeedRaidWeb.RaidChannel do
     nil
   end
 
-  def update_raid(raid) do
-    payload = Calendar.get_raid!(raid.discord_id) |> encode
+  def update_raid(raid_id) do
+    payload = Calendar.get_raid!(raid_id) |> encode
 
     Endpoint.broadcast!("raids", "update_raid", payload)
   end

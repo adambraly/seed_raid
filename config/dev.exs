@@ -67,6 +67,7 @@ config :seed_raid, SeedRaid.Repo,
 config :seed_raid, :guild, 248_859_295_414_878_208
 
 config :seed_raid, :channels, %{
+  400_443_211_127_980_044 => %{slug: "eu-alliance", timezone: "CET", region: :eu},
   248_861_585_811_046_410 => %{slug: "eu-alliance", timezone: "CET", region: :eu},
   248_861_600_998_621_184 => %{slug: "eu-horde", timezone: "CET", region: :eu},
   248_901_465_291_096_064 => %{slug: "na-alliance", timezone: "EST", region: :na},

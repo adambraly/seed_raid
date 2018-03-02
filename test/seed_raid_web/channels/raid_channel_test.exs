@@ -128,7 +128,7 @@ defmodule SeedRaidWeb.RaidChannelTest do
 
     assert {:ok, _reply, _socket} = subscribe_and_join(socket, "raids")
     Calendar.add_members_to_raid_roster(raid.discord_id, [member.discord_id, member2.discord_id])
-    RaidChannel.update_raid(raid)
+    RaidChannel.update_raid(raid.discord_id)
 
     assert_broadcast("update_raid", %{
       id: 2,
@@ -147,7 +147,7 @@ defmodule SeedRaidWeb.RaidChannelTest do
 
     assert {:ok, %Raid{} = raid} = Calendar.create_or_update_raid(@updated_raid)
 
-    RaidChannel.update_raid(raid)
+    RaidChannel.update_raid(raid.discord_id)
 
     assert_broadcast("update_raid", %{
       id: 2,

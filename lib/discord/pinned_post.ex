@@ -43,8 +43,8 @@ defmodule Discord.PinnedPost do
         channel = channels |> Map.fetch!(message.channel_id)
 
         case do_analyze(message, channel) do
-          {:ok, raid = %Calendar.Raid{}} ->
-            RaidChannel.update_raid(raid)
+          {:ok, raid_id} ->
+            RaidChannel.update_raid(raid_id)
 
           _ ->
             :noop
@@ -100,6 +100,8 @@ defmodule Discord.PinnedPost do
             Calendar.create_or_update_raid(raid)
             Calendar.add_members_to_raid_roster(raid.discord_id, raid.roster)
             Calendar.add_members_to_raid_backup(raid.discord_id, raid.backup)
+
+            {:ok, raid.discord_id}
 
           {:error, :upcoming} ->
             :silence

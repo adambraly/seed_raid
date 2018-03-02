@@ -6,16 +6,6 @@ defmodule Discord.Consumer do
   # alias Nostrum.Api
   require Logger
 
-  def child_spec(_) do
-    %{
-      id: __MODULE__,
-      start: {__MODULE__, :start_link, []},
-      restart: :transient,
-      shutdown: 5000,
-      type: :worker
-    }
-  end
-
   def start_link() do
     Consumer.start_link(__MODULE__, :state)
   end
