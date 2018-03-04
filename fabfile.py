@@ -22,11 +22,12 @@ def deploy():
             run("sudo systemctl stop seedraid.service")
             run("rm -rf priv/static/*")
             run("yarn deploy")
+
         run("MIX_ENV=prod mix phx.digest")
         run("MIX_ENV=prod PORT=4000 mix run priv/repo/seeds.exs")
         local("$HOME/bin/sentry-seedraid-release")
-        run("MIX_ENV=prod PORT=4000 mix pins.parse_all")
         run("MIX_ENV=prod PORT=4000 mix discord.all_members")
+        run("MIX_ENV=prod PORT=4000 mix pins.parse_all")
         run("sudo systemctl start seedraid.service")
 
 
@@ -41,5 +42,5 @@ def sync_changes():
         with cd(APP_DIR):
             run('git pull')
 
-    with cd(APP_DIR):
-        put("./config/prod.secret.exs", "./config/prod.secret.exs")
+    # with cd(APP_DIR):
+    #     put("./config/prod.secret.exs", "./config/prod.secret.exs")

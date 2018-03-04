@@ -8,8 +8,12 @@
     <meta name="author" content="">
 
     <title>Seedraid.pw</title>
+    <%= if Mix.env == :prod do %>
+      <link rel="stylesheet" href="<%= static_path(@conn, "/css/vendors.css") %>">
+    <% end %>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Roboto+Mono:300,400,500">
+    <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
   </head>
 
   <body>
@@ -17,6 +21,7 @@
     <%= if Mix.env == :dev do %>
       <script src='http://localhost:4001/index.bundle.js'></script>
     <% else %>
+      <script src="<%= static_path(@conn, "/js/vendor.js") %>"></script>
       <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
     <% end %>
   </body>

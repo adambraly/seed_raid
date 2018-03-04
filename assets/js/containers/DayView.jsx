@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
+import moment from 'moment-timezone';
 import Typography from 'material-ui/Typography';
 import { withStyles } from 'material-ui/styles';
 import { Row, Col, Grid } from 'react-flexbox-grid';

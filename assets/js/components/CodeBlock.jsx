@@ -1,8 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from 'material-ui/styles';
-import hljs from 'highlight.js';
 import 'highlight.js/styles/tomorrow.css';
+
+const { hljs } = window;
 
 const styles = () => ({
   pre: {

@@ -102,15 +102,23 @@ module.exports = () => {
       extensions: ['.js', '.json', '.jsx', '.css'],
     },
     plugins: [
-      new webpack.ProvidePlugin({
-        $: 'jquery',
-        jQuery: 'jquery',
-      }),
+      new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en/),
+      new webpack.LoaderOptionsPlugin({ options: {} }),
+      new webpack.NormalModuleReplacementPlugin(
+        /moment-timezone\/data\/packed\/latest\.json/,
+        require.resolve('./misc/tzdata.json')
+      ),
+      new webpack.optimize.CommonsChunkPlugin({
+            name: 'vendor',
+            minChunks(module, count) {
+                var context = module.context;
+                return context && context.indexOf('node_modules') >= 0;
+            },
+        }),
       new CopyWebpackPlugin([{
         from: './static',
         to: path.resolve(__dirname, '../priv/static'),
       }]),
-
       new ExtractTextPlugin({
         filename: 'css/[name].css',
         allChunks: true,
@@ -125,7 +133,6 @@ module.exports = () => {
         extractComments: false,
         compress: {
           warnings: false,
-          drop_console: true,
           screw_ie8: true,
           conditionals: true,
           unused: true,

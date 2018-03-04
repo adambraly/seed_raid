@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const autoprefixer = require('autoprefixer');
 
@@ -13,17 +14,21 @@ const entry = './js/App';
 const hot = `webpack-hot-middleware/client?path=${publicPath}__webpack_hmr`;
 
 const plugins = [
+  new BundleAnalyzerPlugin(),
+  new webpack.ContextReplacementPlugin(/moment[\/\\]locale$/, /en/),
+  new webpack.LoaderOptionsPlugin({ options: {} }),
+  new webpack.NormalModuleReplacementPlugin(
+    /moment-timezone\/data\/packed\/latest\.json/,
+    require.resolve('./misc/tzdata.json')
+  ),
   new webpack.optimize.OccurrenceOrderPlugin(),
   new webpack.NoEmitOnErrorsPlugin(),
   new webpack.DefinePlugin({
     __PROD: prod,
     __DEV: env === 'dev',
   }),
+  new webpack.HotModuleReplacementPlugin(),
 ];
-
-if (env === 'dev') {
-  plugins.push(new webpack.HotModuleReplacementPlugin());
-}
 
 module.exports = {
   devtool: 'cheap-module-eval-source-map',

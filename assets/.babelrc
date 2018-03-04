@@ -3,7 +3,7 @@
   "env": {
     "development": {
       "presets": [
-        ["@babel/react", { "development": true }],
+        ["@babel/react", { "development": true }]
       ]
     }
   },
