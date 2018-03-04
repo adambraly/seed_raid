@@ -4,6 +4,7 @@ defmodule SeedRaid.Calendar do
   """
 
   import Ecto.Query
+  alias Ecto.Multi
   alias SeedRaid.Repo
   alias SeedRaid.Calendar.Registration
 
@@ -93,27 +94,24 @@ defmodule SeedRaid.Calendar do
     |> Repo.insert()
   end
 
-  def add_members_to_raid_roster(raid_id, members) do
-    add_members_to_raid(raid_id, members, "roster")
+  def set_raid_members(raid_id, members, backup) do
+    delete_query = from(r in Registration, where: r.raid_id == ^raid_id)
+
+    Multi.new()
+    |> Multi.delete_all(:delete_all, delete_query)
+    |> Multi.insert_all(
+      :insert_members,
+      Registration,
+      add_members_changesets(raid_id, members, "roster") ++
+        add_members_changesets(raid_id, backup, "backup")
+    )
+    |> Repo.transaction()
   end
 
-  def add_members_to_raid_backup(raid_id, members) do
-    add_members_to_raid(raid_id, members, "backup")
-  end
-
-  defp add_members_to_raid(raid_id, members_id, type) do
-    Registration
-    |> where(raid_id: ^raid_id)
-    |> where(type: ^type)
-    |> Repo.delete_all()
-
+  defp add_members_changesets(raid_id, members_id, type) do
     members_id
-    |> Enum.each(fn member_id ->
-      changeset = %{member_id: member_id, raid_id: raid_id, type: type}
-
-      %Registration{}
-      |> Registration.changeset(changeset)
-      |> Repo.insert()
+    |> Enum.map(fn member_id ->
+      %{member_id: member_id, raid_id: raid_id, type: type}
     end)
   end
 

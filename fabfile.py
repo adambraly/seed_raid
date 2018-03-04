@@ -16,6 +16,16 @@ def seed():
         local("$HOME/bin/sentry-seedraid-release")
 
 
+def backend():
+    sync_changes()
+    with cd(APP_DIR):
+        run("MIX_ENV=prod mix deps.get --only prod")
+        run("MIX_ENV=prod mix compile")
+        run("MIX_ENV=prod PORT=4001 mix discord.all_members")
+        run("MIX_ENV=prod PORT=4001 mix pins.parse_all")
+        run("sudo systemctl restart seedraid.service")
+
+
 def deploy():
     sync_changes()
 

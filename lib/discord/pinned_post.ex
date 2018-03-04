@@ -98,9 +98,8 @@ defmodule Discord.PinnedPost do
             )
 
             Calendar.create_or_update_raid(raid)
-            Calendar.add_members_to_raid_roster(raid.discord_id, raid.roster)
-            Calendar.add_members_to_raid_backup(raid.discord_id, raid.backup)
 
+            Calendar.set_raid_members(raid.discord_id, raid.roster, raid.backup)
             {:ok, raid.discord_id}
 
           {:error, :upcoming} ->

@@ -81,12 +81,12 @@ defmodule SeedRaid.CalendarTest do
       assert raids |> List.first() |> Map.fetch!(:discord_id) == raid.discord_id
     end
 
-    test "add_members/1 returns the raid with all members" do
+    test "set_raid_members/1 returns the raid with all members" do
       member = member_fixture()
       member2 = member_fixture(discord_id: 1111)
       raid = raid_fixture()
 
-      Calendar.add_members_to_raid_roster(raid.discord_id, [member.discord_id, member2.discord_id])
+      Calendar.set_raid_members(raid.discord_id, [member.discord_id, member2.discord_id], [])
 
       raid = Calendar.get_raid!(raid.discord_id)
 
@@ -95,10 +95,39 @@ defmodule SeedRaid.CalendarTest do
       assert first_registration.member.discord_id == member.discord_id
     end
 
-    test "add_members when there is already members" do
+    test "add_member in a limit case" do
+      limit_case_members = [
+        128_250_420_521_861_120,
+        198_956_678_777_929_728,
+        211_022_778_588_069_888,
+        215_480_785_711_398_912,
+        242_037_329_508_827_136,
+        277_963_213_847_527_425,
+        280_075_520_748_552_192,
+        289_883_408_723_738_625,
+        341_295_822_685_863_936,
+        375_786_786_867_380_224
+      ]
+
+      limit_case_backup = [212_898_570_263_724_032]
+
+      raid = raid_fixture()
+
+      (limit_case_members ++ limit_case_backup)
+      |> Enum.each(fn member_id ->
+        member_fixture(discord_id: member_id)
+      end)
+
+      Calendar.set_raid_members(raid.discord_id, limit_case_members, limit_case_backup)
+
+      raid = Calendar.get_raid!(raid.discord_id)
+      assert raid.registrations |> Enum.count() == 11
+    end
+
+    test "set_raid_members when there is already members" do
       member = member_fixture(discord_id: 5501)
       raid = raid_fixture()
-      Calendar.add_members_to_raid_roster(raid.discord_id, [member.discord_id])
+      Calendar.set_raid_members(raid.discord_id, [member.discord_id], [])
       raid = Calendar.get_raid!(raid.discord_id)
 
       assert raid.registrations |> Enum.count() == 1
@@ -107,11 +136,15 @@ defmodule SeedRaid.CalendarTest do
       member3 = member_fixture(discord_id: 5503)
       member4 = member_fixture(discord_id: 5504)
 
-      Calendar.add_members_to_raid_roster(raid.discord_id, [
-        member2.discord_id,
-        member3.discord_id,
-        member4.discord_id
-      ])
+      Calendar.set_raid_members(
+        raid.discord_id,
+        [
+          member2.discord_id,
+          member3.discord_id,
+          member4.discord_id
+        ],
+        []
+      )
 
       raid = Calendar.get_raid!(raid.discord_id)
       assert raid.registrations |> Enum.count() == 3
