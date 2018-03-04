@@ -142,6 +142,7 @@ module.exports = () => {
           evaluate: true,
           if_return: true,
           join_vars: true,
+          drop_console: true
         },
         output: {
           comments: false,
