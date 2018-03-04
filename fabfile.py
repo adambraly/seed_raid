@@ -9,6 +9,13 @@ APP_DIR = '/home/seedraid/app'
 ASSETS_DIR = '/home/seedraid/app/assets'
 
 
+def seed():
+    sync_changes()
+    with cd(APP_DIR):
+        run("MIX_ENV=prod PORT=4000 mix run priv/repo/seeds.exs")
+        local("$HOME/bin/sentry-seedraid-release")
+
+
 def deploy():
     sync_changes()
 
