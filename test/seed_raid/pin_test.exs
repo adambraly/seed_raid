@@ -33,4 +33,10 @@ defmodule SeedRaid.PinTest do
     assert err.time == false
     assert err.format == false
   end
+
+  test "error already logged?" do
+    assert {:ok, %Error{}} = Pin.insert_error(1234, [:date])
+    assert Pin.error_already_logged?(1234) == true
+    assert Pin.error_already_logged?(12345) == false
+  end
 end

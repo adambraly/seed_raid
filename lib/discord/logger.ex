@@ -27,7 +27,7 @@ defmodule Discord.Logger do
   end
 
   def warn(msg, missing) do
-    case(Pin.error_have_been_logged?(msg.id)) do
+    case(Pin.error_already_logged?(msg.id)) do
       true ->
         :noop
 

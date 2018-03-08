@@ -49,7 +49,7 @@ defmodule SeedRaid.Pin do
     |> Repo.insert()
   end
 
-  def error_have_been_logged?(id) do
+  def error_already_logged?(id) do
     case get_error(id) do
       err when is_map(err) ->
         true
