@@ -2,7 +2,7 @@ defmodule Discord.Consumer do
   @moduledoc false
 
   use Nostrum.Consumer
-  alias Discord.PinnedPost
+  alias Discord.{PinnedPost, Command}
   # alias Nostrum.Api
   require Logger
 
@@ -72,6 +72,11 @@ defmodule Discord.Consumer do
         :noop
     end
 
+    {:ok, state}
+  end
+
+  def handle_event({:MESSAGE_CREATE, {msg}, _ws_state}, state) do
+    Command.handle(msg)
     {:ok, state}
   end
 
