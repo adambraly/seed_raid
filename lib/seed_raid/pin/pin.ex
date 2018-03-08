@@ -37,6 +37,11 @@ defmodule SeedRaid.Pin do
     |> Repo.one()
   end
 
+  # def insert_error(id, missing) when is_binary(id) do
+  #   id = id |> String.to_integer()
+  #   insert_error(id, missing)
+  # end
+
   def insert_error(id, missing) do
     changeset =
       missing
@@ -48,6 +53,12 @@ defmodule SeedRaid.Pin do
     |> Error.changeset(changeset)
     |> Repo.insert()
   end
+
+  # 
+  # def error_already_logged?(id) when is_binary(id) do
+  #   id = id |> String.to_integer()
+  #   error_already_logged?(id)
+  # end
 
   def error_already_logged?(id) do
     case get_error(id) do

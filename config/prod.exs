@@ -69,7 +69,7 @@ config :logger, level: :info
 #     config :seed_raid, SeedRaidWeb.Endpoint, server: true
 #
 
-config :seed_raid, :guild, 248_859_295_414_878_208
+config :seed_raid, :guild, 288_000_098_107_916_289
 
 config :seed_raid, :channels, %{
   248_861_585_811_046_410 => %{slug: "eu-alliance", timezone: "CET", region: :eu},

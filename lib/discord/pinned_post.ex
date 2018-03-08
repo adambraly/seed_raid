@@ -124,7 +124,7 @@ defmodule Discord.PinnedPost do
 
     case meta.missing |> Enum.count() do
       count when count < 3 ->
-        Discord.Logger.warn(message.id, meta.missing)
+        Discord.Logger.warn(message, meta.missing)
 
       _ ->
         :noop
