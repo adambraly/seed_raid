@@ -1,7 +1,7 @@
 defmodule SeedRaid.PinTest do
   use SeedRaid.DataCase
 
-  alias SeedRaid.Pin.Blacklist
+  alias SeedRaid.Pin.{Blacklist, Error}
   alias SeedRaid.Pin
 
   test "add_to_blacklist/1 with valid data" do
@@ -24,5 +24,13 @@ defmodule SeedRaid.PinTest do
     assert {:ok, %Blacklist{}} = Pin.add_to_blacklist(123)
     assert Pin.is_blacklisted?(%{id: 123}) == true
     assert Pin.is_blacklisted?(%{id: 125}) == false
+  end
+
+  test "insert_error" do
+    assert {:ok, %Error{} = err} = Pin.insert_error(1234, [:date])
+    assert err.discord_id == 1234
+    assert err.date == true
+    assert err.time == false
+    assert err.format == false
   end
 end

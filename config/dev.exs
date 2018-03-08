@@ -74,4 +74,6 @@ config :seed_raid, :channels, %{
   248_861_564_008_923_147 => %{slug: "na-horde", timezone: "America/New_York", region: :na}
 }
 
+config :seed_raid, :logger_channel, 400_443_211_127_980_044
+
 import_config "dev.secret.exs"

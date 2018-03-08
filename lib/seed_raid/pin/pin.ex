@@ -1,5 +1,5 @@
 defmodule SeedRaid.Pin do
-  alias SeedRaid.Pin.Blacklist
+  alias SeedRaid.Pin.{Blacklist, Error}
   alias SeedRaid.Repo
 
   import Ecto.Query, warn: false
@@ -30,5 +30,32 @@ defmodule SeedRaid.Pin do
     %Blacklist{}
     |> Blacklist.changeset(%{discord_id: id})
     |> Repo.insert()
+  end
+
+  def get_error(id) do
+    from(err in Error, where: err.discord_id == ^id)
+    |> Repo.one()
+  end
+
+  def insert_error(id, missing) do
+    changeset =
+      missing
+      |> Enum.map(fn field -> {field, true} end)
+      |> Enum.into(%{})
+      |> Map.put(:discord_id, id)
+
+    %Error{}
+    |> Error.changeset(changeset)
+    |> Repo.insert()
+  end
+
+  def error_have_been_logged?(id) do
+    case get_error(id) do
+      err when is_map(err) ->
+        true
+
+      _ ->
+        false
+    end
   end
 end

@@ -122,6 +122,14 @@ defmodule Discord.PinnedPost do
       "error: '#{error_message}' parsing message (#{message.id}) #{short_message(message.content)}"
     )
 
+    case meta.missing |> Enum.count() do
+      count when count < 3 ->
+        Discord.Logger.warn(message.id, meta.missing)
+
+      _ ->
+        :noop
+    end
+
     Sentry.capture_message(
       "could not parse message #{message.id}",
       extra: %{discord_id: message.id, messge: message.content, meta: meta}
