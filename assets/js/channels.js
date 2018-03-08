@@ -13,13 +13,13 @@ const CHANNELS = {
     format: 'DD MMMM YYYY HH:mm',
   },
   'na-alliance': {
-    timezone: 'EST',
+    timezone: 'America/New_York',
     region: 'na',
     side: 'alliance',
     format: 'MMMM DD, YYYY hh:mm a',
   },
   'na-horde': {
-    timezone: 'EST',
+    timezone: 'America/New_York',
     region: 'na',
     side: 'horde',
     format: 'MMMM DD, YYYY hh:mm a',
