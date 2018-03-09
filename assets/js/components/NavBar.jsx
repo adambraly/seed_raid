@@ -7,11 +7,17 @@ import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 
 
-const styles = {
+const styles = theme => ({
   root: {
     width: '100%',
   },
-  flex: {
+  title: {
+    [theme.breakpoints.down('xs')]: {
+      display: 'none',
+    },
+    flex: 1,
+  },
+  channel: {
     flex: 1,
   },
   menuButton: {
@@ -22,34 +28,34 @@ const styles = {
     textDecoration: 'none',
     color: 'inherit',
   },
-};
+});
 
 const NavBar = (props) => {
   const { classes } = props;
   return (
     <AppBar position="static">
       <Toolbar>
-        <Typography variant="title" color="inherit" className={classes.flex}>
+        <Typography variant="title" color="inherit" className={classes.title}>
           <Link to="/" className={classes.materialLink}>
             Seed Raid
           </Link>
         </Typography>
-        <Typography color="inherit" className={classes.flex}>
+        <Typography color="inherit" className={classes.channel}>
           <Link to="/calendar/eu-alliance" className={classes.materialLink}>
             EU Alliance
           </Link>
         </Typography>
-        <Typography color="inherit" className={classes.flex}>
+        <Typography color="inherit" className={classes.channel}>
           <Link to="/calendar/eu-horde" className={classes.materialLink}>
             EU Horde
           </Link>
         </Typography>
-        <Typography color="inherit" className={classes.flex}>
+        <Typography color="inherit" className={classes.channel}>
           <Link to="/calendar/na-alliance" className={classes.materialLink}>
             NA Alliance
           </Link>
         </Typography>
-        <Typography color="inherit" className={classes.flex}>
+        <Typography color="inherit" className={classes.channel}>
           <Link to="/calendar/na-horde" className={classes.materialLink}>
             NA Horde
           </Link>
