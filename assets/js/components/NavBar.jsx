@@ -7,18 +7,14 @@ import PropTypes from 'prop-types';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 
-const styles = theme => ({
+const styles = () => ({
   root: {
     width: '100%',
-  },
-  title: {
-    [theme.breakpoints.down('xs')]: {
-      display: 'none',
-    },
   },
   channel: {
     paddingLeft: '4px',
     paddingRight: '4px',
+    marginTop: '5px',
     display: 'block',
     '&:hover': {
       backgroundColor: 'rgba(0, 0, 0, 0.1)',
