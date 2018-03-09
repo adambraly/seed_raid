@@ -1,5 +1,10 @@
 
 const CHANNELS = {
+  eu: {
+    timezone: 'CET',
+    format: 'DD MMMM YYYY HH:mm',
+  },
+
   'eu-alliance': {
     timezone: 'CET',
     region: 'na',
@@ -11,6 +16,10 @@ const CHANNELS = {
     region: 'eu',
     side: 'horde',
     format: 'DD MMMM YYYY HH:mm',
+  },
+  na: {
+    timezone: 'America/New_York',
+    format: 'MMMM DD, YYYY hh:mm a',
   },
   'na-alliance': {
     timezone: 'America/New_York',

@@ -1,11 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { withStyles } from 'material-ui/styles';
+import { Col, Row } from 'react-flexbox-grid';
 import AppBar from 'material-ui/AppBar';
 import PropTypes from 'prop-types';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
-
 
 const styles = theme => ({
   root: {
@@ -15,10 +15,17 @@ const styles = theme => ({
     [theme.breakpoints.down('xs')]: {
       display: 'none',
     },
-    flex: 1,
   },
   channel: {
-    flex: 1,
+    paddingLeft: '4px',
+    paddingRight: '4px',
+    display: 'block',
+    '&:hover': {
+      backgroundColor: 'rgba(0, 0, 0, 0.1)',
+    },
+  },
+  region: {
+    flexFlow: 'row wrap',
   },
   menuButton: {
     marginLeft: -12,
@@ -35,31 +42,60 @@ const NavBar = (props) => {
   return (
     <AppBar position="static">
       <Toolbar>
-        <Typography variant="title" color="inherit" className={classes.title}>
-          <Link to="/" className={classes.materialLink}>
-            Seed Raid
-          </Link>
-        </Typography>
-        <Typography color="inherit" className={classes.channel}>
-          <Link to="/calendar/eu-alliance" className={classes.materialLink}>
-            EU Alliance
-          </Link>
-        </Typography>
-        <Typography color="inherit" className={classes.channel}>
-          <Link to="/calendar/eu-horde" className={classes.materialLink}>
-            EU Horde
-          </Link>
-        </Typography>
-        <Typography color="inherit" className={classes.channel}>
-          <Link to="/calendar/na-alliance" className={classes.materialLink}>
-            NA Alliance
-          </Link>
-        </Typography>
-        <Typography color="inherit" className={classes.channel}>
-          <Link to="/calendar/na-horde" className={classes.materialLink}>
-            NA Horde
-          </Link>
-        </Typography>
+        <Col xs={6} sm={3} lg={2}>
+          <Row>
+            <Col xs={12}>
+              <Typography color="inherit" className={classes.channel}>
+                <Link to="/calendar/eu" className={classes.materialLink}>
+                  EUROPE
+                </Link>
+              </Typography>
+            </Col>
+          </Row>
+          <Row className={classes.region}>
+            <Col xs={6}>
+              <Typography color="inherit" className={classes.channel}>
+                <Link to="/calendar/eu-alliance" className={classes.materialLink}>
+                  ALLIANCE
+                </Link>
+              </Typography>
+            </Col>
+            <Col xs={6}>
+              <Typography color="inherit" className={classes.channel}>
+                <Link to="/calendar/eu-horde" className={classes.materialLink}>
+                  HORDE
+                </Link>
+              </Typography>
+            </Col>
+          </Row>
+        </Col>
+        <Col xs={6} sm={3} lg={2}>
+          <Row>
+            <Col xs={12} lg={12}>
+              <Typography color="inherit" className={classes.channel}>
+                <Link to="/calendar/na" className={classes.materialLink}>
+                  NORTH AMERICA
+                </Link>
+              </Typography>
+            </Col>
+          </Row>
+          <Row className={classes.region}>
+            <Col xs={6}>
+              <Typography color="inherit" className={classes.channel}>
+                <Link to="/calendar/na-alliance" className={classes.materialLink}>
+                  ALLIANCE
+                </Link>
+              </Typography>
+            </Col>
+            <Col xs={6}>
+              <Typography color="inherit" className={classes.channel}>
+                <Link to="/calendar/na-horde" className={classes.materialLink}>
+                  HORDE
+                </Link>
+              </Typography>
+            </Col>
+          </Row>
+        </Col>
       </Toolbar>
     </AppBar>
   );

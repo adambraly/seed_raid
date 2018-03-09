@@ -6,6 +6,7 @@ import Divider from 'material-ui/Divider';
 import Typography from 'material-ui/Typography';
 import { CircularProgress } from 'material-ui/Progress';
 import { withStyles } from 'material-ui/styles';
+import moment from 'moment-timezone';
 import DayView from '../containers/DayView';
 import { fetchRaids } from '../actions/raids';
 import groupByDay from '../utils/date';
@@ -25,6 +26,7 @@ class Timeline extends React.Component {
     this.props.dispatch(fetchRaids());
   }
 
+
   render() {
     const {
       raids,
@@ -33,9 +35,29 @@ class Timeline extends React.Component {
       classes,
     } = this.props;
 
-    const tz = channels[channel].timezone;
-    const viewRaids = raids[channel] || [];
-    const dayViews = groupByDay(viewRaids, tz);
+    const getRaids = (virtualChannel) => {
+      switch (virtualChannel) {
+        case 'eu':
+          return raids['eu-horde'].concat(raids['eu-alliance']);
+        case 'na':
+          return raids['na-horde'].concat(raids['na-alliance']);
+        default:
+          return raids[virtualChannel];
+      }
+    };
+
+    const sortRaidsByTime = allraids => (
+      allraids.sort((a, b) => (moment(a.when) > moment(b.when)))
+    );
+
+    let dayViews = [];
+
+    if (!isFetching) {
+      const tz = channels[channel].timezone;
+      let viewRaids = getRaids(channel) || [];
+      viewRaids = sortRaidsByTime(viewRaids);
+      dayViews = groupByDay(viewRaids, tz);
+    }
 
     return (
       <List>

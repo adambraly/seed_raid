@@ -5,6 +5,10 @@ const filterByDay = (raids, day, tz) => (
   raids.filter(raid => moment.utc(raid.when).tz(tz).isSame(day, 'day'))
 );
 
+export function sortRaidsByTime(raids) {
+  raids.sort((a, b) => (moment(a.when) > moment(b.when)));
+}
+
 const groupByDay = (raids, tz) => {
   if (raids.length === 0) {
     return [];
