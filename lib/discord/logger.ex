@@ -10,8 +10,13 @@ defmodule Discord.Logger do
     Application.fetch_env!(:seed_raid, :channels)
   end
 
+  defp channel_slug(id) when is_binary(id) do
+    id
+    |> String.to_integer()
+    |> channel_slug()
+  end
+
   defp channel_slug(id) do
-    id = id |> String.to_integer()
     channel = channels() |> Map.fetch!(id)
     channel[:slug]
   end
