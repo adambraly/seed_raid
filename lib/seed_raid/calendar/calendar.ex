@@ -4,7 +4,6 @@ defmodule SeedRaid.Calendar do
   """
 
   import Ecto.Query
-  alias Ecto.Multi
   alias SeedRaid.Repo
   alias SeedRaid.Calendar.Registration
 
@@ -97,25 +96,24 @@ defmodule SeedRaid.Calendar do
   def set_raid_members(raid_id, members, backup) do
     delete_query = from(r in Registration, where: r.raid_id == ^raid_id)
 
-    Multi.new()
-    |> Multi.delete_all(:delete_all, delete_query)
-    |> Multi.insert_all(
-      :insert_members,
-      Registration,
-      add_members_changesets(raid_id, members, "roster") ++
-        add_members_changesets(raid_id, backup, "backup")
-    )
-    |> Repo.transaction()
+    Repo.delete_all(delete_query)
+
+    add_members(raid_id, members, "roster")
+    add_members(raid_id, backup, "backup")
   end
 
-  defp add_members_changesets(raid_id, members_id, type) do
+  defp add_members(raid_id, members_id, type) do
     members_id
     |> Enum.map(fn member_id ->
-      %{member_id: member_id, raid_id: raid_id, type: type}
+      changeset = %{member_id: member_id, raid_id: raid_id, type: type}
+
+      %Registration{}
+      |> Registration.changeset(changeset)
+      |> Repo.insert()
     end)
   end
 
-  def create_or_update_raid(attrs) do
+  def create_or_update_raid!(attrs) do
     %Raid{}
     |> Raid.changeset(attrs)
     |> Repo.insert!(

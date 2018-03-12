@@ -187,7 +187,7 @@ defmodule SeedRaid.CalendarTest do
     end
 
     test "create_or_update with valid data updates the raid" do
-      assert {:ok, %Raid{} = raid} = Calendar.create_or_update_raid(@valid_attrs)
+      assert raid = Calendar.create_or_update_raid!(@valid_attrs)
       assert raid.seeds == 42
       assert raid.content == "raid..."
       assert raid.author_id == 345
@@ -196,7 +196,7 @@ defmodule SeedRaid.CalendarTest do
       assert raid.when == Timex.to_datetime({{2010, 04, 17}, {12, 00, 00}})
       assert(raid.type == :mix)
 
-      assert {:ok, %Raid{}} = Calendar.create_or_update_raid(@create_update_attrs)
+      assert raid = Calendar.create_or_update_raid!(@create_update_attrs)
       saved_raid = Calendar.get_raid!(raid.discord_id)
       assert %Raid{} = saved_raid
       assert saved_raid.seeds == 45
@@ -222,21 +222,21 @@ defmodule SeedRaid.CalendarTest do
         |> Map.put(:channel_slug, "eu-alliance")
         |> Map.put(:discord_id, 1)
 
-      assert {:ok, %Raid{}} = Calendar.create_or_update_raid(raid_attrs)
+      assert %Raid{} = Calendar.create_or_update_raid!(raid_attrs)
 
       raid_attrs =
         @valid_attrs
         |> Map.put(:channel_slug, "eu-alliance")
         |> Map.put(:discord_id, 2)
 
-      assert {:ok, %Raid{}} = Calendar.create_or_update_raid(raid_attrs)
+      assert %Raid{} = Calendar.create_or_update_raid!(raid_attrs)
 
       raid_attrs =
         @valid_attrs
         |> Map.put(:channel_slug, "eu-horde")
         |> Map.put(:discord_id, 3)
 
-      assert {:ok, %Raid{}} = Calendar.create_or_update_raid(raid_attrs)
+      assert %Raid{} = Calendar.create_or_update_raid!(raid_attrs)
 
       raid_attrs =
         @valid_attrs
@@ -244,7 +244,7 @@ defmodule SeedRaid.CalendarTest do
         |> Map.put(:discord_id, 5)
         |> Map.put(:pinned, false)
 
-      assert {:ok, %Raid{}} = Calendar.create_or_update_raid(raid_attrs)
+      assert %Raid{} = Calendar.create_or_update_raid!(raid_attrs)
 
       inserted_raid_count = Calendar.list_raids() |> Enum.count()
 
