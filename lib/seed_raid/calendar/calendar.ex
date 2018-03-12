@@ -118,7 +118,7 @@ defmodule SeedRaid.Calendar do
   def create_or_update_raid(attrs) do
     %Raid{}
     |> Raid.changeset(attrs)
-    |> Repo.insert(
+    |> Repo.insert!(
       on_conflict: [
         set: [
           when: attrs.when,

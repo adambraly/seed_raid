@@ -5,7 +5,7 @@ defenum(RaidTypeEnum, :raidtype, [
   :mix,
   :foxflower,
   :dreamleaf,
-  :fjarnkaggl,
+  :fjarnskaggl,
   :aethril
 ])
 
